@@ -4,25 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- Add your CSS stylesheets and JavaScript files here -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            background-image: url('https://source.unsplash.com/1600x900/?luxury,houses');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 350px;
+            height: 350px; /* Set height same as width to make it square */
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+            position: relative;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        button {
+            display: block;
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #66afe9;
+        }
+
+        button {
+            background-color: #ff66a3; /* Pink */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            animation: alternateColor 2s infinite;
+        }
+
+        @keyframes alternateColor {
+            0%, 100% {
+                background-color: #ff66a3; /* Pink */
+            }
+            50% {
+                background-color: #ff4d4d; /* Red */
+            }
+        }
+
+        button:hover {
+            background-color: #ff1a1a; /* Darker red */
+        }
+
+        .logo {
+            max-width: 50px; /* Adjust the max-width to make the logo really small */
+            margin: 20px auto;
+            display: block;
+            /* Set the background image */
+            background-image: url('images/logo.png'); /* Adjust the path as needed */
+            /* Ensure the background image covers the element */
+            background-size: cover;
+            /* Center the background image */
+            background-position: center;
+        }
+
+        .smoke {
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: url('https://i.ibb.co/0CndWdT/smoke.png') no-repeat center center;
+            background-size: cover;
+            animation: smokeAnimation 5s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes smokeAnimation {
+            0% {
+                transform: translateX(-50%) translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateX(-50%) translateY(-100%) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Added Golden Rhombus Shapes */
+        .golden-rhombus {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: gold;
+            transform: rotate(45deg);
+            animation: moveRhombus 10s linear infinite alternate;
+        }
+
+        @keyframes moveRhombus {
+            0% {
+                transform: translateY(0) rotate(45deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(405deg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Login</h2>
+    <!-- Golden Rhombus Shapes -->
+    <div class="golden-rhombus"></div>
+    <div class="golden-rhombus" style="top: 40%; left: 20%;"></div>
+    <div class="golden-rhombus" style="top: 60%; left: 70%;"></div>
+
+    <div class="smoke"></div>
+    <div class="container animate__animated animate__fadeInDown">
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <h2 class="animate__animated animate__bounceInDown">Real Estate Login</h2>
         <form id="loginForm">
-            <div>
+            <div class="animate__animated animate__slideInLeft">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
-            <div>
+            <div class="animate__animated animate__slideInRight">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" class="animate__animated animate__zoomIn">Login</button>
         </form>
     </div>
 
     <script>
+        // Simulate login process
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form submission
             var username = document.getElementById('username').value;
@@ -30,11 +200,15 @@
 
             // Check username and password
             if (username === 'sol' && password === 'sol12345') {
-                window.location.href = 'Home.html'; // Redirect to page1.html for user1
+                window.location.href = 'Home.html'; // Redirect to Home.html for user sol
             } else if (username === 'gil' && password === 'gil12345') {
-                window.location.href = 'HomeManger.html'; // Redirect to page2.html for user2
+                window.location.href = 'HomeManager.html'; // Redirect to HomeManager.html for user gil
             } else {
-                alert('Invalid username or password');
+                // Add shake effect for invalid input
+                document.querySelector('.container').classList.add('animate__animated', 'animate__shakeX');
+                setTimeout(() => {
+                    document.querySelector('.container').classList.remove('animate__animated', 'animate__shakeX');
+                }, 1000);
             }
         });
     </script>
