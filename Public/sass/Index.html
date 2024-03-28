@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Add your CSS stylesheets and JavaScript files here -->
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Check username and password
+            if (username === 'sol' && password === 'sol12345') {
+                window.location.href = 'Home.html'; // Redirect to page1.html for user1
+            } else if (username === 'gil' && password === 'gil12345') {
+                window.location.href = 'HomeManger.html'; // Redirect to page2.html for user2
+            } else {
+                alert('Invalid username or password');
+            }
+        });
+    </script>
+</body>
+</html>
