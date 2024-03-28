@@ -108,7 +108,7 @@
             width: 600px;
             height: 300px;
             max-width: 100%;
-            min-height: 400px;
+            min-height: 500px;
         }
 
         .form-container {
@@ -274,6 +274,33 @@
             align-self: flex-end; /* If using flexbox */
             justify-self: end; /* If using grid */
         }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Style for the input container */
+        .input-container {
+            position: relative;
+            margin-bottom: 15px; /* Adjust spacing as needed */
+        }
+
+        /* Style for the icon within the input container */
+        .input-container .icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px; /* Adjust as needed */
+            color: #aaa; /* Icon color */
+        }
+
+        /* Style for the input fields */
+        .input-container input {
+            padding-left: 30px; /* Add padding for the icon */
+        }
+        
     </style>
 </head>
 <body>
@@ -287,9 +314,23 @@
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your email for registration</span>
-                <input id="username" type="text" placeholder="Name" />
-                <input id="email" type="email" placeholder="Email" />
-                <input id="password" type="password" placeholder="Password" />
+                <div class="input-container">
+                    <!-- Username input with icon -->
+                    <input type="text" id="username" name="username" placeholder="Name" required>
+                    <i class="fa fa-user icon"></i>
+                </div>
+        
+                <!-- Email input with icon -->
+                <div class="input-container">
+                    <input id="email" type="email" placeholder="Email" required>
+                    <i class="fa fa-envelope icon"></i>
+                </div>
+        
+                <!-- Password input with icon -->
+                <div class="input-container">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <i class="fa fa-key icon"></i>
+                </div>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
@@ -302,8 +343,17 @@
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your account</span>
-                <input id="username" type="text" placeholder="Name" />
-                <input id="password" type="password" placeholder="Password" />
+                <div class="input-container">
+                    <!-- Username input with icon -->
+                    <input type="text" id="username" name="username" placeholder="Name" required>
+                    <i class="fa fa-user icon"></i>
+                </div>
+        
+                <!-- Password input with icon -->
+                <div class="input-container">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <i class="fa fa-key icon"></i>
+                </div>
                 <a href="#">Forgot your password?</a>
                 <button type="submit">Sign In</button>
             </form>
