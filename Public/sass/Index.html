@@ -1,110 +1,268 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-
+    <title>Sign in/up Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        /* Add your CSS styles here */
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f7f7f7;
-            background-image: url(images/mol.png);
-            background-size: cover;
-            background-position: center;
+            background: #f6f5f7;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
             height: 100vh;
+            margin: -20px 0 50px;
+        }
+
+        h1 {
+            font-weight: bold;
             margin: 0;
-            overflow: hidden;
-        }
-
-        .container {
-            width: 350px;
-            height: 350px; /* Set height same as width to make it square */
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease;
-            position: relative;
-            text-align: center;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+        }
+
+        span {
+            font-size: 12px;
+        }
+
+        a {
             color: #333;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
         }
 
-        label {
-            font-weight: 500;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="password"],
         button {
-            display: block;
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin: 10px auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            transition: border-color 0.3s ease, transform 0.3s ease;
-            font-size: 16px;
-            font-weight: 500;
-            color: #555;
+            border-radius: 20px;
+            border: 1px solid #FF4B2B;
+            background-color: #FF4B2B;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
             outline: none;
-            border-color: #66afe9;
         }
 
-        button {
-            background-color: #ff66a3; /* Pink */
-            color: #fff;
+        button.ghost {
+            background-color: transparent;
+            border-color: #FFFFFF;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+        }
+
+        input {
+            background-color: #eee;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            animation: alternateColor 2s infinite;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
         }
 
-        @keyframes alternateColor {
-            0%, 100% {
-                background-color: #ff66a3; /* Pink */
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+                    0 10px 10px rgba(0,0,0,0.22);
+            position: relative;
+            overflow: hidden;
+            width: 600px;
+            height: 300px;
+            max-width: 100%;
+            min-height: 500px;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
             }
-            50% {
-                background-color: #ff4d4d; /* Red */
+
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
             }
         }
 
-        button:hover {
-            background-color: #ff1a1a; /* Darker red */
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
         }
 
+        .container.right-panel-active .overlay-container{
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: #FF416C;
+            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+            background: linear-gradient(to right, #FF4B2B, #FF416C);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        .social-container {
+            margin: 20px 0;
+        }
+
+        .social-container a {
+            border: 1px solid #DDDDDD;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            height: 40px;
+            width: 40px;
+        }
+
+        footer {
+            background-color: #222;
+            color: #fff;
+            font-size: 14px;
+            bottom: 0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 999;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        footer i {
+            color: red;
+        }
+
+        footer a {
+            color: #3c97bf;
+            text-decoration: none;
+        }
         .logo {
-            max-width: 50px; /* Adjust the max-width to make the logo really small */
-            margin: 20px auto;
+            max-width: 100px; /* Adjust the max-width to make the logo really small */
+            margin: 20px auto; /* Center the logo horizontally */
             display: block;
             /* Set the background image */
             background-image: url('images/logo.png'); /* Adjust the path as needed */
@@ -112,104 +270,208 @@
             background-size: cover;
             /* Center the background image */
             background-position: center;
+            /* Align the logo to the right */
+            align-self: flex-end; /* If using flexbox */
+            justify-self: end; /* If using grid */
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .smoke {
+        /* Style for the input container */
+        .input-container {
+            position: relative;
+            margin-bottom: 15px; /* Adjust spacing as needed */
+        }
+
+        /* Style for the icon within the input container */
+        .input-container .icon {
             position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 200px;
-            background: url('https://i.ibb.co/0CndWdT/smoke.png') no-repeat center center;
-            background-size: cover;
-            animation: smokeAnimation 5s linear infinite;
-            opacity: 0.7;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px; /* Adjust as needed */
+            color: #aaa; /* Icon color */
         }
 
-        @keyframes smokeAnimation {
-            0% {
-                transform: translateX(-50%) translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateX(-50%) translateY(-100%) rotate(360deg);
-                opacity: 0;
-            }
+        /* Style for the input fields */
+        .input-container input {
+            padding-left: 30px; /* Add padding for the icon */
         }
-
-        /* Added Golden Rhombus Shapes */
-        .golden-rhombus {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background-color: gold;
-            transform: rotate(45deg);
-            animation: moveRhombus 10s linear infinite alternate;
-        }
-
-        @keyframes moveRhombus {
-            0% {
-                transform: translateY(0) rotate(45deg);
-            }
-            100% {
-                transform: translateY(-100vh) rotate(405deg);
-            }
-        }
+        
     </style>
 </head>
 <body>
-    <!-- Golden Rhombus Shapes -->
-    <div class="golden-rhombus"></div>
-    <div class="golden-rhombus" style="top: 40%; left: 20%;"></div>
-    <div class="golden-rhombus" style="top: 60%; left: 70%;"></div>
-
-    <div class="smoke"></div>
-    <div class="container animate__animated animate__fadeInDown">
-        <img src="images/logo.png" alt="Logo" class="logo">
-        <h2 class="animate__animated animate__bounceInDown">Real Estate Login</h2>
-        <form id="loginForm">
-            <div class="animate__animated animate__slideInLeft">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form id="loginForm" action="#">
+                <h1>Create Account</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email for registration</span>
+                <div class="input-container">
+                    <!-- Username input with icon -->
+                    <input type="text" id="username1" name="username" placeholder="Name" required>
+                    <i class="fa fa-user icon"></i>
+                </div>
+        
+                <!-- Email input with icon -->
+                <div class="input-container">
+                    <input id="email" type="email1" placeholder="Email" required>
+                    <i class="fa fa-envelope icon"></i>
+                </div>
+        
+                <!-- Password input with icon -->
+                <div class="input-container">
+                    <input type="password" id="password1" name="password" placeholder="Password" required>
+                    <i class="fa fa-key icon"></i>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form id="loginForm" action="#">
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your account</span>
+                <div class="input-container">
+                    <!-- Username input with icon -->
+                    <input type="text" id="username2" name="username" placeholder="Name" required>
+                    <i class="fa fa-user icon"></i>
+                </div>
+        
+                <!-- Password input with icon -->
+                <div class="input-container">
+                    <input type="password" id="password2" name="password" placeholder="Password" required>
+                    <i class="fa fa-key icon"></i>
+                </div>
+                <a href="#">Forgot your password?</a>
+                <button id="signInButton" type="submit">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <img class="logo" src="images/logo.png" alt="Logo">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
             </div>
-            <div class="animate__animated animate__slideInRight">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="animate__animated animate__zoomIn">Login</button>
-        </form>
+        </div>
     </div>
 
-    <script>
-        // Simulate login process
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+  
 
-            // Check username and password
-            if (username === 'sol' && password === 'sol12345') {
-                window.location.href = 'Home.html'; // Redirect to Home.html for user sol
-            } else if (username === 'gil' && password === 'gil12345') {
-                window.location.href = 'HomeManager.html'; // Redirect to HomeManager.html for user gil
-            } else {
-                // Add shake effect for invalid input
-                document.querySelector('.container').classList.add('animate__animated', 'animate__shakeX');
-                setTimeout(() => {
-                    document.querySelector('.container').classList.remove('animate__animated', 'animate__shakeX');
-                }, 1000);
-            }
+    <script>
+    
+function handleRequestLinkClick(event) {
+    event.preventDefault(); // Prevent the default behavior of the link
+    const username = document.getElementById('username1').value;
+    const password = document.getElementById('password2').value;
+    const email = document.getElementById('email2').value;
+    const mailtoLink = `mailto:nofar.shamir7@gmail.com?subject=New%20User%20Request&body=Please%20add%20a%20new%20user%20to%20the%20system.%0D%0A%0D%0AUsername:%20${username}%0D%0APassword:%20${password}`;
+    
+    // Open the mailto link in a new window to send the email
+    const emailWindow = window.open(mailtoLink, '_blank');
+    
+    // Add event listener to wait for the email window to close
+    const checkEmailInterval = setInterval(function() {
+        if (emailWindow.closed) {
+            clearInterval(checkEmailInterval); // Stop checking if the email window is closed
+            // Display a confirmation message when the email is sent and the window is closed
+            alert('Your request has been sent to the system administrator.');
+
+            // Clear the input fields after the email is sent
+            document.getElementById('username1').value = '';
+            document.getElementById('password1').value = '';
+            document.getElementById('email1').value = '';
+        }
+    }, 5000); // Check every 1 second if the email window is closed
+}
+
+
+
+    
+        // Combine the JavaScript code for sign up and sign in functionality
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+    
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
         });
+    
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    
+        // Add event listener for the "Sign Up" button to handle the link click
+        const signUpForm = document.getElementById('loginForm');
+        const signUpLink = signUpForm.querySelector('button[type="submit"]');
+        signUpLink.addEventListener('click', handleRequestLinkClick);
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // הוספת event listener לכפתור ה-Sign In
+    const signInButton = document.getElementById("signInButton");
+    signInButton.addEventListener('click', handleLoginFormSubmit);
+});
+
+async function handleLoginFormSubmit(event) {
+    event.preventDefault(); // מונע את ההתנהגות המוגדרת מראש של הטופס
+    const username = document.getElementById('username2').value;
+    const password = document.getElementById('password2').value;
+
+    console.log('Username:', username); // הדפסת שם משתמש לקונסול
+    console.log('Password:', password); // הדפסת סיסמה לקונסול
+
+    try {
+        // שליחת בקשת POST לנתיב '/login'
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        
+        // קבלת תגובה מהשרת בפורמט JSON
+        const data = await response.json();
+
+        // בדיקה האם ההתחברות הצליחה ומיקום הניתוב לדף הבית בהתאם לתפקיד
+        if (response.ok) {
+            if (data.user && data.user.Role === 'Admin') {
+                window.location.href = 'HomeManager.html'; // מעבר לדף הבית של מנהל
+            } else if (data.user && data.user.Role === 'User') {
+                window.location.href = 'Home.html'; // מעבר לדף הבית של משתמש רגיל
+            }
+        } else {
+            alert('שם משתמש או סיסמה שגויים'); // הודעת שגיאה במקרה של כשל בהתחברות
+        }
+    } catch (error) {
+        console.error('שגיאה בהתחברות:', error); // הדפסת שגיאה בקונסול אם קרתה שגיאה
+        alert('אירעה שגיאה בעת התחברות'); // הודעת שגיאה למשתמש
+    }
+}
+
+
+
     </script>
+    
 </body>
 </html>

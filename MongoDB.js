@@ -23,24 +23,20 @@ async function run() {
   }
 }
 
-//Login Function
-async function login(username, password) {
-  try {
-    const database = client.db('Practicum'); // Use the existing client instance
-    const collection = database.collection('Users');
-    const user = await collection.findOne({ UserName: username, Password: password });
+run();
 
-    if (user) {
-      if (user.Role === 'Admin') {
-        console.log('Admin logged in');
-        return 1;
-      } else if (user.Role === 'User') {
-        console.log('User logged in');
-        return 2;
-      }
+
+//Login Function
+const loginUser = async (username, password) => {
+  try {
+    const database = client.db('Practicum');
+    const collection = database.collection('Users');
+    const user = await collection.findOne({ UserName: username });
+
+    if (user && user.Password === password) {
+      return { message: 'Login successful!', user };
     } else {
-      console.log('User not found');
-      return null;
+      throw new Error('Invalid username or password');
     }
   } catch (error) {
     console.error('Error:', error);
@@ -117,6 +113,6 @@ async function getAllAssets() {
 
 // Call the run function to connect to the MongoDB instance
 
-module.exports = { run, login, getAllAssets, filterAssets};
+module.exports = { run,loginUser , getAllAssets, filterAssets};
 
 
