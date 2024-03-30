@@ -382,8 +382,8 @@
 function handleRequestLinkClick(event) {
     event.preventDefault(); // Prevent the default behavior of the link
     const username = document.getElementById('username1').value;
-    const password = document.getElementById('password2').value;
-    const email = document.getElementById('email2').value;
+    const password = document.getElementById('password1').value;
+    const email = document.getElementById('email1').value;
     const mailtoLink = `mailto:nofar.shamir7@gmail.com?subject=New%20User%20Request&body=Please%20add%20a%20new%20user%20to%20the%20system.%0D%0A%0D%0AUsername:%20${username}%0D%0APassword:%20${password}`;
     
     // Open the mailto link in a new window to send the email
