@@ -461,11 +461,11 @@ async function handleLoginFormSubmit(event) {
                 window.location.href = 'Home.html'; // מעבר לדף הבית של משתמש רגיל
             }
         } else {
-            alert('שם משתמש או סיסמה שגויים'); // הודעת שגיאה במקרה של כשל בהתחברות
+            alert('Invalid username or password'); // הודעת שגיאה במקרה של כשל בהתחברות
         }
     } catch (error) {
-        console.error('שגיאה בהתחברות:', error); // הדפסת שגיאה בקונסול אם קרתה שגיאה
-        alert('אירעה שגיאה בעת התחברות'); // הודעת שגיאה למשתמש
+        console.error('Error logging in:', error); // הדפסת שגיאה בקונסול אם קרתה שגיאה
+        alert('An error occurred while logging in'); // הודעת שגיאה למשתמש
     }
 }
 
