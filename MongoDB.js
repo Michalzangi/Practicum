@@ -2,10 +2,8 @@ const { MongoClient } = require('mongodb');
 
 const uri = "mongodb+srv://barsiboni:OeTrMMWzNa9cb31W@practicumdatabase.shts5lo.mongodb.net/?retryWrites=true&w=majority&appName=PracticumDatabase";
 
-// Create a MongoClient instance with options for ServerApiVersion
+// Create a MongoClient instance
 const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   serverApi: {
     version: '1'
   }
@@ -25,9 +23,7 @@ async function run() {
   }
 }
 
-run();
-
-
+//Login Function
 async function login(username, password) {
   try {
     const database = client.db('Practicum'); // Use the existing client instance
@@ -52,7 +48,75 @@ async function login(username, password) {
   }
 }
 
+//FilterAssets
+
+const filterAssets = async (AssetType, AssetPrice, AssetStreet, AssetStreetNumber, RoomNum) => {
+  const client = new MongoClient(uri);
+
+  try {
+    console.log('Connecting to the database...');
+    await client.connect();
+    console.log('Connected to the database.');
+
+    const database = client.db('Practicum');
+    const collection = database.collection('Assets');
+
+    const filter = {};
+    if (AssetType) filter.AssetType = AssetType;
+    if (AssetPrice) filter.AssetPrice = AssetPrice;
+    if (AssetStreet) filter.AssetStreet = AssetStreet;
+    if (AssetStreetNumber) filter.AssetStreetNumber = AssetStreetNumber;
+    if (RoomNum) filter.RoomNum = RoomNum;
+
+    console.log('Filter:', filter);
+    const projection = { "AssetID": 0 }; // Exclude AssetID and AssetImage fields
+    const result = await collection.find(filter, { projection }).toArray();
+    console.log('Filtered Assets:', result);
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch filtered assets.');
+  } finally {
+    await client.close();
+    console.log('Database connection closed.');
+  }
+}
+
+async function getAllAssets() {
+  const client = new MongoClient(uri);
+
+  try {
+      // Connect to the MongoDB server
+      console.log('Connecting to the database...');
+      await client.connect();
+      console.log('Connected to the database.');
+
+      // Access the database and collection
+      const database = client.db('Practicum');
+      const collection = database.collection('Assets');
+
+      // Projection to exclude the AssetImage field
+      const projection = { "AssetID": 0 };
+      // Find all documents in the collection, excluding AssetImage
+      const assets = await collection.find({}, { projection }).toArray();
+      console.log(assets);
+      return assets;
+  } catch (error) {
+      console.error(error);
+      throw new Error('Failed to fetch all assets.');
+  } finally {
+      // Close the MongoDB connection
+      await client.close();
+  }
+}
 
 
 
-module.exports = { run, login };
+
+
+// Call the run function to connect to the MongoDB instance
+
+module.exports = { run, login, getAllAssets, filterAssets};
+
+
