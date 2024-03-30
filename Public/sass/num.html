@@ -337,12 +337,11 @@
     <script>
         // Add your JavaScript code here
         // Simulate login process
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
+        document.getElementById('signInForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form submission
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
 
-            // Check username and password
             if (username === 'sol' && password === 'sol12345') {
                 window.location.href = 'Home.html'; // Redirect to Home.html for user sol
             } else if (username === 'gil' && password === 'gil12345') {
@@ -356,18 +355,31 @@
             }
         });
 
-        // Combine the JavaScript code for sign up and sign in functionality
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
 
-        signUpButton.addEventListener('click', () => {
-            container.classList.add("right-panel-active");
-        });
+        document.getElementById('signUpForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    var username = document.getElementById('username').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
 
-        signInButton.addEventListener('click', () => {
-            container.classList.remove("right-panel-active");
-        });
+    // Here you can implement your sign-up logic
+    // For demonstration purposes, let's just log the input values
+    console.log('Username:', username);
+    console.log('Email:', email);
+    console.log('Password:', password);
+});
+
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+    container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+    container.classList.remove("right-panel-active");
+});
     </script>
 </body>
 </html>
