@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
-const path = require('path');
 const port = 4000;
 const {loginUser}= require('./MongoDB')
-// Serve static files from the 'Public\sass' directory
-app.use(express.static(path.join(__dirname, 'Public', 'sass')));
+// Serve static files from the 'Public\sass' directoryapp.use(express.static('public'));
+app.use(express.static('public'));
 app.use(express.json()); 
 // Define a route handler for the root URL
 app.get('/', (req, res) => {
