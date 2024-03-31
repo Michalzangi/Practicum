@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets}= require('./MongoDB')
+const {loginUser, filterAssets,getFeedback}= require('./MongoDB')
 // Serve static files from the 'Public\sass' directoryapp.use(express.static('public'));
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -38,6 +38,10 @@ app.get('/CustomerAssets', async (req, res) => {
   }
 });
 
+app.get('/feedback', async (req, res) => {
+  const feedback = await getFeedback();
+  res.json(feedback);
+});
 
 
 

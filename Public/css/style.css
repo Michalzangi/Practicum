@@ -1383,3 +1383,40 @@ div.cs-select span {
   background: url(../images/hourglass.svg) center no-repeat #222222; }
 
 /*# sourceMappingURL=style.css.map */
+
+/* עיצוב חדש עבור התצוגה של התגים והנתונים */
+.feedback-card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-family: 'Calibri' ;
+    
+}
+
+
+
+.feedback-card p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #666;
+    font-family: 'Calibri'  ;
+}
+.feedback-card h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #e7169d;
+  font-family: 'Calibri'  ;
+}
+
+
+
+.feedback-item {
+  width: calc(100% / 3); /* כל פידבק בגודל של כשליש */
+  padding: 10px;
+  box-sizing: border-box;
+  display: inline-block; /* תצוגה כבלוקים סמוכים */
+  vertical-align: top; /* אלימות למעלה */
+  margin-bottom: 20px; /* מרווח בין הפידבקים */
+}

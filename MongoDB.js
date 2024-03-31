@@ -119,11 +119,38 @@ async function getAllAssets() {
 }
 
 
+const getFeedback = async () => {
+  let client; // Define the client variable
+
+  try {
+    // Connect to MongoDB
+    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+
+    // Access the database and collection
+    const database = client.db('Practicum');
+    const collection = database.collection('Feedback');
+
+    // Find all documents in the collection
+    const feedbacks = await collection.find().toArray();
+    console.log('Feedbacks:', feedbacks);
+    return feedbacks;
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw new Error('Failed to fetch feedback data');
+  } finally {
+    // Close the MongoDB connection
+    if (client) {
+      await client.close();
+      console.log('Connection to MongoDB closed');
+    }
+  }
+};
 
 
 
 // Call the run function to connect to the MongoDB instance
 
-module.exports = { run,loginUser , getAllAssets, filterAssets};
+module.exports = { run,loginUser , getAllAssets, filterAssets,getFeedback};
 
 
