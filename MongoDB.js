@@ -46,7 +46,7 @@ const loginUser = async (username, password) => {
 
 //FilterAssets
 
-const filterAssets = async (AssetType, AssetPrice, AssetStreet, AssetStreetNumber, RoomNum) => {
+const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet, AssetStreetNumber, RoomNum) => {
   const client = new MongoClient(uri);
 
   try {
@@ -59,7 +59,16 @@ const filterAssets = async (AssetType, AssetPrice, AssetStreet, AssetStreetNumbe
 
     const filter = {};
     if (AssetType) filter.AssetType = AssetType;
-    if (AssetPrice) filter.AssetPrice = AssetPrice;
+    if (AssetPriceMin || AssetPriceMax) {
+      // Convert string inputs to numeric values
+      const minPrice = AssetPriceMin ? parseInt(AssetPriceMin, 10) : undefined;
+      const maxPrice = AssetPriceMax ? parseInt(AssetPriceMax, 10) : undefined;
+
+      // Construct a price range filter
+      filter.AssetPrice = {};
+      if (minPrice !== undefined) filter.AssetPrice.$gte = minPrice;
+      if (maxPrice !== undefined) filter.AssetPrice.$lte = maxPrice;
+    }
     if (AssetStreet) filter.AssetStreet = AssetStreet;
     if (AssetStreetNumber) filter.AssetStreetNumber = AssetStreetNumber;
     if (RoomNum) filter.RoomNum = RoomNum;
@@ -78,6 +87,8 @@ const filterAssets = async (AssetType, AssetPrice, AssetStreet, AssetStreetNumbe
     console.log('Database connection closed.');
   }
 }
+
+
 
 async function getAllAssets() {
   const client = new MongoClient(uri);
