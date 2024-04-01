@@ -189,7 +189,6 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
   }
 }
 
-<<<<<<< HEAD
 //Add New Feedback
 
 const addFeedback = async (feedbackData) => {
@@ -214,8 +213,6 @@ const addFeedback = async (feedbackData) => {
 
 
 
-=======
->>>>>>> db1eb9b68e9c8373ca5186547ae813eec2ba5e7b
 // Call the run function to connect to the MongoDB instance
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback};
