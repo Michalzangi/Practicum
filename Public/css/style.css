@@ -1420,3 +1420,82 @@ div.cs-select span {
   vertical-align: top; /* אלימות למעלה */
   margin-bottom: 20px; /* מרווח בין הפידבקים */
 }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    background-color: #f8f8f8;
+}
+.form-group {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+#sub {
+    display: block;
+    margin: 0 auto;
+    padding: 15px;
+    width: fit-content; 
+}
+.center-rating {
+  display: flex;
+  margin: 0px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;       
+}
+
+.rating-stars {
+  display: flex;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  font-size: 24px;
+}
+
+rating-stars input[type="radio"] {
+  display: none;
+}
+  
+.rating-stars label {
+  width: 40px; 
+  height: 40px; 
+  font-size: 50px; 
+  line-height: 100px;
+  text-align: center; 
+  cursor: pointer;
+  transition: color 0.3s; 
+  border: none; 
+  background: none;
+}
+  
+.rating-stars label::before {
+  content: '\2605'; 
+  color: rgb(231, 81, 116); 
+}
+  
+.rating-stars input[type="radio"]:checked + label::before {
+  color: gold; 
+}
+    
+.rating-stars input {
+  display: none;
+}
+    
+.rating-stars label {
+  display: inline-block;
+  margin-right: 5px;
+  cursor: pointer;
+  width: 40px;
+  text-align: center;
+}
+    
+.rating-stars label:before {
+  content: "\2605";
+}
+    
+.rating-stars input:checked ~ label:before {
+  color: gold;
+}

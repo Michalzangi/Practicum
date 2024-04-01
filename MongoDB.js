@@ -89,7 +89,7 @@ const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet
 }
 
 
-
+//All Assets
 async function getAllAssets() {
   const client = new MongoClient(uri);
 
@@ -119,6 +119,7 @@ async function getAllAssets() {
 }
 
 
+//Show All Feedback
 const getFeedback = async () => {
   let client; // Define the client variable
 
@@ -147,6 +148,8 @@ const getFeedback = async () => {
   }
 };
 
+
+//Add New Asset
 const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {
   let client; // Define the client variable
 
@@ -183,9 +186,32 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
   }
 }
 
+//Add New Feedback
+
+const addFeedback = async (feedbackData) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  
+  try {
+    await client.connect();
+    const database = client.db('Practicum');
+    const collection = database.collection('Feedback');
+    const result = await collection.insertOne(feedbackData);
+    
+    console.log('Feedback added successfully!');
+    console.log('Received feedback data:', feedbackData);
+    return result;
+  } catch (error) {
+    console.error('Error adding feedback:', error);
+    throw new Error('Failed to add feedback');
+  } finally {
+    await client.close();
+  }
+};
+
+
 
 // Call the run function to connect to the MongoDB instance
 
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty};
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback};
 
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback, addProperty}= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback, addProperty,addFeedback}= require('./MongoDB')
 // Serve static files from the 'Public\sass' directoryapp.use(express.static('public'));
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -53,6 +53,19 @@ app.post('/addProperty', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+app.post('/addFeedback', async (req, res) => {
+  const feedbackData = req.body; // הנתונים שנשלחו מהטופס בצד הלקוח
+
+  try {
+    await addFeedback(feedbackData); // הוספת הפידבק למסד הנתונים
+    res.status(201).json({ message: 'Feedback added successfully!' });
+  } catch (error) {
+    console.error('Error adding feedback to database:', error);
+    res.status(500).json({ error: 'Failed to add feedback to the database' });
+  }
+});
+
 
 
 // Start the server
