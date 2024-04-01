@@ -159,10 +159,13 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
     const database = client.db('Practicum');
     const collection = database.collection('Assets');
 
+    // Parse assetPrice to an integer
+    const price = parseInt(assetPrice);
+
     // Insert the property document into the collection
     const result = await collection.insertOne({
       AssetType: assetType,
-      AssetPrice: assetPrice,
+      AssetPrice: price, // Use the parsed integer value
       AssetStreet: assetStreet,
       AssetStreetNumber: assetStreetNumber,
       RoomNum: roomNum,
@@ -179,10 +182,9 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
-    }
-  }
+    }
+  }
 }
-
 
 // Call the run function to connect to the MongoDB instance
 
