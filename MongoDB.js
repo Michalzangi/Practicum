@@ -147,10 +147,45 @@ const getFeedback = async () => {
   }
 };
 
+const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {
+  let client; // Define the client variable
+
+  try {
+    // Connect to MongoDB
+    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+
+    // Access the database and collection
+    const database = client.db('Practicum');
+    const collection = database.collection('Assets');
+
+    // Insert the property document into the collection
+    const result = await collection.insertOne({
+      AssetType: assetType,
+      AssetPrice: assetPrice,
+      AssetStreet: assetStreet,
+      AssetStreetNumber: assetStreetNumber,
+      RoomNum: roomNum,
+      AssetImage: assetImage
+    });
+
+    console.log('Property added successfully');
+    return result.insertedId;
+  } catch (error) {
+    console.error('Error adding property:', error);
+    throw new Error('Failed to add property');
+  } finally {
+    // Close the MongoDB connection
+    if (client) {
+      await client.close();
+      console.log('Connection to MongoDB closed');
+    }
+  }
+}
 
 
 // Call the run function to connect to the MongoDB instance
 
-module.exports = { run,loginUser , getAllAssets, filterAssets,getFeedback};
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty};
 
 

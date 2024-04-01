@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets,getFeedback}= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback, addProperty}= require('./MongoDB')
 // Serve static files from the 'Public\sass' directoryapp.use(express.static('public'));
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -43,6 +43,16 @@ app.get('/feedback', async (req, res) => {
   res.json(feedback);
 });
 
+app.post('/addProperty', async (req, res) => {
+  const { assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage } = req.body;
+
+  try {
+    const propertyId = await addProperty(assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage);
+    res.status(201).json({ message: 'Property added successfully', propertyId });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 // Start the server
