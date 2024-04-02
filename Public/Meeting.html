@@ -65,23 +65,21 @@
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<ul class="sf-menu" id="fh5co-primary-menu">
-								<li><a href="Home.html">Home</a></li>
-								<li>
-									<a href="Assets.html" class="fh5co-sub-ddown">Assets</a>
-									<ul class="fh5co-sub-menu">
-										<li><a href="#">New</a></li>
-										<li><a href="#">Discount</a></li>
-										<li><a href="#">Sale</a></li>
-										<li><a href="#">Rent</a></li>
-										<li><a href="#">All</a></li>
-									</ul>
-								</li>
-								<li><a href="agent.html">Agent</a></li>
-								<a href="Meeting.html" class="fh5co-sub-ddown">Meeting</a>
-								<li><a href="blog.html">Blog</a></li>
-								<li class="active"><a href="contact.html">Contact</a></li>
-							</ul>
+							<li><a href="Home.html">Home</a></li>
+							<li>
+								<a href="Assets.html" class="fh5co-sub-ddown">Assets</a>
+								<ul class="fh5co-sub-menu">
+									<li><a href="#">New</a></li>
+									<li><a href="#">Discount</a></li>
+									<li><a href="#">Sale</a></li>
+									<li><a href="#">Rent</a></li>
+									<li><a href="#">All</a></li>
+								</ul>
+							</li>
+							<li><a href="agent.html">Agent</a></li>
+							<li class="active"><a href="Meeting.html">Meeting</a></li>
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -122,8 +120,7 @@
             </div>
 			
 			<div class="container">
-                    <!-- Property Information Form -->
-					<form id="meetingForm" action="/addMeeting" method="POST">
+                    <form id="meetingForm" action="/addMeeting" method="POST">
 						<div class="form-group">
 							<label for="customerID">Customer ID:</label>
 							<input type="text" class="form-control" id="customerID" name="customerID" required>
@@ -145,8 +142,9 @@
 							Meeting added successfully!
 						</div>
 					</form>
-			</div>
-		</div>					
+					
+                </div>
+            </div>
 			
 
 
@@ -220,7 +218,7 @@
 
 	<!-- jQuery -->
     <script>
-       document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
     var form = document.getElementById("meetingForm"); // קישור לטופס הפגישה ב-HTML
     form.addEventListener("submit", function(event) {
         event.preventDefault(); // מניעת השליחה הרגילה של הטופס
