@@ -1413,7 +1413,7 @@ div.cs-select span {
 
 
 .feedback-item {
-  width: calc(100% / 3); /* כל פידבק בגודל של כשליש */
+  width: calc(33.33% - 20px);  /* כל פידבק בגודל של כשליש */
   padding: 10px;
   box-sizing: border-box;
   display: inline-block; /* תצוגה כבלוקים סמוכים */

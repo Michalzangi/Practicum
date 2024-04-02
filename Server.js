@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback, addProperty,addFeedback}= require('./MongoDB')
-// Serve static files from the 'Public\sass' directoryapp.use(express.static('public'));
+
 app.use(express.static('public'));
 app.use(express.json()); 
+const nodemailer = require('nodemailer');
 // Define a route handler for the root URL
 app.get('/', (req, res) => {
   // You can optionally handle requests to the root URL separately here
@@ -63,6 +64,43 @@ app.post('/addFeedback', async (req, res) => {
   } catch (error) {
     console.error('Error adding feedback to database:', error);
     res.status(500).json({ error: 'Failed to add feedback to the database' });
+  }
+});
+
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail', 
+  auth: {
+      user: 'nofar.shamir7@gmail.com', 
+      pass: 'shebnouqreidnctk' 
+  }
+});
+
+app.post('/submitMessage', async (req, res) => {
+  const formData = req.body;
+
+  try {
+      const emailContent = `
+          Name: ${formData.Name}
+          Email: ${formData.Email}
+          Message: ${formData.Message}
+      `;
+
+      const mailOptions = {
+          from: 'nofar.shamir7@gmail.com', 
+          to: 'nofar.shamir7@gmail.com', 
+          subject: 'New Message Received',
+          text: emailContent
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      console.log('message email sent successfully'); 
+
+      res.json({ message: 'message submitted successfully!' });
+  } catch (error) {
+      console.error('Error sending message email:', error);
+      res.status(500).json({ error: 'Failed to send message email' });
   }
 });
 

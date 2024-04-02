@@ -101,7 +101,7 @@
 				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
 			   				<div class="slider-text-inner">
 		   						<h2 class="heading-title">Contact Us</h2>
-		   						<p class="fh5co-lead">Coming Soon <i class="icon-heart3"></i> By Queen Michal Zangi </p>
+		   						<p class="fh5co-lead">Coming Soon <i class="icon-heart3"></i> </p>
 			   				</div>
 			   			</div>
 				   		</div>
@@ -116,17 +116,16 @@
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
 						<h3>Contact Information</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						<p>For any problem on the website or our customer service send us an email</p>
 					</div>
 				</div>
 				<form action="#">
 					<div class="row animate-box">
 						<div class="col-md-6">
-							<h3 class="section-title">Our Address</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+							<h3 class="section-title">Our Address:</h3>
 							<ul class="contact-info">
-								<li><i class="icon-location-pin"></i>198 West 21th Street, Suite 721 New York NY 10016</li>
-								<li><i class="icon-phone2"></i>+ 1235 2355 98</li>
+								<li><i class="icon-location-pin"></i> 4 Heh Beiyar St., Tel Aviv</li>
+								<li><i class="icon-phone2"></i>03-5333307</li>
 								<li><i class="icon-mail"></i><a href="#">info@yoursite.com</a></li>
 								<li><i class="icon-globe2"></i><a href="#">www.yoursite.com</a></li>
 							</ul>
@@ -135,22 +134,22 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Name">
+										<input type="text" class="form-control" id="Name" placeholder="Name">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Email">
+										<input type="text" class="form-control" id="Email" placeholder="Email">
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<textarea name="" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
+										<textarea name="" class="form-control" id="Message" cols="30" rows="7" placeholder="Message"></textarea>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<input type="submit" value="Send Message" class="btn btn-primary">
+										<button class="btn btn-primary" type="button" onclick="submitMessage()">Send Message</button>
 									</div>
 								</div>
 							</div>
@@ -229,7 +228,48 @@
 	<!-- END fh5co-wrapper -->
 
 	<!-- jQuery -->
+<script>
+	async function submitMessage() {
+    const Name = document.getElementById('Name').value;
+    const Email = document.getElementById('Email').value;
+    const Message = document.getElementById('Message').value;
 
+    const formData = {
+        Name: Name,
+        Email: Email,
+        Message: Message
+    };
+
+    fetch('/submitMessage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error('Error submitting message:', data.error);
+            alert('An error occurred while submitting message.');
+
+        } else {
+            console.log('message submitted successfully:', data.message);
+            alert(data.message);
+            
+            document.getElementById('Name').value = '';
+            document.getElementById('Email').value = '';
+            document.getElementById('Message').value = '';
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting message:', error);
+        alert('An error occurred while submitting message.');
+    });
+}
+
+
+</script>
 
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
