@@ -51,16 +51,12 @@
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
+
 
 	</head>
 	<body>
 		<div id="fh5co-wrapper">
 		<div id="fh5co-page">
-
 		<header id="fh5co-header-section" class="sticky-banner">
 			<div class="container">
 				<div class="nav-header">
@@ -69,28 +65,30 @@
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a href="HomeManager.html">Home</a></li>
-							<li>
-								<a href="AssetsManager.html" class="fh5co-sub-ddown">Assets</a>
-								<ul class="fh5co-sub-menu">
-									<li><a href="#">New</a></li>
-									<li><a href="#">Discount</a></li>
-									<li><a href="#">Sale</a></li>
-									<li><a href="#">Rent</a></li>
-									<li><a href="#">All</a></li>
-								</ul>
-							</li>
-                            <li><a href="agent.html">Agent</a></li>
-							<li><a href="Meeting.html">Meeting</a></li>
-							<li class="active"><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<ul class="sf-menu" id="fh5co-primary-menu">
+								<li><a href="Home.html">Home</a></li>
+								<li>
+									<a href="Assets.html" class="fh5co-sub-ddown">Assets</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="#">New</a></li>
+										<li><a href="#">Discount</a></li>
+										<li><a href="#">Sale</a></li>
+										<li><a href="#">Rent</a></li>
+										<li><a href="#">All</a></li>
+									</ul>
+								</li>
+								<li><a href="agent.html">Agent</a></li>
+								<a href="Meeting.html" class="fh5co-sub-ddown">Meeting</a>
+								<li><a href="blog.html">Blog</a></li>
+								<li class="active"><a href="contact.html">Contact</a></li>
+							</ul>
 						</ul>
 					</nav>
 				</div>
 			</div>
 		</header>
 
-		<!-- end:header-top -->
+
 
 		<aside id="fh5co-hero" class="js-fullheight">
 			<div class="flexslider js-fullheight">
@@ -101,7 +99,7 @@
 			   			<div class="row">
 				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
 			   				<div class="slider-text-inner">
-		   						<h2 class="heading-title">Our Blog</h2>
+		   						<h2 class="heading-title">Meeting</h2>
 		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
 			   				</div>
 			   			</div>
@@ -115,91 +113,43 @@
 		
 
 		<div id="fh5co-blog-section" class="fh5co-section-gray">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-						<h3>Our Blog</h3>
-					</div>
-				</div>
-			</div>
-			
-			<div class="container">
-				<div class="container" id="feedbackListContainer">
-					<div class="row row-bottom-padded-md">
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="fh5co-blog animate-box">
-
-								
-						<div class="row row-bottom-padded-md" id="feedbackList">
-									<!-- Feedback items will be dynamically added here -->
-						</div>
-								
-						</div>
-						<div class="clearfix visible-sm-block"></div>
-						<div class="clearfix visible-sm-block"></div>
-						<div class="clearfix visible-md-block"></div>
-					</div>
-				</div>
-			</div>
-				</div>	</div>
-			</div>
-		</div>
-
-		<div id="fh5co-blog-section" class="fh5co-section-gray">
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                        <h3>Add New Feedback</h3>
+                        <h3>Add New Meeting</h3>
                     </div>
                 </div>
             </div>
 			
 			<div class="container">
                     <!-- Property Information Form -->
-                    <form id="feedbackForm" method="POST" action="/addFeedback">
-                        <div class="form-group">
-								<label for="Name">Name:</label>
-								<input type="text" class="form-control" id="Name" name="Name" required>
+					<form id="meetingForm" action="/addMeeting" method="POST">
+						<div class="form-group">
+							<label for="customerID">Customer ID:</label>
+							<input type="text" class="form-control" id="customerID" name="customerID" required>
 						</div>
 						<div class="form-group">
-								<label for="Date">Date:</label>
-								<input type="date" class="form-control" id="Date" name="Date" required>
+							<label for="date">Date:</label>
+							<input type="date" class="form-control" id="date" name="date" required>
 						</div>
 						<div class="form-group">
-								<label for="FeedbackDesc">FeedbackDesc:</label>
-								<textarea  type="text" class="form-control" id="FeedbackDesc" name="FeedbackDesc" required>
-						</textarea>
-							<div class="form-group">
-								<label for="star5"><span>Rating:</span></label>
-								<div class="center-rating">
-									<div class="rating-stars">
-										<input type="radio" name="rating" id="star5" value="5">
-										<label for="star5"></label>
-										<input type="radio" name="rating" id="star4" value="4">
-										<label for="star4"></label>
-										<input type="radio" name="rating" id="star3" value="3">
-										<label for="star3"></label>
-										<input type="radio" name="rating" id="star2" value="2">
-										<label for="star2"></label>
-										<input type="radio" name="rating" id="star1" value="1">
-										<label for="star1"></label>
-									</div>
-								</div>
-							</div>
-							
-								<br><br><br><br><br>
+							<label for="time">Time:</label>
+							<input type="time" class="form-control" id="time" name="time" required>
 						</div>
-						<button type="submit" class="btn btn-primary" id="sub">Submit </button>
-           				 <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
-                			Feedback submitted successfully!
+						<div class="form-group">
+							<label for="location">Location:</label>
+							<input type="text" class="form-control" id="location" name="location" required>
+						</div> <br>
+						<button type="submit" class="btn btn-primary" id="sub">Submit</button>
+						<div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
+							Meeting added successfully!
 						</div>
-						</div>
-						
-                </div>
-            </div>
+					</form>
+			</div>
+		</div>					
 			
-			
-		<!-- fh5co-blog-section -->
+
+
 
 		<footer>
 			<div id="footer">
@@ -207,7 +157,7 @@
 					<div class="row row-bottom-padded-md">
 						<div class="col-md-3">
 							<h3 class="section-title">About Us</h3>
-							<p>We, Bar Michal and Nofer, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
+							<p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
 						</div>
 						
 						<div class="col-md-3 col-md-push-1">
@@ -269,86 +219,43 @@
 	<!-- END fh5co-wrapper -->
 
 	<!-- jQuery -->
-
-<script>
-	   document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch('/feedback');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch feedback data');
-                }
-                const data = await response.json();
-
-                const feedbackList = document.getElementById('feedbackList');
-                if (!feedbackList) {
-                    throw new Error('Element with ID "feedbackList" not found');
-                }
-
-                feedbackList.innerHTML = '';
-
-                data.forEach((feedback) => {
-                    const card = document.createElement('div');
-                    card.classList.add('feedback-card');
-
-					card.innerHTML = `
-						<h2 <i class="icon-bubble2"> <i class="comment"> ${feedback.Name}</h2>
-                        <p>Date: ${feedback.Date}</p>
-                        <p>${feedback.FeedbackDesc}</p>
-                        <p>Rating: ${feedback.rating} stars</p>
-                    `; 
-
-                    feedbackList.appendChild(card);
-                });
-				
-            } catch (error) {
-                console.error('Error fetching feedback:', error.message);
-            }
-        });
-
-
-
-	document.addEventListener("DOMContentLoaded", function () {
-    var form = document.getElementById("feedbackForm");
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        var formData = new FormData(form);
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("meetingForm"); // קישור לטופס הפגישה ב-HTML
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // מניעת השליחה הרגילה של הטופס
+        var formData = new FormData(form); // יצירת אובייקט FormData מהטופס
         var data = {};
-        formData.forEach(function (value, key) {
-            data[key] = value;
+        formData.forEach(function(value, key) {
+            data[key] = value; // המרת הנתונים לפורמט JSON
         });
 
-        // הוספת בדיקה לדירוג
-        if (!data.rating) {
-            alert("Please select a rating before submitting.");
-            return;
-        }
-
-        // Fetch feedback data
-        fetch("/addFeedback", {
+        fetch("/addMeeting", { // שליחת בקשת POST לנתיב /addMeeting
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(data) // שליחת הנתונים בפורמט JSON
         })
-        .then(function (response) {
-            if (response.ok) {
-                // Display success message and reset form
-                document.getElementById("successMessage").style.display = "block";
-                form.reset();
+        .then(function(response) {
+            if (response.ok) { // בדיקה אם הבקשה הושלמה בהצלחה
+                document.getElementById("successMessage").style.display = "block"; // הצגת הודעת הצלחה
+                console.log("Meeting added successfully"); // הדפסת הודעת הצלחה בקונסול
+                setTimeout(function() {
+                    location.reload(); // רענון הדף לאחר טעינה מחדש
+                }, 3000); // רענון לאחר 3 שניות
             } else {
-                console.error("Failed to add feedback");
+                console.error("Failed to add meeting"); // הדפסת הודעת שגיאה בקונסול
             }
         })
-        .catch(function (error) {
-            console.error("Error:", error);
+        .catch(function(error) {
+            console.error("Error:", error); // הדפסת שגיאות בקונסול
         });
     });
 });
 
+    </script>
 
-
-</script>
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>

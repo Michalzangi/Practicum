@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback, addProperty,addFeedback}= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback, addProperty,addFeedback,addMeeting}= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -104,7 +104,16 @@ app.post('/submitMessage', async (req, res) => {
   }
 });
 
+app.post('/addMeeting', async (req, res) => {
+  const { customerID, date, time, location } = req.body;
 
+  try {
+    const meetingId = await addMeeting(customerID, date, time, location);
+    res.status(201).json({ message: 'Meeting added successfully', meetingId });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Start the server
 app.listen(port, () => {

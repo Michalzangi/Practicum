@@ -212,9 +212,47 @@ const addFeedback = async (feedbackData) => {
 };
 
 
+//Add New Meeting
+const addMeeting = async (customerID, date, time, location) => {
+  let client; // Define the client variable
+
+  try {
+    // Connect to MongoDB
+    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+
+    // Access the database and collection
+    const database = client.db('Practicum');
+    const collection = database.collection('Meetings');
+
+    // Parse the date and time to a JavaScript Date object
+    const dateTime = new Date(`${date}T${time}`);
+
+    // Insert the meeting document into the collection
+    const result = await collection.insertOne({
+      CustomerID: customerID,
+      DateTime: dateTime,
+      Location: location
+    });
+
+    console.log('Meeting added successfully');
+    return result.insertedId;
+  } catch (error) {
+    console.error('Error adding meeting:', error);
+    throw new Error('Failed to add meeting');
+  } finally {
+    // Close the MongoDB connection
+    if (client) {
+      await client.close();
+      console.log('Connection to MongoDB closed');
+    }
+  }
+}
+
+
 
 // Call the run function to connect to the MongoDB instance
 
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback};
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting};
 
 
