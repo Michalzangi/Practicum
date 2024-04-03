@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback, addProperty,addFeedback,addMeeting}= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback, addProperty,addFeedback,addMeeting, updateProperty}= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -54,6 +54,22 @@ app.post('/addProperty', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+app.post('/updateProperty', async (req, res) => {
+  const { assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage } = req.body;
+  console.log('Request Body:', req.body);
+
+  try {
+    
+    const propertyId = await updateProperty(assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage);
+    res.status(201).json({ message: 'Property updated successfully', propertyId });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 
 app.post('/addFeedback', async (req, res) => {
   const feedbackData = req.body; // הנתונים שנשלחו מהטופס בצד הלקוח

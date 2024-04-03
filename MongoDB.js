@@ -162,13 +162,28 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
     const database = client.db('Practicum');
     const collection = database.collection('Assets');
 
+    // Find the maximum AssetID
+    const maxAssetIdDoc = await collection.find({ AssetID: { $exists: true, $type: 'number' } }).sort({ AssetID: -1 }).limit(1).toArray();
+    let newAssetId = 1; // Default value if collection is empty
+
+    if (maxAssetIdDoc.length > 0) {
+      const maxAssetId = maxAssetIdDoc[0].AssetID;
+      if (!isNaN(maxAssetId)) {
+        newAssetId = parseInt(maxAssetId) + 1; // Increment the maximum AssetID by 1
+      }
+    }
+
     // Parse assetPrice to an integer
     const price = parseInt(assetPrice);
 
+    // Ensure consistency in assetType case
+    const formattedAssetType = assetType.charAt(0).toUpperCase() + assetType.slice(1).toLowerCase();
+
     // Insert the property document into the collection
     const result = await collection.insertOne({
-      AssetType: assetType,
-      AssetPrice: price, // Use the parsed integer value
+      AssetID: newAssetId,
+      AssetType: formattedAssetType,
+      AssetPrice: price,
       AssetStreet: assetStreet,
       AssetStreetNumber: assetStreetNumber,
       RoomNum: roomNum,
@@ -185,8 +200,8 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
-    }
-  }
+    }
+  }
 }
 
 //Add New Feedback
@@ -249,10 +264,66 @@ const addMeeting = async (customerID, date, time, location) => {
   }
 }
 
+const updateProperty = async (assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {
+  let client; // Define the client variable
+
+  try {
+    // Capitalize the first letter of assetType
+    const capitalizedAssetType = assetType.charAt(0).toUpperCase() + assetType.slice(1);
+
+    // Connect to MongoDB
+    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+
+    // Access the database and collection
+    const database = client.db('Practicum');
+    const collection = database.collection('Assets');
+
+    // Find the existing property document based on the assetId
+    const existingProperty = await collection.findOne({ AssetID: parseInt(assetID) });
+
+    if (!existingProperty) {
+      console.log('Property with AssetID', assetID, 'not found.');
+      return 0; // Return 0 to indicate that no documents were modified
+    }
+
+    // Construct the update query
+    const updateQuery = {};
+
+    // Update fields only if they are present
+    if (capitalizedAssetType) updateQuery.AssetType = capitalizedAssetType;
+    if (assetPrice) updateQuery.AssetPrice = parseInt(assetPrice);
+    if (assetStreet) updateQuery.AssetStreet = assetStreet;
+    if (assetStreetNumber) updateQuery.AssetStreetNumber = assetStreetNumber;
+    if (roomNum) updateQuery.RoomNum = roomNum;
+    if (assetImage) updateQuery.AssetImage = assetImage;
+
+    // Perform the update if there are fields to update
+    if (Object.keys(updateQuery).length > 0) {
+      const result = await collection.updateOne({ AssetID: parseInt(assetID) }, { $set: updateQuery });
+      console.log('Result of updateOne:', result);
+      console.log('Property updated successfully');
+      return result.modifiedCount; // Return the number of modified documents
+    } else {
+      console.log('No fields to update');
+      return 0; // Return 0 to indicate that no documents were modified
+    }
+  } catch (error) {
+    console.error('Error updating property:', error);
+    throw new Error('Failed to update property');
+  } finally {
+    // Close the MongoDB connection
+    if (client) {
+      await client.close();
+      console.log('Connection to MongoDB closed');
+    }
+  }
+}
+
 
 
 // Call the run function to connect to the MongoDB instance
 
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting};
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty};
 
 

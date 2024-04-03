@@ -178,6 +178,57 @@
             </div>
 			
 
+			<div id="fh5co-blog-section" class="fh5co-section-gray">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>Update Property Information</h3>
+						</div>
+					</div>
+				</div>
+				
+
+			<div class="container">
+				<!-- Property Information Form -->
+				<form id="propertyFormUpdate" action="/updateProperty" method="POST">
+					<div class="form-group">
+						<label for="assetID">AssetID:</label>
+						<input type="text" class="form-control" id="assetID" name="assetID" required>
+					</div>
+					<div class="form-group"
+						<label for="assetType">Asset Type:</label>
+						<select class="form-control" id="assetType2" name="assetType">
+							<option value="sale">Sale</option>
+							<option value="rent">Rent</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="assetPrice">Price:</label>
+						<input type="text" class="form-control" id="assetPrice2" name="assetPrice" required>
+					</div>
+					<div class="form-group">
+						<label for="assetStreet">Street:</label>
+						<input type="text" class="form-control" id="assetStreet2" name="assetStreet" required>
+					</div>
+					<div class="form-group">
+						<label for="assetStreetNumber">Street Number:</label>
+						<input type="text" class="form-control" id="assetStreetNumber2" name="assetStreetNumber" required>
+					</div>
+					<div class="form-group">
+						<label for="roomNum">Room Number:</label>
+						<input type="text" class="form-control" id="roomNum2" name="roomNum" required>
+					</div>
+					<div class="form-group">
+						<label for="assetImage">Image URL:</label>
+						<input type="text" class="form-control" id="assetImage2" name="assetImage" required>
+					</div> <br>
+					<button type="submit" class="btn btn-primary" id="sub">Submit</button>
+					<div id="successMessage2" style="display: none;" class="alert alert-success" role="alert">
+						Property added successfully!
+					</div>
+				</form>
+			</div>
+		</div>
 
 
 		<footer>
@@ -288,6 +339,47 @@
     });
 });
     </script>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var form2 = document.getElementById("propertyFormUpdate");
+		form2.addEventListener("submit", function(event) {
+			event.preventDefault();
+			var formData2 = new FormData(form2);
+			var data2 = {};
+			formData2.forEach(function(value, key) {
+				data2[key] = value;
+			});
+		console.log(data2);
+
+	
+	fetch("/updateProperty", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(data2)
+	})
+	.then(function(response) {
+		// Check if the request was successful
+		if (response.ok) {
+			// Show success message
+			document.getElementById("successMessage2").style.display = "block";
+			console.log("Property updated successfully");
+			// Optionally, you can reload the page after a short delay
+			setTimeout(function() {
+				location.reload();
+			}, 3000); // Reload after 3 seconds (3000 milliseconds)
+		} else {
+			// Handle errors
+			console.error("Failed to update property");
+		}
+	})
+	.catch(function(error) {
+		console.error("Error:", error);
+	});
+});
+});
+</script>
 
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
