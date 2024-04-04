@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback, addProperty,addFeedback,addMeeting, updateProperty}= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers,deleteUserById,addUser }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -119,17 +119,34 @@ app.post('/submitMessage', async (req, res) => {
       res.status(500).json({ error: 'Failed to send message email' });
   }
 });
-
-app.post('/addMeeting', async (req, res) => {
-  const { customerID, date, time, location } = req.body;
-
+////////////////////////////////////////////////////////////////////////
+app.get('/Users', async (req, res) => {
   try {
-    const meetingId = await addMeeting(customerID, date, time, location);
-    res.status(201).json({ message: 'Meeting added successfully', meetingId });
+    const Users = await getAllUsers(); // Implement this function to fetch all users
+    res.json(Users); // Send the users as a JSON response
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
+
+app.delete('/Users/:id', async (req, res) => {
+  const UserId = req.params.id;
+  await deleteUserById(UserId);
+  res.sendStatus(204); // Send success status code
+});
+
+app.post('/add-user', async (req, res) => {
+  try {
+      const newUser = await addUser(req.body);
+      res.status(201).json(newUser);
+  } catch (error) {
+      console.error('Error adding user:', error);
+      res.status(500).json({ error: 'Failed to add user' });
+  }
+});
+
+
 
 // Start the server
 app.listen(port, () => {

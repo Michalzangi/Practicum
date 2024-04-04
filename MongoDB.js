@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const uri = "mongodb+srv://barsiboni:OeTrMMWzNa9cb31W@practicumdatabase.shts5lo.mongodb.net/?retryWrites=true&w=majority&appName=PracticumDatabase";
 
@@ -319,11 +319,60 @@ const updateProperty = async (assetID, assetType, assetPrice, assetStreet, asset
     }
   }
 }
+///////////////
+const getAllUsers = async () => {
+  try {
+    const database = client.db('Practicum');
+    const collection = database.collection('Users');
+    const Users = await collection.find().toArray();
+    console.log('Users:', Users);
+    return Users;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
+  }
+};
+
+
+async function deleteUserById(UserId) {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+      await client.connect();
+
+      const db = client.db('Practicum');
+      const usersCollection = db.collection('Users');
+      const userObjectId = new ObjectId(UserId);
+
+      const result = await usersCollection.deleteOne({ _id: userObjectId });
+
+      // Check if the deletion was successful
+      if (result.deletedCount === 1) {
+          console.log('User deleted successfully');
+      } else {
+          console.log('User not found or deletion failed');
+      }
+      const Users = await usersCollection.find().toArray();
+      console.log('Users:', Users);
+      return Users;
+      } catch (err) {
+      console.error('Error deleting user:', err);
+      throw err; 
+      } finally {
+      await client.close();
+    }
+  }
+
+  async function addUser(userData) {
+    const db = await connectToMongoDB();
+    const usersCollection = db.collection('Users');
+    const result = await usersCollection.insertOne(userData);
+    console.log('User added:', result.ops[0]);
+    return result.ops[0];
+}
 
 
 
-// Call the run function to connect to the MongoDB instance
-
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty};
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers, deleteUserById, addUser};
 
 
