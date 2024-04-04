@@ -119,6 +119,21 @@ app.post('/submitMessage', async (req, res) => {
       res.status(500).json({ error: 'Failed to send message email' });
   }
 });
+
+
+app.post('/addMeeting', async (req, res) => {
+  const { customerID, date, time, location,partner } = req.body;
+
+  try {
+    const meetingId = await addMeeting(customerID, date, time, location, partner);
+    res.status(201).json({ message: 'Meeting added successfully', meetingId });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 ////////////////////////////////////////////////////////////////////////
 app.get('/Users', async (req, res) => {
   try {

@@ -228,7 +228,7 @@ const addFeedback = async (feedbackData) => {
 
 
 //Add New Meeting
-const addMeeting = async (customerID, date, time, location) => {
+const addMeeting = async (customerID, date, time, location, partner) => {
   let client; // Define the client variable
 
   try {
@@ -247,7 +247,8 @@ const addMeeting = async (customerID, date, time, location) => {
     const result = await collection.insertOne({
       CustomerID: customerID,
       DateTime: dateTime,
-      Location: location
+      Location: location,
+      Partner: partner // Include the partner in the document
     });
 
     console.log('Meeting added successfully');
@@ -260,9 +261,10 @@ const addMeeting = async (customerID, date, time, location) => {
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
-    }
-  }
+    }
+  }
 }
+
 
 const updateProperty = async (assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {
   let client; // Define the client variable
