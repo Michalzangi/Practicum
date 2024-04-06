@@ -306,32 +306,26 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form id="loginForm" action="#">
+            <form id="signUpForm" action="#">
                 <h1>Create Account</h1>
                 <div class="social-container">
                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <span>or use your email for registration</span>
+
                 <div class="input-container">
                     <!-- Username input with icon -->
                     <input type="text" id="username1" name="username" placeholder="Name" required>
                     <i class="fa fa-user icon"></i>
                 </div>
-        
-                <!-- Email input with icon -->
-                <div class="input-container">
-                    <input id="email1" type="email" placeholder="Email" required>
-                    <i class="fa fa-envelope icon"></i>
-                </div>
-        
+    
                 <!-- Password input with icon -->
                 <div class="input-container">
                     <input type="password" id="password1" name="password" placeholder="Password" required>
                     <i class="fa fa-key icon"></i>
                 </div>
-                <button type="submit">Sign Up</button>
+                <button id="signUpButton" type="submit">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -468,7 +462,50 @@ async function handleLoginFormSubmit(event) {
         alert('An error occurred while logging in'); // הודעת שגיאה למשתמש
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const signUpForm = document.getElementById('signUpForm');
+    const signUpButton = document.getElementById('signUpButton');
+    
+    signUpForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Get user input values
+        const username = document.getElementById('username1').value;
+        const password = document.getElementById('password1').value;
+        
+        // Prepare the user data to be sent to the server
+        const userData = {
+            UserName: username,
+            Password: password,
+            Role: 'User'
+        };
 
+        try {
+            // Send a POST request to the server to add the new user
+            const response = await fetch('/add-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            // Check if the user was successfully added to the database
+            if (response.ok) {
+                // Display a success message to the user
+                alert('Account created successfully! You can now sign in.');
+                // Clear the form fields
+                signUpForm.reset();
+            } else {
+                // Display an error message if something went wrong
+                alert('Error creating account. Please try again later.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An unexpected error occurred. Please try again later.');
+        }
+    });
+});
 
 
     </script>

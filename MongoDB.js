@@ -365,15 +365,25 @@ async function deleteUserById(UserId) {
     }
   }
 
+
   async function addUser(userData) {
-    const db = await connectToMongoDB();
-    const usersCollection = db.collection('Users');
-    const result = await usersCollection.insertOne(userData);
-    console.log('User added:', result.ops[0]);
-    return result.ops[0];
+    try {
+        const db = client.db('Practicum');
+        const usersCollection = db.collection('Users');
+        const result = await usersCollection.insertOne(userData);
+        console.log('Insert result:', result);
+        if (result && result.insertedCount === 1) {
+            console.log('User added:', userData);
+            return userData;
+        } else {
+            console.error('Error adding user: No inserted document found');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error adding user:', error);
+        throw error;
+    }
 }
-
-
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers, deleteUserById, addUser};
 

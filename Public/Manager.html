@@ -8,12 +8,8 @@
     <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
     <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
     <meta name="author" content="FREEHTML5.CO" />
-
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico">
-
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
-
     <!-- Animate.css -->
     <link rel="stylesheet" href="css/animate.css">
     <!-- Icomoon Icon Fonts-->
@@ -34,8 +30,6 @@
 
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Modernizr JS -->
-    <script src="js/modernizr-2.6.2.min.js"></script>
 
     <style>
 	
@@ -51,7 +45,21 @@
             text-align: center;
             margin-bottom: 30px;
         }
+        .message-container {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 128, 0, 0.8); /* Green background color */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
 
+        .message-container.right {
+            right: 20px; /* Adjust the right distance from the side of the page */
+        }
     </style>
 
 </head>
@@ -113,18 +121,18 @@
 				<form id="add-user-form" class="user-row">
 					<h2>Add New User</h2>
 					<div class="form-group">
-						<label for="username">Username:</label>
-						<input type="text" id="username" name="username" required class="centered">
+						<label for="username">UserName:</label>
+						<input type="text" id="username" name="UserName" required class="centered">
 					</div>
 					<div class="form-group">
 						<label for="password">Password:</label>
-						<input type="password" id="password" name="password" required class="centered">
+						<input type="password" id="password" name="Password" required class="centered">
 					</div>
 					<div class="form-group">
 						<label for="role">Role:</label>
-						<select id="role" name="role" required class="centered">
-							<option value="administrator">Admin</option>
-							<option value="user">User</option>
+						<select id="role" name="Role" required class="centered">
+							<option value="Admin">Admin</option>
+							<option value="User">User</option>
 						</select>
 					</div>
 					<button type="submit" class="btn btn-primary">Add User</button><br>
@@ -214,96 +222,70 @@
 <script src="js/main.js"></script>
 <script>
 	window.onload = async () => {
-		try {
-			const response = await fetch('/Users');
-			const users = await response.json(); // Corrected variable name
-			const usersContainer = document.getElementById('users-container');
-			
-			// Clear the existing content in case it's already populated
-			usersContainer.innerHTML = '';
-	
-			users.forEach(user => {
-				// Create a div element for each user with the user-row class
-				const userElement = document.createElement('div');
-				userElement.classList.add('user-row'); // Add user-row class
-				userElement.innerHTML = `
-					<p>Id: ${user._id}</p>
-					<p>Username: ${user.UserName}</p>
-					<p>Password: ${user.Password}</p>
-					<p>Role: ${user.Role}</p>
-					<button class="delete-btn" style="background-color: pink;" data-id="${user._id}">Delete</button>
-				`;
-				usersContainer.appendChild(userElement);
-			});
-	
-			// Add event listeners to delete buttons
-			const deleteButtons = document.querySelectorAll('.delete-btn');
-			deleteButtons.forEach(button => {
-				button.addEventListener('click', async () => {
-					const userId = button.getAttribute('data-id');
-					try {
-						const response = await fetch(`/Users/${userId}`, {
-							method: 'DELETE'
-						});
-						if (response.ok) {
-							// Remove the user row from the UI
-							button.parentElement.remove();
-						} else {
-							console.error('Failed to delete user');
-						}
-					} catch (error) {
-						console.error('Error deleting user:', error);
-					}
-				});
-			});
-		} catch (error) {
-			console.error('Error fetching users:', error);
-		}
-	};
-	document.getElementById('add-user-form').addEventListener('submit', async function(event) {
-        event.preventDefault(); 
-        const formData = new FormData(this);
-        const newUser = {};
-        formData.forEach((value, key) => {
-            newUser[key] = value;
-        });
+    try {
+        // Fetch users data from the server
+        const response = await fetch('/Users');
+        const users = await response.json();
+        
+        // Clear the existing content in case it's already populated
+        const usersContainer = document.getElementById('users-container');
+        usersContainer.innerHTML = '';
 
-        try {
-            const response = await fetch('/Users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newUser)
-            });
-            if (response.ok) {
-                const addedUser = await response.json();
-                // Add the new user to the UI
-                addUserToUI(addedUser);
-                // Clear form fields
-                this.reset();
-            } else {
-                console.error('Failed to add user');
-            }
-        } catch (error) {
-            console.error('Error adding user:', error);
-        }
+        // Display each user in the UI
+        users.forEach(user => {
+            addUserToUI(user);
+        });
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
+};
+
+document.getElementById('add-user-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); 
+    const formData = {};
+    const inputs = this.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        formData[input.name] = input.value;
     });
 
-    // Function to add a user to the UI
-    function addUserToUI(user) {
-        const usersContainer = document.getElementById('users-container');
-        const userElement = document.createElement('div');
-        userElement.classList.add('user-row');
-        userElement.innerHTML = `
-            <p>Id: ${User._id}</p>
-            <p>Username: ${User.UserName}</p>
-            <p>Password: ${User.Password}</p>
-            <p>Role: ${User.Role}</p>
-            <button class="delete-btn" style="background-color: pink;" data-id="${user._id}">Delete</button>
-        `;
-        usersContainer.appendChild(userElement);
+    try {
+        const response = await fetch('/add-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
 
+        if (response.ok) {
+            const addUser = await response.json();
+            showMessage('User added successfully', 'success');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('role').selectedIndex = 0;
+            setTimeout(() => {
+                window.location.reload(); // Refresh the page after 3 seconds
+            }, 3000);
+        } else {
+            console.error('Failed to add user');
+        }
+    } catch (error) {
+        console.error('Error adding user:', error);
+    }
+});
+// Function to add a user to the UI
+function addUserToUI(user) {
+    const usersContainer = document.getElementById('users-container');
+    const userElement = document.createElement('div');
+    userElement.classList.add('user-row');
+    userElement.innerHTML = `
+        <p>id: ${user._id}</p>
+        <p>UserName: ${user.UserName}</p>
+        <p>Password: ${user.Password}</p>
+        <p>Role: ${user.Role}</p>
+        `;
+    if (user.Role === 'Admin') {
+        userElement.innerHTML += `<button class="delete-btn" style="background-color: pink;" data-id="${user._id}">Delete</button>`;
         // Add event listener to delete button
         userElement.querySelector('.delete-btn').addEventListener('click', async () => {
             const userId = user._id;
@@ -321,6 +303,27 @@
             }
         });
     }
+    usersContainer.appendChild(userElement);
+}
+// Function to show a message on the page
+function showMessage(message, side) {
+    const messageContainer = document.createElement('div');
+    messageContainer.classList.add('message-container');
+    messageContainer.classList.add(side); // Add the specified side class
+
+    const messageBox = document.createElement('div');
+    messageBox.classList.add('message-box');
+    messageBox.textContent = message;
+
+    messageContainer.appendChild(messageBox);
+    document.body.appendChild(messageContainer);
+
+    // Remove the message after 5 seconds (5000 milliseconds)
+    setTimeout(() => {
+        messageContainer.remove();
+    }, 5000); // Change 3000 to 5000 for a longer display duration
+}
+
 	</script>
 </body>
 </html>
