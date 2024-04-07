@@ -384,108 +384,28 @@
   
 
     <script>
-    
-function handleRequestLinkClick(event) {
-    event.preventDefault(); // Prevent the default behavior of the link
-    const username = document.getElementById('username1').value;
-    const email = document.getElementById('email1').value;
-    const password = document.getElementById('password1').value;
-    const mailtoLink = `mailto:nofar.shamir7@gmail.com?subject=New%20User%20Request&body=Please%20add%20a%20new%20user%20to%20the%20system.%0D%0A%0D%0AUsername:%20${username}%0D%0APassword:%20${password}`;
-    
-    // Open the mailto link in a new window to send the email
-    const emailWindow = window.open(mailtoLink, '_blank');
-    
-    // Add event listener to wait for the email window to close
-    const checkEmailInterval = setInterval(function() {
-        if (emailWindow.closed) {
-            clearInterval(checkEmailInterval); // Stop checking if the email window is closed
-            // Display a confirmation message when the email is sent and the window is closed
-            alert('Your request has been sent to the system administrator.');
+document.addEventListener('DOMContentLoaded', function () {
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
 
-            // Clear the input fields after the email is sent
-            document.getElementById('username1').value = '';
-            document.getElementById('password1').value = '';
-            document.getElementById('email1').value = '';
-        }
-    }, 5000); // Check every 1 second if the email window is closed
-}
+    signUpButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
 
+    signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
 
-
-    
-        // Combine the JavaScript code for sign up and sign in functionality
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
-    
-        signUpButton.addEventListener('click', () => {
-            container.classList.add("right-panel-active");
-        });
-    
-        signInButton.addEventListener('click', () => {
-            container.classList.remove("right-panel-active");
-        });
-    
-        // Add event listener for the "Sign Up" button to handle the link click
-        const signUpForm = document.getElementById('loginForm');
-        const signUpLink = signUpForm.querySelector('button[type="submit"]');
-        signUpLink.addEventListener('click', handleRequestLinkClick);
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-    // הוספת event listener לכפתור ה-Sign In
-    const signInButton = document.getElementById("signInButton");
-    signInButton.addEventListener('click', handleLoginFormSubmit);
-});
-
-async function handleLoginFormSubmit(event) {
-    event.preventDefault(); // מונע את ההתנהגות המוגדרת מראש של הטופס
-    const username = document.getElementById('username2').value;
-    const password = document.getElementById('password2').value;
-
-    console.log('Username:', username); // הדפסת שם משתמש לקונסול
-    console.log('Password:', password); // הדפסת סיסמה לקונסול
-
-    try {
-        // שליחת בקשת POST לנתיב '/login'
-        const response = await fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
-        
-        // קבלת תגובה מהשרת בפורמט JSON
-        const data = await response.json();
-
-        // בדיקה האם ההתחברות הצליחה ומיקום הניתוב לדף הבית בהתאם לתפקיד
-        if (response.ok) {
-            if (data.user && data.user.Role === 'Admin') {
-                window.location.href = 'HomeManager.html'; // מעבר לדף הבית של מנהל
-            } else if (data.user && data.user.Role === 'User') {
-                window.location.href = 'Home.html'; // מעבר לדף הבית של משתמש רגיל
-            }
-        } else {
-            alert('Invalid username or password'); // הודעת שגיאה במקרה של כשל בהתחברות
-        }
-    } catch (error) {
-        console.error('Error logging in:', error); // הדפסת שגיאה בקונסול אם קרתה שגיאה
-        alert('An error occurred while logging in'); // הודעת שגיאה למשתמש
-    }
-}
-document.addEventListener('DOMContentLoaded', function() {
     const signUpForm = document.getElementById('signUpForm');
-    const signUpButton = document.getElementById('signUpButton');
-    
-    signUpForm.addEventListener('submit', async function(event) {
+    const signUpButtonForm = document.getElementById('signUpButton');
+
+    signUpForm.addEventListener('submit', async function (event) {
         event.preventDefault(); // Prevent the default form submission
-        
-        // Get user input values
+
         const username = document.getElementById('username1').value;
         const password = document.getElementById('password1').value;
-        
-        // Prepare the user data to be sent to the server
+
         const userData = {
             UserName: username,
             Password: password,
@@ -493,7 +413,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         try {
-            // Send a POST request to the server to add the new user
             const response = await fetch('/add-user', {
                 method: 'POST',
                 headers: {
@@ -502,14 +421,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(userData)
             });
 
-            // Check if the user was successfully added to the database
             if (response.ok) {
-                // Display a success message to the user
                 alert('Account created successfully! You can now sign in.');
-                // Clear the form fields
                 signUpForm.reset();
             } else {
-                // Display an error message if something went wrong
                 alert('Error creating account. Please try again later.');
             }
         } catch (error) {
@@ -517,8 +432,42 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('An unexpected error occurred. Please try again later.');
         }
     });
+
+    const signInButtonForm = document.getElementById("signInButton");
+    signInButtonForm.addEventListener('click', async function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username2').value;
+        const password = document.getElementById('password2').value;
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                if (data.user && data.user.Role === 'Admin') {
+                    window.location.href = 'HomeManager.html';
+                } else if (data.user && data.user.Role === 'User') {
+                    window.location.href = 'Home.html';
+                }
+            } else {
+                alert('Invalid username or password');
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+            alert('An error occurred while logging in');
+        }
+    });
 });
 
+      
 
     </script>
     
