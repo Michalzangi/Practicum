@@ -94,28 +94,25 @@ async function getAllAssets() {
   const client = new MongoClient(uri);
 
   try {
-      // Connect to the MongoDB server
       console.log('Connecting to the database...');
       await client.connect();
       console.log('Connected to the database.');
 
-      // Access the database and collection
       const database = client.db('Practicum');
       const collection = database.collection('Assets');
 
-      // Projection to exclude the AssetImage field
-      const projection = { "AssetID": 0 };
+
+      const projection = { "_id": 0 };
       // Find all documents in the collection, excluding AssetImage
       const assets = await collection.find({}, { projection }).toArray();
       console.log(assets);
       return assets;
-  } catch (error) {
+    } catch (error) {
       console.error(error);
       throw new Error('Failed to fetch all assets.');
-  } finally {
-      // Close the MongoDB connection
+    } finally {
       await client.close();
-  }
+    }
 }
 
 
@@ -321,7 +318,7 @@ const updateProperty = async (assetID, assetType, assetPrice, assetStreet, asset
     }
   }
 }
-///////////////
+//get All Users
 const getAllUsers = async () => {
   try {
     const database = client.db('Practicum');
@@ -335,7 +332,7 @@ const getAllUsers = async () => {
   }
 };
 
-
+//delete Users
 async function deleteUserById(UserId) {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -365,7 +362,7 @@ async function deleteUserById(UserId) {
     }
   }
 
-
+//add User
   async function addUser(userData) {
     try {
         const db = client.db('Practicum');

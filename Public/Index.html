@@ -55,8 +55,8 @@
 
         button {
             border-radius: 20px;
-            border: 1px solid #FF4B2B;
-            background-color: #FF4B2B;
+            border: 1px solid #000000;
+            background-color: #32c053;
             color: #FFFFFF;
             font-size: 12px;
             font-weight: bold;
@@ -170,9 +170,9 @@
         }
 
         .overlay {
-            background: #FF416C;
-            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-            background: linear-gradient(to right, #FF4B2B, #FF416C);
+            background: #000000;
+            background: -webkit-linear-gradient(to right, #000000, #000000);
+            background: linear-gradient(to right, #000000, #000000);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: 0 0;
@@ -253,7 +253,7 @@
         }
 
         footer i {
-            color: red;
+            color: rgb(0, 0, 0);
         }
 
         footer a {
@@ -300,10 +300,22 @@
         .input-container input {
             padding-left: 30px; /* Add padding for the icon */
         }
-        
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1000;
+        }
     </style>
 </head>
 <body>
+    <video autoplay muted loop id="video-background">
+        <source src="images/MOVIE.mp4" type="video/mp4">
+      </video>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form id="signUpForm" action="#">

@@ -9,10 +9,6 @@
 	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FREEHTML5.CO" />
-
-  
-
-  	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
 	<meta property="og:image" content=""/>
 	<meta property="og:url" content=""/>
@@ -23,33 +19,18 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
-
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
-	
-	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Superfish -->
 	<link rel="stylesheet" href="css/superfish.css">
-	<!-- Flexslider  -->
 	<link rel="stylesheet" href="css/flexslider.css">
-	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="css/magnific-popup.css">
-	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
-	<!-- CS Select -->
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
-	
 	<link rel="stylesheet" href="css/style.css">
-
-
-	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
     <style>
@@ -69,9 +50,23 @@
             padding: 15px;
             width: fit-content; 
         }
-
-
-
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .property-button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #d1869b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .property-button:hover {
+            background-color: #d80f48;
+        }
     </style>
 
 	</head>
@@ -83,20 +78,18 @@
 				<div class="nav-header">
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
 					<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
-					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
 							<li><a href="HomeManager.html">Home</a></li>
 							<li>
-								<a href="AssetsManager.html" class="fh5co-sub-ddown">Assets</a>
-								<ul class="fh5co-sub-menu">
-									<li><a href="#">New</a></li>
-									<li><a href="#">Discount</a></li>
-									<li><a href="#">Sale</a></li>
-									<li><a href="#">Rent</a></li>
-									<li><a href="#">All</a></li>
-								</ul>
-							</li>
+								<a>Assets</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="#">All</a></li>
+										<li><a href="Assets.html">filter</a></li>
+										<li><a href="#">New</a></li>
+										<li><a href="#">Sale</a></li>
+									</ul>
+								</li>
                             <li><a href="Manager.html">Manager</a></li>
 							<li><a href="BlogManager.html">Blog</a></li>
 							<li><a href="AddManager.html">Add</a></li>
@@ -105,8 +98,6 @@
 				</div>
 			</div>
 		</header>
-
-
 
 		<aside id="fh5co-hero" class="js-fullheight">
 			<div class="flexslider js-fullheight">
@@ -117,7 +108,7 @@
 			   			<div class="row">
 				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
 			   				<div class="slider-text-inner">
-		   						<h2 class="heading-title">Add Property</h2>
+		   						<h2 class="heading-title">Property</h2>
 		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
 			   				</div>
 			   			</div>
@@ -128,22 +119,17 @@
 		  	</div>
 		</aside>
 
-		
-
-		<div id="fh5co-blog-section" class="fh5co-section-gray">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                        <h3>Add Property Information</h3>
-                    </div>
-                </div>
-            </div>
 			
-			<div class="container">
-                    <!-- Property Information Form -->
-					<button class="property-button" onclick="toggleAddPropertyForm()">Add Property</button>
+			<div class="container"><br><br><br><br><br>
+				<div class="button-container">
+					<button class="property-button" onclick="toggleAddPropertyForm()">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
+					<button class="property-button" onclick="toggleUpdatePropertyForm()">Update</button>
+				</div><br><br><br>
 					<div id="addPropertyForm" style="display: none;">
                     <form id="propertyForm" action="/addProperty" method="POST">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>Add Property Information</h3>
+						</div>
                         <div class="form-group">
                             <label for="assetType">Asset Type:</label>
                             <select class="form-control" id="assetType" name="assetType">
@@ -169,7 +155,7 @@
                         </div>
                         <div class="form-group">
                             <label for="assetImage">Image URL:</label>
-                            <input type="text" class="form-control" id="assetImage" name="assetImage" required>
+							<input type="file" class="form-control" id="assetImage" name="assetImage" required>
                         </div> <br>
                         <button type="submit" class="btn btn-primary" id="sub">Submit</button>
                         <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
@@ -177,30 +163,17 @@
                         </div>
                     </form>
 				</div>
-                </div>
-            </div>
-			
-
-			<div id="fh5co-blog-section" class="fh5co-section-gray">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-							<h3>Update Property Information</h3>
-						</div>
-					</div>
-				</div>
-				
-
-			<div class="container">
-				<!-- Property Information Form -->
-				<button class="property-button" onclick="toggleUpdatePropertyForm()">Update Property</button>
+                </div><br><br><br><br><br>
 				<div id="updatePropertyForm" style="display: none;">
 				<form id="propertyFormUpdate" action="/updateProperty" method="POST">
+					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+						<h3>Update Property Information</h3>
+					</div>
 					<div class="form-group">
 						<label for="assetID">AssetID:</label>
 						<input type="text" class="form-control" id="assetID" name="assetID" required>
 					</div>
-					<div class="form-group"
+					<div class="form-group">
 						<label for="assetType">Asset Type:</label>
 						<select class="form-control" id="assetType2" name="assetType">
 							<option value="sale">Sale</option>
@@ -231,7 +204,7 @@
 					<div id="successMessage2" style="display: none;" class="alert alert-success" role="alert">
 						Property added successfully!
 					</div>
-				</form>
+				</form><br><br><br><br><br>
 			</div>
 			</div>
 		</div>
@@ -295,16 +268,9 @@
 				</div>
 			</div>
 		</footer>
-
-	
-
 	</div>
-	<!-- END fh5co-page -->
-
 	</div>
-	<!-- END fh5co-wrapper -->
 
-	<!-- jQuery -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var form = document.getElementById("propertyForm");
@@ -325,17 +291,14 @@
             body: JSON.stringify(data)
         })
         .then(function(response) {
-            // Check if the request was successful
             if (response.ok) {
                 // Show success message
                 document.getElementById("successMessage").style.display = "block";
                 console.log("Property added successfully");
-                // Optionally, you can reload the page after a short delay
                 setTimeout(function() {
                     location.reload();
-                }, 3000); // Reload after 3 seconds (3000 milliseconds)
+                }, 3000); 
             } else {
-                // Handle errors
                 console.error("Failed to add property");
             }
         })
@@ -344,8 +307,7 @@
         });
     });
 });
-    </script>
-<script>
+
 	document.addEventListener("DOMContentLoaded", function() {
 		var form2 = document.getElementById("propertyFormUpdate");
 		form2.addEventListener("submit", function(event) {
@@ -356,7 +318,6 @@
 				data2[key] = value;
 			});
 		console.log(data2);
-
 	
 	fetch("/updateProperty", {
 		method: "POST",
@@ -366,17 +327,13 @@
 		body: JSON.stringify(data2)
 	})
 	.then(function(response) {
-		// Check if the request was successful
 		if (response.ok) {
-			// Show success message
 			document.getElementById("successMessage2").style.display = "block";
 			console.log("Property updated successfully");
-			// Optionally, you can reload the page after a short delay
 			setTimeout(function() {
 				location.reload();
-			}, 3000); // Reload after 3 seconds (3000 milliseconds)
+			}, 3000); 
 		} else {
-			// Handle errors
 			console.error("Failed to update property");
 		}
 	})
@@ -385,8 +342,7 @@
 	});
 });
 });
-</script>
-<script>
+
 function toggleAddPropertyForm() {
     var addPropertyForm = document.getElementById("addPropertyForm");
     if (addPropertyForm.style.display === "none") {
@@ -396,8 +352,7 @@ function toggleAddPropertyForm() {
     }
 }
 
-</script>
-<script>
+
 	function toggleUpdatePropertyForm() {
 		var addPropertyForm = document.getElementById("updatePropertyForm");
 		if (addPropertyForm.style.display === "none") {
@@ -409,26 +364,16 @@ function toggleAddPropertyForm() {
 	
 	</script>
 	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<script src="js/sticky.js"></script>
-	<!-- Superfish -->
 	<script src="js/hoverIntent.js"></script>
 	<script src="js/superfish.js"></script>
-	<!-- Flexslider -->
 	<script src="js/jquery.flexslider-min.js"></script>
-	<!-- Date Picker -->
 	<script src="js/bootstrap-datepicker.min.js"></script>
-	<!-- CS Select -->
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
-
-	
-	<!-- Main JS -->
 	<script src="js/main.js"></script>
 
 	</body>

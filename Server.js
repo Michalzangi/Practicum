@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers,deleteUserById,addUser }= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers,deleteUserById,addUser }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -129,6 +129,16 @@ app.post('/addMeeting', async (req, res) => {
     res.status(201).json({ message: 'Meeting added successfully', meetingId });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+///////////
+app.get('/Assets', async (req, res) => {
+  try {
+    const assets = await getAllAssets(); // Implement this function to fetch all users
+    res.json(assets); // Send the users as a JSON response
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
 
