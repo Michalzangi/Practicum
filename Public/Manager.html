@@ -44,6 +44,10 @@
         .users-header {
             text-align: center;
             margin-bottom: 30px;
+            font-size: 40px;
+            font-weight: 400;
+            position: relative;
+            color:  #de6277; 
         }
         .message-container {
             position: fixed;
@@ -60,6 +64,7 @@
         .message-container.right {
             right: 20px; /* Adjust the right distance from the side of the page */
         }
+ 
     </style>
 
 </head>
@@ -115,29 +120,23 @@
 
 		<div id="fh5co-blog-section" class="fh5co-section-gray">
             <div class="container">
-				<h2 class="users-header">Users</h2>
+				<h3 class="users-header">Users</h3>
 				<div id="users-container"></div>
 				<form id="add-user-form" class="user-row">
-					<h2>Add New User</h2>
+					<h3 class="users-header">Add New User</h3>
 					<div class="form-group">
 						<label for="username">UserName:</label>
-						<input type="text" id="username" name="UserName" required class="centered">
+						<input type="text" id="username" name="UserName"  class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label for="password">Password:</label>
-						<input type="password" id="password" name="Password" required class="centered">
+						<input type="password" id="password" name="Password" class="form-control" required >
 					</div>
-					<div class="form-group">
-						<label for="role">Role:</label>
-						<select id="role" name="Role" required class="centered">
-							<option value="Admin">Admin</option>
-							<option value="User">User</option>
-						</select>
-					</div>
-					<button type="submit" class="btn btn-primary">Add User</button><br>
+				
+					<button type="submit" class="btn btn-primary"  id="sub">Add User</button><br>
 				</form>
 			</div>
-			
+        </div>
 
         <footer>
             <div id="footer">
@@ -196,9 +195,12 @@
                     </div>
                 </div>
             </div>
+       
+
         </footer>
     </div>
 </div>
+
 
 <script src="js/jquery.min.js"></script>
 <!-- jQuery Easing -->
@@ -247,6 +249,9 @@ document.getElementById('add-user-form').addEventListener('submit', async functi
         formData[input.name] = input.value;
     });
 
+    // Set the role to 'Admin' automatically
+    formData['Role'] = 'Admin'; 
+
     try {
         const response = await fetch('/add-user', {
             method: 'POST',
@@ -261,10 +266,7 @@ document.getElementById('add-user-form').addEventListener('submit', async functi
             showMessage('User added successfully', 'success');
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            document.getElementById('role').selectedIndex = 0;
-            setTimeout(() => {
-                window.location.reload(); // Refresh the page after 3 seconds
-            }, 3000);
+           
         } else {
             console.error('Failed to add user');
         }
@@ -272,13 +274,19 @@ document.getElementById('add-user-form').addEventListener('submit', async functi
         console.error('Error adding user:', error);
     }
 });
+
+
+
+  
+ 
+
+
 // Function to add a user to the UI
 function addUserToUI(user) {
     const usersContainer = document.getElementById('users-container');
     const userElement = document.createElement('div');
     userElement.classList.add('user-row');
     userElement.innerHTML = `
-        <p>id: ${user._id}</p>
         <p>UserName: ${user.UserName}</p>
         <p>Password: ${user.Password}</p>
         <p>Role: ${user.Role}</p>
