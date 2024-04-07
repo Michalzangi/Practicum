@@ -67,13 +67,14 @@
 						<ul class="sf-menu" id="fh5co-primary-menu">
 							<li><a href="Home.html">Home</a></li>
 							<li>
-								<a>Assets</a>
-									<ul class="fh5co-sub-menu">
-										<li><a href="all.html">All</a></li>
-										<li><a href="Assets.html">filter</a></li>
-										<li><a href="new.html">New</a></li>
-										<li><a href="sale.html">Sale</a></li>
-									</ul>
+								<a href="Assets.html" class="fh5co-sub-ddown">Assets</a>
+								<ul class="fh5co-sub-menu">
+									<li><a href="#">New</a></li>
+									<li><a href="#">Discount</a></li>
+									<li><a href="#">Sale</a></li>
+									<li><a href="#">Rent</a></li>
+									<li><a href="#">All</a></li>
+								</ul>
 							</li>
 							<li><a href="agent.html">Agent</a></li>
 							<li class="active"><a href="Meeting.html">Meeting</a></li>
@@ -144,6 +145,13 @@
 								<option value="Gil Nissim">Gil Nissim</option>
 							</select>
 						</div> <br>
+						<div class="form-group">
+							<label for="assetSelect">Select Asset:</label>
+							<select class="form-control" id="assetSelect" name="assetSelect" required>
+							  <option value="">Select Asset</option>
+							  <!-- Options will be dynamically populated here -->
+							</select>
+						  </div>
 						<button type="submit" class="btn btn-primary" id="sub">Submit</button>
 						<div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
 							Meeting added successfully!
@@ -225,39 +233,96 @@
 
 	<!-- jQuery -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-    var form = document.getElementById("meetingForm"); // קישור לטופס הפגישה ב-HTML
+document.addEventListener("DOMContentLoaded", function() {
+  // Fetch assets data from server and display them
+  fetch('/Assets')
+    .then(response => response.json())
+    .then(data => {
+      const assetSelect = document.getElementById('assetSelect');
+      data.forEach(asset => {
+        const option = document.createElement('option');
+        option.value = asset.AssetID; // Assuming AssetID is unique
+        option.textContent = `Street: ${asset.AssetStreet} , Number: ${asset.AssetStreetNumber}, Price: ${asset.AssetPrice}, Type: ${asset.AssetType}  `; // Customize as needed
+        assetSelect.appendChild(option);
+      });
+    })
+    .catch(error => console.error('Error fetching assets:', error));
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Fetch assets data from server and display them
+  fetch('/getAllAssets')
+    .then(response => response.json())
+    .then(data => {
+      const assetSelect = document.getElementById('assetSelect');
+      data.forEach(asset => {
+        const option = document.createElement('option');
+        option.value = asset.AssetID; // Assuming AssetID is unique
+        option.textContent = `Street: ${asset.AssetStreet} , Number: ${asset.AssetStreetNumber}, Price: ${asset.AssetPrice}, Type: ${asset.AssetType}  `; // Customize as needed
+        assetSelect.appendChild(option);
+      });
+    })
+    .catch(error => console.error('Error fetching assets:', error));
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("meetingForm");
     form.addEventListener("submit", function(event) {
-        event.preventDefault(); // מניעת השליחה הרגילה של הטופס
-        var formData = new FormData(form); // יצירת אובייקט FormData מהטופס
+        event.preventDefault();
+
+        var assetSelect = document.getElementById("assetSelect");
+        var selectedAssets = [];
+
+        for (var i = 0; i < assetSelect.options.length; i++) {
+            if (assetSelect.options[i].selected) {
+                selectedAssets.push({
+                    AssetID: assetSelect.options[i].value,
+                    AssetStreet: assetSelect.options[i].dataset.street,
+                    AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
+                    AssetPrice: assetSelect.options[i].dataset.price,
+                    AssetType: assetSelect.options[i].dataset.type
+                });
+            }
+        }
+
+        var formData = new FormData(form);
         var data = {};
         formData.forEach(function(value, key) {
-            data[key] = value; // המרת הנתונים לפורמט JSON
+            data[key] = value;
         });
 
-        fetch("/addMeeting", { // שליחת בקשת POST לנתיב /addMeeting
+        data["selectedAssets"] = selectedAssets; // הוספת הנכסים הנבחרים לאובייקט הנתונים
+
+        fetch("/addMeeting", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data) // שליחת הנתונים בפורמט JSON
+            body: JSON.stringify(data)
         })
         .then(function(response) {
-            if (response.ok) { // בדיקה אם הבקשה הושלמה בהצלחה
-                document.getElementById("successMessage").style.display = "block"; // הצגת הודעת הצלחה
-                console.log("Meeting added successfully"); // הדפסת הודעת הצלחה בקונסול
+            if (response.ok) {
+                document.getElementById("successMessage").style.display = "block";
+                console.log("Meeting added successfully");
                 setTimeout(function() {
-                    location.reload(); // רענון הדף לאחר טעינה מחדש
-                }, 3000); // רענון לאחר 3 שניות
+                    location.reload();
+                }, 3000);
             } else {
-                console.error("Failed to add meeting"); // הדפסת הודעת שגיאה בקונסול
+                console.error("Failed to add meeting");
             }
         })
         .catch(function(error) {
-            console.error("Error:", error); // הדפסת שגיאות בקונסול
+            console.error("Error:", error);
         });
     });
 });
+
 
     </script>
 

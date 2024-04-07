@@ -225,27 +225,29 @@ const addFeedback = async (feedbackData) => {
 
 
 //Add New Meeting
-const addMeeting = async (customerID, date, time, location, partner) => {
-  let client; // Define the client variable
+const addMeeting = async (customerID, date, time, location, partner, assetSelect) => {
+  let client; // הגדרה של משתנה client
 
   try {
-    // Connect to MongoDB
+    // חיבור למסד הנתונים MongoDB
     client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Connected to MongoDB');
 
-    // Access the database and collection
+    // גישה למסד הנתונים ולאוסף Meetings
     const database = client.db('Practicum');
     const collection = database.collection('Meetings');
 
-    // Parse the date and time to a JavaScript Date object
+    // המרת התאריך והשעה לאובייקט JavaScript Date
     const dateTime = new Date(`${date}T${time}`);
 
-    // Insert the meeting document into the collection
+    // הוספת מסמך הפגישה לאוסף Meetings
     const result = await collection.insertOne({
       CustomerID: customerID,
       DateTime: dateTime,
       Location: location,
-      Partner: partner // Include the partner in the document
+      Partner: partner, // כלול את השותף במסמך הפגישה
+      AssetSelect: assetSelect // הוספת סוג הנכס למסמך הפגישה
+
     });
 
     console.log('Meeting added successfully');
@@ -254,13 +256,14 @@ const addMeeting = async (customerID, date, time, location, partner) => {
     console.error('Error adding meeting:', error);
     throw new Error('Failed to add meeting');
   } finally {
-    // Close the MongoDB connection
+    // סגירת חיבור למסד הנתונים MongoDB
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
     }
   }
 }
+
 
 
 const updateProperty = async (assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {

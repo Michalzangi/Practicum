@@ -122,15 +122,16 @@ app.post('/submitMessage', async (req, res) => {
 
 
 app.post('/addMeeting', async (req, res) => {
-  const { customerID, date, time, location,partner } = req.body;
+  const { customerID, date, time, location, partner, assetSelect } = req.body;
 
   try {
-    const meetingId = await addMeeting(customerID, date, time, location, partner);
+    const meetingId = await addMeeting(customerID, date, time, location, partner, assetSelect);
     res.status(201).json({ message: 'Meeting added successfully', meetingId });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 ///////////
 app.get('/Assets', async (req, res) => {
   try {
