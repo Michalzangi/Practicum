@@ -408,6 +408,96 @@ async function addPartner(partnerData) {
   }
 }
 
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers, deleteUserById, addUser,addPartner};
+
+//get all partners
+async function getAllPartners() {
+  const client = new MongoClient(uri);
+
+  try {
+      console.log('Connecting to the database...');
+      await client.connect();
+      console.log('Connected to the database.');
+
+      const database = client.db('Practicum');
+      const collection = database.collection('Partner');
+
+
+      const projection = { "_id": 0 };
+      const partners = await collection.find({}, { projection }).toArray();
+      console.log(partners);
+      return partners;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to fetch all Partners.');
+    } finally {
+      await client.close();
+    }
+}
+
+//add new Customer 
+const addCustomer = async (customerID, fullName, phone, email, customerType) => {
+  let client; // הגדרה של משתנה client
+
+  try {
+    // חיבור למסד הנתונים MongoDB
+    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+
+    // גישה למסד הנתונים ולאוסף Customers
+    const database = client.db('Practicum');
+    const collection = database.collection('Customers');
+
+    // הוספת מסמך הלקוח לאוסף Customers עם כל הפרטים המתאימים
+    const result = await collection.insertOne({
+      CustomerID: customerID,
+      FullName: fullName,
+      Phone: phone,
+      Email: email,
+      CustomerType: customerType
+
+    });
+
+    console.log('Customer added successfully');
+    return result.insertedId;
+  } catch (error) {
+    console.error('Error adding Customer:', error);
+    throw new Error('Failed to add Customer');
+  } finally {
+    // סגירת חיבור למסד הנתונים MongoDB
+    if (client) {
+      await client.close();
+      console.log('Connection to MongoDB closed');
+    }
+  }
+}
+
+//check Customer Existence
+async function checkCustomerExistence(username) {
+  let client; try {
+    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+    await client.connect();
+    const database = client.db('Practicum');
+    const collection = database.collection('Customers');
+    const customer = await collection.findOne({ username });
+    if (customer) {
+      console.log('Customer exists');
+      return true;
+    }
+    else {
+      console.log('You need to add a new customer');
+      return false;
+    }
+  }
+  catch (error) {
+    console.error('Error:', error);
+    throw new Error('Failed to check customer existence');
+  } finally {
+    await client.close();
+  }
+}
+
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
+   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence};
 
 

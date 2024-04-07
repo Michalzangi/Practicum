@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers,deleteUserById,addUser,addPartner }= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
+  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -182,6 +183,50 @@ app.post('/add-partner', async (req, res) => {
       res.status(500).json({ error: 'Failed to add Partner' });
   }
 });
+
+app.get('/Partners', async (req, res) => {
+  try {
+    const Partners = await getAllPartners(); // Implement this function to fetch all users
+    res.json(Partners); // Send the users as a JSON response
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to fetch Partners' });
+  }
+});
+
+app.post('/AddCustomer', async (req, res) => {
+  const { customerID, fullName, phone, email, customerType } = req.body;
+
+  try {
+    const customerId = await addCustomer(customerID, fullName, phone, email, customerType);
+    res.status(201).json({ message: 'Customer added successfully', customerId });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/checkCustomer/:id', async (req, res) => {
+  const customerId = parseInt(req.params.id);
+  const customerExists = customers.some(customer => customer.id === customerId);
+
+  if (customerExists) {
+      try {
+          const username = customers.find(customer => customer.id === customerId).username;
+          const existsInDB = await checkCustomerExistence(username);
+          if (existsInDB) {
+              res.status(200).send('Customer exists in the database');
+          } else {
+              res.status(404).send('Customer exists locally but not in the database');
+          }
+      } catch (error) {
+          res.status(500).send('Error checking customer existence');
+      }
+  } else {
+      res.status(404).send('Customer not found');
+  }
+});
+
+
 
 
 
