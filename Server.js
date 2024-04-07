@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 4000;
-const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers,deleteUserById,addUser }= require('./MongoDB')
+const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers,deleteUserById,addUser,addPartner }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -170,6 +170,16 @@ app.post('/add-user', async (req, res) => {
   } catch (error) {
       console.error('Error adding user:', error);
       res.status(500).json({ error: 'Failed to add user' });
+  }
+});
+
+app.post('/add-partner', async (req, res) => {
+  try {
+      const newPartner = await addPartner(req.body);
+      res.status(201).json(newPartner);
+  } catch (error) {
+      console.error('Error adding Partner:', error);
+      res.status(500).json({ error: 'Failed to add Partner' });
   }
 });
 

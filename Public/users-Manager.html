@@ -10,29 +10,18 @@
     <meta name="author" content="FREEHTML5.CO" />
     <link rel="shortcut icon" href="favicon.ico">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
-    <!-- Animate.css -->
     <link rel="stylesheet" href="css/animate.css">
-    <!-- Icomoon Icon Fonts-->
     <link rel="stylesheet" href="css/icomoon.css">
-    <!-- Bootstrap  -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <!-- Superfish -->
     <link rel="stylesheet" href="css/superfish.css">
-    <!-- Flexslider  -->
     <link rel="stylesheet" href="css/flexslider.css">
-    <!-- Magnific Popup -->
     <link rel="stylesheet" href="css/magnific-popup.css">
-    <!-- Date Picker -->
     <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
-    <!-- CS Select -->
     <link rel="stylesheet" href="css/cs-select.css">
     <link rel="stylesheet" href="css/cs-skin-border.css">
-
     <link rel="stylesheet" href="css/style.css">
 
-
     <style>
-	
         .user-row {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -40,7 +29,6 @@
             padding: 15px;
             border-radius: 5px;
         }
-        /* Header styling */
         .users-header {
             text-align: center;
             margin-bottom: 30px;
@@ -62,7 +50,7 @@
         }
 
         .message-container.right {
-            right: 20px; /* Adjust the right distance from the side of the page */
+            right: 50px; /* Adjust the right distance from the side of the page */
         }
  
     </style>
@@ -71,7 +59,6 @@
 <body>
     <div id="fh5co-wrapper">
     <div id="fh5co-page">
-
     <header id="fh5co-header-section" class="sticky-banner">
         <div class="container">
             <div class="nav-header">
@@ -129,18 +116,24 @@
 				<h3 class="users-header">Users</h3>
 				<div id="users-container"></div>
 				<form id="add-user-form" class="user-row">
-					<h3 class="users-header">Add New User</h3>
-					<div class="form-group">
-						<label for="username">UserName:</label>
-						<input type="text" id="username" name="UserName"  class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label for="password">Password:</label>
-						<input type="password" id="password" name="Password" class="form-control" required >
-					</div>
-				
-					<button type="submit" class="btn btn-primary"  id="sub">Add User</button><br>
-				</form>
+                    <h3 class="users-header">Add New User</h3>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="UserName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="Password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="Email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="tel" id="phone" name="Phone" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="sub">Add User</button><br></form>
 			</div>
         </div>
 
@@ -207,38 +200,26 @@
     </div>
 </div>
 
-
 <script src="js/jquery.min.js"></script>
-<!-- jQuery Easing -->
 <script src="js/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
 <script src="js/bootstrap.min.js"></script>
-<!-- Waypoints -->
 <script src="js/jquery.waypoints.min.js"></script>
 <script src="js/sticky.js"></script>
-<!-- Superfish -->
 <script src="js/hoverIntent.js"></script>
 <script src="js/superfish.js"></script>
-<!-- Flexslider -->
 <script src="js/jquery.flexslider-min.js"></script>
-<!-- Date Picker -->
 <script src="js/bootstrap-datepicker.min.js"></script>
-<!-- CS Select -->
 <script src="js/classie.js"></script>
 <script src="js/selectFx.js"></script>
 <script src="js/main.js"></script>
 <script>
 	window.onload = async () => {
     try {
-        // Fetch users data from the server
         const response = await fetch('/Users');
         const users = await response.json();
-        
-        // Clear the existing content in case it's already populated
         const usersContainer = document.getElementById('users-container');
         usersContainer.innerHTML = '';
 
-        // Display each user in the UI
         users.forEach(user => {
             addUserToUI(user);
         });
@@ -247,47 +228,6 @@
     }
 };
 
-document.getElementById('add-user-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); 
-    const formData = {};
-    const inputs = this.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        formData[input.name] = input.value;
-    });
-
-    // Set the role to 'Admin' automatically
-    formData['Role'] = 'Admin'; 
-
-    try {
-        const response = await fetch('/add-user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        if (response.ok) {
-            const addUser = await response.json();
-            showMessage('User added successfully', 'success');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-           
-        } else {
-            console.error('Failed to add user');
-        }
-    } catch (error) {
-        console.error('Error adding user:', error);
-    }
-});
-
-
-
-  
- 
-
-
-// Function to add a user to the UI
 function addUserToUI(user) {
     const usersContainer = document.getElementById('users-container');
     const userElement = document.createElement('div');
@@ -299,7 +239,6 @@ function addUserToUI(user) {
         `;
     if (user.Role === 'Admin') {
         userElement.innerHTML += `<button class="delete-btn" style="background-color: pink;" data-id="${user._id}">Delete</button>`;
-        // Add event listener to delete button
         userElement.querySelector('.delete-btn').addEventListener('click', async () => {
             const userId = user._id;
             try {
@@ -318,23 +257,82 @@ function addUserToUI(user) {
     }
     usersContainer.appendChild(userElement);
 }
-// Function to show a message on the page
-function showMessage(message, side) {
+document.getElementById('add-user-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const formData = {};
+    const inputs = this.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        formData[input.name] = input.value;
+    });
+
+    // Save username and password to "user" collection
+    const userFormData = {
+        UserName: formData.UserName,
+        Password: formData.Password,
+        Role: 'Admin'
+    };
+
+    // Save username, email, and phone to "partner" collection
+    const partnerFormData = {
+        UserName: formData.UserName,
+        Email: formData.Email,
+        Phone: formData.Phone
+    };
+
+    try {
+        // Save data to "user" collection
+        const userResponse = await fetch('/add-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userFormData)
+        });
+
+        if (!userResponse.ok) {
+            console.error('Failed to add user to "user" collection');
+            return;
+        }
+
+        // Save data to "partner" collection
+        const partnerResponse = await fetch('/add-partner', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(partnerFormData)
+        });
+
+        if (!partnerResponse.ok) {
+            console.error('Failed to add user to "partner" collection');
+            return;
+        }
+
+        // If both saves are successful, show success message
+        showMessage('User and partner added successfully', 'success');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+
+        // Refresh the page after 5 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+    } catch (error) {
+        console.error('Error adding user:', error);
+    }
+});
+
+function showMessage(message, type) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
-    messageContainer.classList.add(side); // Add the specified side class
-
-    const messageBox = document.createElement('div');
-    messageBox.classList.add('message-box');
-    messageBox.textContent = message;
-
-    messageContainer.appendChild(messageBox);
+    messageContainer.textContent = message;
+    messageContainer.style.backgroundColor = type === 'success'
     document.body.appendChild(messageContainer);
-
-    // Remove the message after 5 seconds (5000 milliseconds)
     setTimeout(() => {
         messageContainer.remove();
-    }, 5000); // Change 3000 to 5000 for a longer display duration
+    }, 5000);
 }
 
 	</script>

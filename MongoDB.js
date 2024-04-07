@@ -388,6 +388,26 @@ async function deleteUserById(UserId) {
     }
 }
 
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers, deleteUserById, addUser};
+//add partner
+async function addPartner(partnerData) {
+  try {
+      const db = client.db('Practicum');
+      const partnerCollection = db.collection('Partner');
+      const result = await partnerCollection.insertOne(partnerData);
+      console.log('Insert result:', result);
+      if (result && result.insertedCount === 1) {
+          console.log('partner added:', partnerData);
+          return partnerData;
+      } else {
+          console.error('Error adding partner: No inserted document found');
+          return null;
+      }
+  } catch (error) {
+      console.error('Error adding partner:', error);
+      throw error;
+  }
+}
+
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting, updateProperty,getAllUsers, deleteUserById, addUser,addPartner};
 
 
