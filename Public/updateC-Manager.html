@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+ <html class="no-js">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>practicum</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/superfish.css">
+	<link rel="stylesheet" href="css/flexslider.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/modernizr-2.6.2.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+        .form-group {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #sub {
+            display: block;
+            margin: 0 auto;
+            padding: 15px;
+            width: fit-content; 
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .property-button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #d1869b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .property-button:hover {
+            background-color: #d80f48;
+        }
+    </style>
+
+</head>
+<body>
+	<div id="fh5co-wrapper">
+	<div id="fh5co-page">
+
+	<header id="fh5co-header-section" class="sticky-banner">
+		<div class="container">
+			<div class="nav-header">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+				<nav id="fh5co-menu-wrap" role="navigation">
+					<ul class="sf-menu" id="fh5co-primary-menu">
+						<li class="active"><a href="HomeManager.html">Home</a></li>
+						<li>
+							<a>Assets</a>
+								<ul class="fh5co-sub-menu">
+									<li><a href="all-Manager.html">All</a></li>
+									<li><a href="filter-Manager.html">filter</a></li>
+								</ul>
+						</li>
+						<li><a href="users-Manager.html">Users</a></li>
+						<li><a href="blog-Manager.html">Blog</a></li>
+						<li>
+							<a>Activities</a>
+								<ul class="fh5co-sub-menu">
+									<li><a href="addP-Manager.html">Add Property</a></li>
+									<li><a href="updateP-Manager.html">Update Property</a></li>
+									<li><a href="addC-Manager.html">Add a Customer</a></li>
+									<li><a href="updateC-Manager.html">Update Customer</a></li>
+								</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+		<aside id="fh5co-hero" class="js-fullheight">
+			<div class="flexslider js-fullheight">
+				<ul class="slides">
+			   	<li style="background-image: url(images/cov.png);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+			   				<div class="slider-text-inner">
+		   						<h2 class="heading-title">Property</h2>
+		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
+			   				</div>
+			   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			  	</ul>
+		  	</div>
+		</aside>
+
+			
+			<div class="container"><br><br><br><br><br>
+				<div class="button-container">
+					<button class="property-button" onclick="toggleAddPropertyForm()">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
+					<button class="property-button" onclick="toggleUpdatePropertyForm()">Update</button>
+				</div><br><br><br>
+					<div id="addPropertyForm" style="display: none;">
+                    <form id="propertyForm" action="/addProperty" method="POST">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>Add Property Information</h3>
+						</div>
+                        <div class="form-group">
+                            <label for="assetType">Asset Type:</label>
+                            <select class="form-control" id="assetType" name="assetType">
+                                <option value="sale">Sale</option>
+                                <option value="rent">Rent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="assetPrice">Price:</label>
+                            <input type="text" class="form-control" id="assetPrice" name="assetPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="assetStreet">Street:</label>
+                            <input type="text" class="form-control" id="assetStreet" name="assetStreet" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="assetStreetNumber">Street Number:</label>
+                            <input type="text" class="form-control" id="assetStreetNumber" name="assetStreetNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="roomNum">Room Number:</label>
+                            <input type="text" class="form-control" id="roomNum" name="roomNum" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="assetImage">Image URL:</label>
+							<input type="text" class="form-control" id="assetImage" name="assetImage" required>
+                        </div> <br>
+                        <button type="submit" class="btn btn-primary" id="sub">Submit</button>
+                        <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
+                            Property added successfully!
+                        </div>
+                    </form>
+				</div>
+                </div><br><br><br><br><br>
+				<div id="updatePropertyForm" style="display: none;">
+				<form id="propertyFormUpdate" action="/updateProperty" method="POST">
+					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+						<h3>Update Property Information</h3>
+					</div>
+					<div class="form-group">
+						<label for="assetID">AssetID:</label>
+						<input type="text" class="form-control" id="assetID" name="assetID" required>
+					</div>
+					<div class="form-group">
+						<label for="assetType">Asset Type:</label>
+						<select class="form-control" id="assetType2" name="assetType">
+							<option value="sale">Sale</option>
+							<option value="rent">Rent</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="assetPrice">Price:</label>
+						<input type="text" class="form-control" id="assetPrice2" name="assetPrice" required>
+					</div>
+					<div class="form-group">
+						<label for="assetStreet">Street:</label>
+						<input type="text" class="form-control" id="assetStreet2" name="assetStreet" required>
+					</div>
+					<div class="form-group">
+						<label for="assetStreetNumber">Street Number:</label>
+						<input type="text" class="form-control" id="assetStreetNumber2" name="assetStreetNumber" required>
+					</div>
+					<div class="form-group">
+						<label for="roomNum">Room Number:</label>
+						<input type="text" class="form-control" id="roomNum2" name="roomNum" required>
+					</div>
+					<div class="form-group">
+						<label for="assetImage">Image URL:</label>
+						<input type="text" class="form-control" id="assetImage2" name="assetImage" required>
+					</div> <br>
+					<button type="submit" class="btn btn-primary" id="sub">Submit</button>
+					<div id="successMessage2" style="display: none;" class="alert alert-success" role="alert">
+						Property added successfully!
+					</div>
+				</form><br><br><br><br><br>
+			</div>
+			</div>
+		</div>
+
+
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-3">
+							<h3 class="section-title">About Us</h3>
+							<p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
+						</div>
+						
+						<div class="col-md-3 col-md-push-1">
+							<h3 class="section-title">Links</h3>
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Assets</a></li>
+								<li><a href="#">Agent</a></li>
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</div>
+
+						<div class="col-md-3">
+							<h3 class="section-title">Information</h3>
+							<ul>
+								<li><a href="#">Terms &amp; Condition</a></li>
+								<li><a href="#">License</a></li>
+								<li><a href="#">Privacy &amp; Policy</a></li>
+								<li><a href="#">Contact Us</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3">
+							<h3 class="section-title">Newsletter</h3>
+							<p>Subscribe for our newsletter</p>
+							<form class="form-inline" id="fh5co-header-subscribe">
+								<div class="row">
+									<div class="col-md-12 col-md-offset-0">
+										<div class="form-group">
+											<input type="text" class="form-control" id="email" placeholder="Enter your email">
+											<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("propertyForm");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+                var formData = new FormData(form);
+                var data = {};
+                formData.forEach(function(value, key) {
+                    data[key] = value;
+                });
+
+        
+        fetch("/addProperty", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            if (response.ok) {
+                // Show success message
+                document.getElementById("successMessage").style.display = "block";
+                console.log("Property added successfully");
+                setTimeout(function() {
+                    location.reload();
+                }, 3000); 
+            } else {
+                console.error("Failed to add property");
+            }
+        })
+        .catch(function(error) {
+            console.error("Error:", error);
+        });
+    });
+});
+
+	document.addEventListener("DOMContentLoaded", function() {
+		var form2 = document.getElementById("propertyFormUpdate");
+		form2.addEventListener("submit", function(event) {
+			event.preventDefault();
+			var formData2 = new FormData(form2);
+			var data2 = {};
+			formData2.forEach(function(value, key) {
+				data2[key] = value;
+			});
+		console.log(data2);
+	
+	fetch("/updateProperty", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(data2)
+	})
+	.then(function(response) {
+		if (response.ok) {
+			document.getElementById("successMessage2").style.display = "block";
+			console.log("Property updated successfully");
+			setTimeout(function() {
+				location.reload();
+			}, 3000); 
+		} else {
+			console.error("Failed to update property");
+		}
+	})
+	.catch(function(error) {
+		console.error("Error:", error);
+	});
+});
+});
+
+function toggleAddPropertyForm() {
+    var addPropertyForm = document.getElementById("addPropertyForm");
+    if (addPropertyForm.style.display === "none") {
+        addPropertyForm.style.display = "block";
+    } else {
+        addPropertyForm.style.display = "none";
+    }
+}
+
+
+	function toggleUpdatePropertyForm() {
+		var addPropertyForm = document.getElementById("updatePropertyForm");
+		if (addPropertyForm.style.display === "none") {
+			addPropertyForm.style.display = "block";
+		} else {
+			addPropertyForm.style.display = "none";
+		}
+	}
+	
+	</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<script src="js/jquery.flexslider-min.js"></script>
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
