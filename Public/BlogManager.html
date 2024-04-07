@@ -239,7 +239,7 @@
 
 					card.innerHTML = `
 						<h2 <i class="icon-bubble2"> <i class="comment"> ${feedback.Name}</h2>
-                        <p>Date: ${feedback.Date}</p>
+                        <p>Date Posted: ${feedback.Date} </p>
                         <p>${feedback.FeedbackDesc}</p>
                         <p>Rating: ${feedback.rating} stars</p>
                     `; 
@@ -251,6 +251,7 @@
                 console.error('Error fetching feedback:', error.message);
             }
         });
+
 
 </script>
 	<script src="js/jquery.min.js"></script>
