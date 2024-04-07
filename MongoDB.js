@@ -225,7 +225,7 @@ const addFeedback = async (feedbackData) => {
 
 
 //Add New Meeting
-const addMeeting = async (customerID, date, time, location, partner, assetSelect) => {
+const addMeeting = async (customerID, date, time, location, partner, meetingType, assetSelect) => {
   let client; // הגדרה של משתנה client
 
   try {
@@ -240,14 +240,15 @@ const addMeeting = async (customerID, date, time, location, partner, assetSelect
     // המרת התאריך והשעה לאובייקט JavaScript Date
     const dateTime = new Date(`${date}T${time}`);
 
-    // הוספת מסמך הפגישה לאוסף Meetings
+    // הוספת מסמך הפגישה לאוסף Meetings עם כל הפרטים המתאימים
     const result = await collection.insertOne({
       CustomerID: customerID,
       DateTime: dateTime,
       Location: location,
-      Partner: partner, // כלול את השותף במסמך הפגישה
-      AssetSelect: assetSelect // הוספת סוג הנכס למסמך הפגישה
-
+      Partner: partner,
+      MeetingType: meetingType,
+      AssetSelect: assetSelect
+       // הוספת סוג הפגישה למסמך הפגישה
     });
 
     console.log('Meeting added successfully');
@@ -263,6 +264,8 @@ const addMeeting = async (customerID, date, time, location, partner, assetSelect
     }
   }
 }
+
+
 
 
 

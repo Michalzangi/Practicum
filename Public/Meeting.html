@@ -136,7 +136,7 @@
 						<div class="form-group">
 							<label for="location">Location:</label>
 							<input type="text" class="form-control" id="location" name="location" required>
-						</div> <br>
+						</div> 
 						<div class="form-group">
 							<label for="partner">Partner:</label>
 							<select class="form-control" id="partner" name="partner" required>
@@ -144,7 +144,19 @@
 								<option value="Ovad Zangi">Ovad Zangi</option>
 								<option value="Gil Nissim">Gil Nissim</option>
 							</select>
-						</div> <br>
+						</div> 
+						<div class="form-group">
+						<label for="meetingType">Meeting Type:</label>
+							<select class="form-control" id="meetingType" name="meetingType" required>
+								<option value="">Select Meeting Type</option>
+								<option value="Introduction Meeting">Introduction Meeting</option>
+								<option value="Asset Search Meeting">Asset Search Meeting</option>
+								<option value="Asset Visit Meeting">Asset Visit Meeting</option>
+								<option value="Negotiation Meeting">Negotiation Meeting</option>
+								<option value="Contract Signing Meeting">Contract Signing Meeting</option>
+							</select>
+						</div>
+						
 						<div class="form-group">
 							<label for="assetSelect">Select Asset:</label>
 							<select class="form-control" id="assetSelect" name="assetSelect" required>
@@ -238,32 +250,13 @@ document.addEventListener("DOMContentLoaded", function() {
   fetch('/Assets')
     .then(response => response.json())
     .then(data => {
-      const assetSelect = document.getElementById('assetSelect');
-      data.forEach(asset => {
-        const option = document.createElement('option');
-        option.value = asset.AssetID; // Assuming AssetID is unique
-        option.textContent = `Street: ${asset.AssetStreet} , Number: ${asset.AssetStreetNumber}, Price: ${asset.AssetPrice}, Type: ${asset.AssetType}  `; // Customize as needed
-        assetSelect.appendChild(option);
-      });
-    })
-    .catch(error => console.error('Error fetching assets:', error));
-});
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  // Fetch assets data from server and display them
-  fetch('/getAllAssets')
-    .then(response => response.json())
-    .then(data => {
-      const assetSelect = document.getElementById('assetSelect');
-      data.forEach(asset => {
-        const option = document.createElement('option');
-        option.value = asset.AssetID; // Assuming AssetID is unique
-        option.textContent = `Street: ${asset.AssetStreet} , Number: ${asset.AssetStreetNumber}, Price: ${asset.AssetPrice}, Type: ${asset.AssetType}  `; // Customize as needed
-        assetSelect.appendChild(option);
-      });
+        const assetSelect = document.getElementById('assetSelect');
+        data.forEach(asset => {
+            const option = document.createElement('option');
+            option.value = 'Street: '+asset.AssetStreet +' , Street Number: ' +asset.AssetStreetNumber +', Price: ' + asset.AssetPrice + ', Type: ' + asset.AssetType;
+            option.textContent = option.value;
+            assetSelect.appendChild(option);
+        });
     })
     .catch(error => console.error('Error fetching assets:', error));
 });
@@ -279,6 +272,10 @@ document.addEventListener("DOMContentLoaded", function() {
         var assetSelect = document.getElementById("assetSelect");
         var selectedAssets = [];
 
+        // Fetch selected meeting type
+        var meetingType = document.getElementById("meetingType").value;
+
+        // Fetch selected assets
         for (var i = 0; i < assetSelect.options.length; i++) {
             if (assetSelect.options[i].selected) {
                 selectedAssets.push({
@@ -297,8 +294,10 @@ document.addEventListener("DOMContentLoaded", function() {
             data[key] = value;
         });
 
-        data["selectedAssets"] = selectedAssets; // הוספת הנכסים הנבחרים לאובייקט הנתונים
+        data["selectedAssets"] = selectedAssets; // Add selected assets to data object
+        data["meetingType"] = meetingType; // Add selected meeting type to data object
 
+        // Send data to server
         fetch("/addMeeting", {
             method: "POST",
             headers: {
