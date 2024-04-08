@@ -182,7 +182,7 @@
             const assetStreet = document.getElementById("from-place").value;
     
             // Construct the URL with query parameters
-			const url = `/CustomerAssets?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
+			const url = `/CustomerAssetsForManager?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
             // Log gathered data for debugging
             console.log("Asset Type:", assetType);
             console.log("Asset Price (Min):", assetPriceMin);
@@ -227,6 +227,7 @@
         			<p>Street: ${asset.AssetStreet}</p>
         			<p>Room Number: ${asset.RoomNum}</p>
                     <p>Description: ${asset.AssetDescription}</p>
+                    <p>Asset Status: ${asset.AssetStatus}</p>
     				`;
     				assetContainer.appendChild(details);
 

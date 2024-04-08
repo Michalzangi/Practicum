@@ -57,6 +57,49 @@ const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet
     const database = client.db('Practicum');
     const collection = database.collection('Assets');
 
+    const filter = { AssetStatus: 'Available' }; // Add condition for AssetStatus
+    if (AssetType) filter.AssetType = AssetType;
+    if (AssetPriceMin || AssetPriceMax) {
+      // Convert string inputs to numeric values
+      const minPrice = AssetPriceMin ? parseInt(AssetPriceMin, 10) : undefined;
+      const maxPrice = AssetPriceMax ? parseInt(AssetPriceMax, 10) : undefined;
+
+      // Construct a price range filter
+      filter.AssetPrice = {};
+      if (minPrice !== undefined) filter.AssetPrice.$gte = minPrice;
+      if (maxPrice !== undefined) filter.AssetPrice.$lte = maxPrice;
+    }
+    if (AssetStreet) filter.AssetStreet = AssetStreet;
+    if (AssetStreetNumber) filter.AssetStreetNumber = AssetStreetNumber;
+    if (RoomNum) filter.RoomNum = RoomNum;
+
+    console.log('Filter:', filter);
+    const projection = { "AssetID": 0 }; // Exclude AssetID and AssetImage fields
+    const result = await collection.find(filter, { projection }).toArray();
+    console.log('Filtered Assets:', result);
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch filtered assets.');
+  } finally {
+    await client.close();
+    console.log('Database connection closed.');
+  }
+}
+
+
+const filterAssetsForManager = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet, AssetStreetNumber, RoomNum) => {
+  const client = new MongoClient(uri);
+
+  try {
+    console.log('Connecting to the database...');
+    await client.connect();
+    console.log('Connected to the database.');
+
+    const database = client.db('Practicum');
+    const collection = database.collection('Assets');
+
     const filter = {};
     if (AssetType) filter.AssetType = AssetType;
     if (AssetPriceMin || AssetPriceMax) {
@@ -87,6 +130,8 @@ const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet
     console.log('Database connection closed.');
   }
 }
+
+
 
 
 //All Assets
@@ -185,7 +230,7 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
       AssetStreetNumber: assetStreetNumber,
       RoomNum: roomNum,
       AssetImage: assetImage,
-      assetDescription: assetDescription,
+      AssetDescription: assetDescription,
       AssetStatus: 'Available' // New field AssetStatus with value 'Available'
     });
 
@@ -501,6 +546,4 @@ async function checkCustomerExistence(username) {
 }
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
-   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence};
-
-
+   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager};

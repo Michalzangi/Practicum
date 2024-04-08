@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
-  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence }= require('./MongoDB')
+  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -34,6 +34,19 @@ app.get('/CustomerAssets', async (req, res) => {
   try {
     // Call FilterAssets function with parameters
     const filteredAssets = await filterAssets(assetType, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
+    res.json(filteredAssets); // Return filtered assets as JSON response
+  } catch (error) {
+    res.status(500).json({ error: error.message }); // Handle any errors
+  }
+});
+
+app.get('/CustomerAssetsForManager', async (req, res) => {
+  // Retrieve parameters from query string
+  const { assetType, assetPriceMin, assetPriceMax, roomNumber, assetStreetNumber, assetStreet } = req.query;
+
+  try {
+    // Call FilterAssets function with parameters
+    const filteredAssets = await filterAssetsForManager(assetType, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
     res.json(filteredAssets); // Return filtered assets as JSON response
   } catch (error) {
     res.status(500).json({ error: error.message }); // Handle any errors
