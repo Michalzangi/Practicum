@@ -147,7 +147,7 @@ const getFeedback = async () => {
 
 
 //Add New Asset
-const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {
+const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription) => {
   let client; // Define the client variable
 
   try {
@@ -184,7 +184,9 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
       AssetStreet: assetStreet,
       AssetStreetNumber: assetStreetNumber,
       RoomNum: roomNum,
-      AssetImage: assetImage
+      AssetImage: assetImage,
+      assetDescription: assetDescription,
+      AssetStatus: 'Available' // New field AssetStatus with value 'Available'
     });
 
     console.log('Property added successfully');
@@ -200,6 +202,7 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
     }
   }
 }
+
 
 //Add New Feedback
 

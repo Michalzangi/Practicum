@@ -46,10 +46,10 @@ app.get('/feedback', async (req, res) => {
 });
 
 app.post('/addProperty', async (req, res) => {
-  const { assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage } = req.body;
+  const { assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription } = req.body;
 
   try {
-    const propertyId = await addProperty(assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage);
+    const propertyId = await addProperty(assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription);
     res.status(201).json({ message: 'Property added successfully', propertyId });
   } catch (error) {
     res.status(500).json({ error: error.message });
