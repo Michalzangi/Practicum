@@ -545,5 +545,94 @@ async function checkCustomerExistence(username) {
   }
 }
 
+async function createDeal(assetId, customer1Id, customer2Id) {
+  try {
+      const db = client.db("Practicum");
+      const dealsCollection = db.collection("Deals");
+      const customersCollection = db.collection("Customers");
+      const assetsCollection = db.collection("Assets");
+
+      // Fetch customer1 and customer2 documents
+      console.log(customer1Id);
+      console.log(customer2Id);
+      const customer1 = await customersCollection.findOne({ CustomerID: customer1Id });
+      const customer2 = await customersCollection.findOne({ CustomerID: customer2Id });
+
+      if (!customer1 || !customer2) {
+          console.log("Customer 1 or Customer 2 not found.");
+          return;
+      }
+
+      // Fetch asset document
+      const asset = await assetsCollection.findOne({ AssetID: parseInt(assetId) });
+
+      if (!asset) {
+          console.log("Asset not found.");
+          return;
+      }
+
+      // Determine deal type and customer roles based on asset type
+      let dealType, customer1Role, customer2Role, dealCommission;
+      if (asset.AssetType.toLowerCase() === "rent") {
+          dealType = "Renting";
+          customer1Role = "Rented";
+          customer2Role = "Rentee";
+          dealCommission = asset.AssetPrice;
+      } else if (asset.AssetType.toLowerCase() === "sale") {
+          dealType = "Buying";
+          customer1Role = "Seller";
+          customer2Role = "Buyer";
+          dealCommission = asset.AssetPrice * 0.01;
+      } else {
+          console.log("Invalid asset type. Asset type must be 'rent' or 'sale'.");
+          return;
+      }
+
+      // Generate a unique transaction number
+      const highestDeal = await dealsCollection.findOne({}, { sort: { transactionNumber: -1 } });
+
+// Calculate the next transaction number
+      const transactionNumber = highestDeal ? highestDeal.transactionNumber + 1 : 1;
+
+      // Create deal documents
+      const deal1 = {
+          transactionNumber,
+          customerId: customer1Id,
+          assetId,
+          dealType,
+          role: customer1Role,
+          dealCommission
+      };
+
+
+      const transactionNumberForSecondDeal = transactionNumber + 1;
+
+      const deal2 = {
+          transactionNumber:  transactionNumberForSecondDeal,
+          customerId: customer2Id,
+          assetId,
+          dealType: (dealType === "Renting") ? "Rented" : "Selling",
+          role: customer2Role,
+          dealCommission
+      };
+
+      // Update asset status to "Unavailable"
+      await assetsCollection.updateOne(
+          { AssetID: assetId },
+          { $set: { AssetStatus: "Unavailable" } }
+      );
+
+      // Insert both deal documents into the deals collection
+      await dealsCollection.insertOne(deal1);
+      await dealsCollection.insertOne(deal2);
+
+      console.log("Deal documents created successfully.");
+  } catch (error) {
+      console.error("Error creating deal:", error);
+  }
+}
+
+
+
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
-   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager};
+   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager, createDeal};

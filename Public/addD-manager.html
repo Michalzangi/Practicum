@@ -115,7 +115,7 @@
                        <div class="row">
                            <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                <div class="slider-text-inner">
-                                   <h2 class="heading-title">Property</h2>
+                                   <h2 class="heading-title">Deals</h2>
                                    <p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
                                </div>
                            </div>
@@ -128,44 +128,27 @@
 
         
         <div class="container"><br><br><br><br><br>
-            <form id="propertyForm" action="/addProperty" method="POST">
+            <form id="DealForm" action="/addDeal" method="POST">
                 <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                    <h3>Add Property Information</h3>
+                    <h3>Add Deal Information</h3>
                 </div>
                 <div class="form-group">
-                    <label for="assetType">Asset Type:</label>
-                    <select class="form-control" id="assetType" name="assetType">
-                        <option value="sale">Sale</option>
-                        <option value="rent">Rent</option>
-                    </select>
+                    <label for="AssetID">Asset ID:</label>
+                    <input type="text" class="form-control" id="AssetID" name="AssetID" required>
                 </div>
                 <div class="form-group">
-                    <label for="assetPrice">Price:</label>
-                    <input type="text" class="form-control" id="assetPrice" name="assetPrice" required>
+                    <label for="Customer1ID">Seller/Landord's ID:</label>
+                    <input type="text" class="form-control" id="Customer1ID" name="Customer1ID" required>
                 </div>
                 <div class="form-group">
-                    <label for="assetStreet">Street:</label>
-                    <input type="text" class="form-control" id="assetStreet" name="assetStreet" required>
+                    <label for="Customer2ID">Buyer/Tenant's ID:</label>
+                    <input type="text" class="form-control" id="Customer2ID" name="Customer2ID" required>
                 </div>
-                <div class="form-group">
-                    <label for="assetDescription">Description:</label>
-                    <input type="text" class="form-control" id="assetDescription" name="assetDescription" required>
-                </div>
-                <div class="form-group">
-                    <label for="assetStreetNumber">Street Number:</label>
-                    <input type="text" class="form-control" id="assetStreetNumber" name="assetStreetNumber" required>
-                </div>
-                <div class="form-group">
-                    <label for="roomNum">Room Number:</label>
-                    <input type="text" class="form-control" id="roomNum" name="roomNum" required>
-                </div>
-                <div class="form-group">
-                    <label for="assetImage">Image URL:</label>
-                    <input type="text" class="form-control" id="assetImage" name="assetImage" required>
-                </div> <br>
+            
+                <br>
                 <button type="submit" class="btn btn-primary" id="sub">Submit</button><br><br><br><br>
                 <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
-                    Property added successfully!
+                    Deals added successfully!
                 </div>
             </form><br><br><br><br>
         </div>
@@ -233,7 +216,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var form = document.getElementById("propertyForm");
+        var form = document.getElementById("DealForm");
         form.addEventListener("submit", function(event) {
             event.preventDefault();
             var formData = new FormData(form);
@@ -242,7 +225,9 @@
                 data[key] = value;
             });
 
-            fetch("/addProperty", {
+            console.log(data);
+
+            fetch("/addDeal", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -253,7 +238,8 @@
                 if (response.ok) {
                     // Show success message
                     document.getElementById("successMessage").style.display = "block";
-                    console.log("Property added successfully");
+                    console.log(data);
+                    console.log("Deals added successfully");
                     setTimeout(function() {
                         location.reload();
                     }, 3000); 

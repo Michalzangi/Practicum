@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
-  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager }= require('./MongoDB')
+  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager,createDeal }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -64,6 +64,17 @@ app.post('/addProperty', async (req, res) => {
   try {
     const propertyId = await addProperty(assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription);
     res.status(201).json({ message: 'Property added successfully', propertyId });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/addDeal', async (req, res) => {
+  const { AssetID, Customer1ID, Customer2ID } = req.body;
+
+  try {
+    const DealID = await createDeal(AssetID, Customer1ID, Customer2ID);
+    res.status(201).json({ message: 'Deals added successfully', DealID });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
