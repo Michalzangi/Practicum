@@ -102,16 +102,19 @@ app.post('/addFeedback', async (req, res) => {
   try {
       const customerId = feedbackData.CustomerID;
       const result = await addFeedback(customerId, feedbackData);
-      if (result) {
-          res.status(201).json({ message: 'Feedback added successfully!' });
-      } else {
-          res.status(404).json({ error: 'Customer not found or has not made any deals. Cannot add feedback.' });
-      }
+      res.status(201).json({ message: 'Feedback added successfully!' });
   } catch (error) {
-      console.error('Error adding feedback to database:', error);
-      res.status(500).json({ error: 'Failed to add feedback to the database' });
+      if (error.message.includes('Customer not found')) {
+          res.status(404).json({ error: 'Your Customer ID is not found. Please register as a customer to add a feedback.' });
+      } else if (error.message.includes('haven\'t made a deal')) {
+          res.status(404).json({ error: 'You still haven\'t made a deal. A feedback hasn\'t been added.' });
+      } else {
+          console.error('Error adding feedback to database:', error);
+          res.status(500).json({ error: 'Failed to add feedback to the database' });
+      }
   }
 });
+
 
 
 

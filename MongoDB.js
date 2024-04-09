@@ -263,15 +263,13 @@ const addFeedback = async (customerId, feedbackData) => {
       // Check if the customer exists
       const customer = await customersCollection.findOne({ CustomerID: customerId });
       if (!customer) {
-          console.log('Customer not found. Cannot add feedback.');
-          return null;
+          throw new Error('Customer not found. Please register as a customer to add feedback.');
       }
 
       // Check if the customer has made at least one deal
       const dealsCount = await dealsCollection.countDocuments({ customerId: customerId });
       if (dealsCount === 0) {
-          console.log('Customer has not made any deals. Cannot add feedback.');
-          return null;
+          throw new Error('You still haven\'t made a deal. A feedback hasn\'t been added.');
       }
 
       // Proceed to add feedback
@@ -288,6 +286,7 @@ const addFeedback = async (customerId, feedbackData) => {
       await client.close();
   }
 };
+
 
 
 

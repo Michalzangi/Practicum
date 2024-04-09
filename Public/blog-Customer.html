@@ -193,6 +193,9 @@
            				 <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
                 			Feedback submitted successfully!
 						</div>
+						<div id="errorMessage" style="display: none;" class="alert alert-danger" role="alert">
+							Failed to add feedback. Please try again later.
+						</div>
 						</div>
 						
                 </div>
@@ -325,13 +328,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		document.addEventListener("DOMContentLoaded", function () {
     var form = document.getElementById("feedbackForm");
+    var successMessage = document.getElementById("successMessage");
+    var errorMessage = document.getElementById("errorMessage");
+
     form.addEventListener("submit", function (event) {
         event.preventDefault();
         var formData = new FormData(form);
         var data = {};
         formData.forEach(function (value, key) {
             data[key] = value;
-		console.log(data);
         });
 
         // Fetch feedback data
@@ -345,18 +350,23 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(function (response) {
             if (response.ok) {
                 // Display success message and reset form
-                document.getElementById("successMessage").style.display = "block";
+                successMessage.style.display = "block";
+                errorMessage.style.display = "none";
                 form.reset();
             } else {
-                console.error("Failed to add feedback");
+                // Display error message
+                errorMessage.style.display = "block";
+                successMessage.style.display = "none";
             }
         })
         .catch(function (error) {
             console.error("Error:", error);
+            // Display error message
+            errorMessage.style.display = "block";
+            successMessage.style.display = "none";
         });
     });
 });
-
 
 
 </script>
