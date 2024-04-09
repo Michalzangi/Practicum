@@ -282,58 +282,104 @@ document.addEventListener("DOMContentLoaded", function() {
     form.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        var assetSelect = document.getElementById("assetSelect");
-        var selectedAssets = [];
+        var customerID = document.getElementById("customerID").value;
 
-        // Fetch selected meeting type
-        var meetingType = document.getElementById("meetingType").value;
-
-        // Fetch selected assets
-        for (var i = 0; i < assetSelect.options.length; i++) {
-            if (assetSelect.options[i].selected) {
-                selectedAssets.push({
-                    AssetID: assetSelect.options[i].value,
-                    AssetStreet: assetSelect.options[i].dataset.street,
-                    AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
-                    AssetPrice: assetSelect.options[i].dataset.price,
-                    AssetType: assetSelect.options[i].dataset.type
-                });
-            }
-        }
-
-        var formData = new FormData(form);
-        var data = {};
-        formData.forEach(function(value, key) {
-            data[key] = value;
-        });
-
-        data["selectedAssets"] = selectedAssets; // Add selected assets to data object
-        data["meetingType"] = meetingType; // Add selected meeting type to data object
-
-        // Send data to server
-        fetch("/addMeeting", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(function(response) {
-            if (response.ok) {
-                document.getElementById("successMessage").style.display = "block";
-                console.log("Meeting added successfully");
-                setTimeout(function() {
-                    location.reload();
-                }, 3000);
-            } else {
-                console.error("Failed to add meeting");
-            }
-        })
-        .catch(function(error) {
-            console.error("Error:", error);
-        });
+        // בדיקה אם הלקוח קיים
+        fetch(`/checkCustomerExists?customerID=${customerID}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
+                    sendMeetingData();
+                } else {
+                    // אם הלקוח לא קיים, הצג הודעת שגיאה
+                    console.log("Customer does not exist!");
+                }
+            })
+            .catch(error => console.error('Error checking customer:', error));
     });
 });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("meetingForm");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                var customerID = document.getElementById("customerID").value;
+
+                // בדיקה אם הלקוח קיים
+                fetch(`/checkCustomerExists?customerID=${customerID}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
+                            sendMeetingData();
+                        } else {
+                            // אם הלקוח לא קיים, הצג הודעת שגיאה
+                            alert("The user does not exist in the system, go to the add customer page to fill in details and then schedule an meeting again");
+                        }
+                    })
+                    .catch(error => console.error('Error checking customer:', error));
+            });
+        });
+
+        // עדכון לפונקציה sendMeetingData עם העברת האלמנט form כפרמטר
+        function sendMeetingData() {
+            var form = document.getElementById("meetingForm"); // הבהרה של המשתנה form
+            var assetSelect = form.querySelector("#assetSelect");
+            var selectedAssets = [];
+
+            // Fetch selected meeting type
+            var meetingType = form.querySelector("#meetingType").value;
+
+            // Fetch selected assets
+            for (var i = 0; i < assetSelect.options.length; i++) {
+                if (assetSelect.options[i].selected) {
+                    selectedAssets.push({
+                        AssetID: assetSelect.options[i].value,
+                        AssetStreet: assetSelect.options[i].dataset.street,
+                        AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
+                        AssetPrice: assetSelect.options[i].dataset.price,
+                        AssetType: assetSelect.options[i].dataset.type
+                    });
+                }
+            }
+
+            var formData = new FormData(form);
+            var data = {};
+            formData.forEach(function(value, key) {
+                data[key] = value;
+            });
+
+            data["selectedAssets"] = selectedAssets;
+            data["meetingType"] = meetingType;
+
+            fetch("/addMeeting", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    document.getElementById("successMessage").style.display = "block";
+                    console.log("Meeting added successfully");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+                } else {
+                    console.error("Failed to add meeting");
+                }
+            })
+            .catch(function(error) {
+                console.error("Error:", error);
+            });
+        }
+
+
+
+
 
 
     </script>

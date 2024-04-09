@@ -333,6 +333,34 @@ const addMeeting = async (customerID, date, time, location, partner, meetingType
 
 
 
+const checkCustomerExists = async (customerID) => {
+  let client;
+
+  try {
+      client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log('Connected to MongoDB');
+
+      const database = client.db('Practicum');
+      const collection = database.collection('Customers');
+
+      // בדיקה אם הלקוח קיים במסד הנתונים על ידי ID
+      const customer = await collection.findOne({ CustomerID: customerID });
+
+      if (customer) {
+          return true; // הלקוח קיים
+      } else {
+          return false; // הלקוח לא קיים
+      }
+  } catch (error) {
+      console.error('Error checking customer:', error);
+      throw new Error('Failed to check customer');
+  } finally {
+      if (client) {
+          await client.close();
+          console.log('Connection to MongoDB closed');
+      }
+  }
+}
 
 
 const updateProperty = async (assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage) => {
@@ -537,31 +565,7 @@ const addCustomer = async (customerID, fullName, phone, email, customerType) => 
   }
 }
 
-//check Customer Existence
-async function checkCustomerExistence(username) {
-  let client; try {
-    client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('Connected to MongoDB');
-    await client.connect();
-    const database = client.db('Practicum');
-    const collection = database.collection('Customers');
-    const customer = await collection.findOne({ username });
-    if (customer) {
-      console.log('Customer exists');
-      return true;
-    }
-    else {
-      console.log('You need to add a new customer');
-      return false;
-    }
-  }
-  catch (error) {
-    console.error('Error:', error);
-    throw new Error('Failed to check customer existence');
-  } finally {
-    await client.close();
-  }
-}
+
 
 async function createDeal(assetId, customer1Id, customer2Id) {
   try {
@@ -652,4 +656,5 @@ async function createDeal(assetId, customer1Id, customer2Id) {
 
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
-   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager, createDeal};
+   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
+   createDeal,checkCustomerExists};

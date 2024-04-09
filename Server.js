@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
-  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,checkCustomerExistence, filterAssetsForManager,createDeal }= require('./MongoDB')
+  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,createDeal,checkCustomerExists }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -156,16 +156,32 @@ app.post('/submitMessage', async (req, res) => {
 
 
 app.post('/addMeeting', async (req, res) => {
-  const { customerID, date, time, location, partner, meetingType,assetSelect  } = req.body;
+  const { customerID, date, time, location, partner, meetingType, assetSelect } = req.body;
 
   try {
-    const meetingId = await addMeeting(customerID, date, time, location, partner,meetingType ,assetSelect);
-    res.status(201).json({ message: 'Meeting added successfully', meetingId });
+      // בדיקה האם הלקוח קיים טרם הוספת הפגישה
+      const customerExists = await checkCustomerExists(customerID);
+      if (!customerExists) {
+          return res.status(400).json({ error: 'Customer does not exist' });
+      }
+
+      const meetingId = await addMeeting(customerID, date, time, location, partner, meetingType, assetSelect);
+      res.status(201).json({ message: 'Meeting added successfully', meetingId });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
   }
 });
 
+app.get('/checkCustomerExists', async (req, res) => {
+  const { customerID } = req.query;
+
+  try {
+      const exists = await checkCustomerExists(customerID);
+      res.status(200).json({ exists }); // Return a JSON response
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
 
 ///////////
 app.get('/Assets', async (req, res) => {
@@ -238,26 +254,7 @@ app.post('/AddCustomer', async (req, res) => {
   }
 });
 
-app.get('/checkCustomer/:id', async (req, res) => {
-  const customerId = parseInt(req.params.id);
-  const customerExists = customers.some(customer => customer.id === customerId);
 
-  if (customerExists) {
-      try {
-          const username = customers.find(customer => customer.id === customerId).username;
-          const existsInDB = await checkCustomerExistence(username);
-          if (existsInDB) {
-              res.status(200).send('Customer exists in the database');
-          } else {
-              res.status(404).send('Customer exists locally but not in the database');
-          }
-      } catch (error) {
-          res.status(500).send('Error checking customer existence');
-      }
-  } else {
-      res.status(404).send('Customer not found');
-  }
-});
 
 
 
