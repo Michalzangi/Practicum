@@ -251,25 +251,44 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
 
 //Add New Feedback
 
-const addFeedback = async (feedbackData) => {
+const addFeedback = async (customerId, feedbackData) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
   
   try {
-    await client.connect();
-    const database = client.db('Practicum');
-    const collection = database.collection('Feedback');
-    const result = await collection.insertOne(feedbackData);
-    
-    console.log('Feedback added successfully!');
-    console.log('Received feedback data:', feedbackData);
-    return result;
+      await client.connect();
+      const database = client.db('Practicum');
+      const customersCollection = database.collection('Customers');
+      const dealsCollection = database.collection('Deals');
+
+      // Check if the customer exists
+      const customer = await customersCollection.findOne({ CustomerID: customerId });
+      if (!customer) {
+          console.log('Customer not found. Cannot add feedback.');
+          return null;
+      }
+
+      // Check if the customer has made at least one deal
+      const dealsCount = await dealsCollection.countDocuments({ customerId: customerId });
+      if (dealsCount === 0) {
+          console.log('Customer has not made any deals. Cannot add feedback.');
+          return null;
+      }
+
+      // Proceed to add feedback
+      const collection = database.collection('Feedback');
+      const result = await collection.insertOne(feedbackData);
+      
+      console.log('Feedback added successfully!');
+      console.log('Received feedback data:', feedbackData);
+      return result;
   } catch (error) {
-    console.error('Error adding feedback:', error);
-    throw new Error('Failed to add feedback');
+      console.error('Error adding feedback:', error);
+      throw new Error('Failed to add feedback');
   } finally {
-    await client.close();
+      await client.close();
   }
 };
+
 
 
 //Add New Meeting
@@ -631,7 +650,6 @@ async function createDeal(assetId, customer1Id, customer2Id) {
       console.error("Error creating deal:", error);
   }
 }
-
 
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,

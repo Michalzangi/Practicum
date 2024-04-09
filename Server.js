@@ -97,16 +97,22 @@ app.post('/updateProperty', async (req, res) => {
 
 
 app.post('/addFeedback', async (req, res) => {
-  const feedbackData = req.body; // הנתונים שנשלחו מהטופס בצד הלקוח
+  const feedbackData = req.body; // Data sent from the form on the client side
 
   try {
-    await addFeedback(feedbackData); // הוספת הפידבק למסד הנתונים
-    res.status(201).json({ message: 'Feedback added successfully!' });
+      const customerId = feedbackData.CustomerID;
+      const result = await addFeedback(customerId, feedbackData);
+      if (result) {
+          res.status(201).json({ message: 'Feedback added successfully!' });
+      } else {
+          res.status(404).json({ error: 'Customer not found or has not made any deals. Cannot add feedback.' });
+      }
   } catch (error) {
-    console.error('Error adding feedback to database:', error);
-    res.status(500).json({ error: 'Failed to add feedback to the database' });
+      console.error('Error adding feedback to database:', error);
+      res.status(500).json({ error: 'Failed to add feedback to the database' });
   }
 });
+
 
 
 const transporter = nodemailer.createTransport({
