@@ -180,9 +180,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                    <h3>All Properties</h3>
+                    <h3>Filter Properties</h3>
+                    <input type="text" id="property-id-input" placeholder="Enter Property ID">
+                    <button onclick="filterProperties()">Filter</button>
                 </div>
             </div>
+
             <div class="row" id="assets-container">
             </div>
         </div>
@@ -264,19 +267,17 @@
 <script src="js/main.js"></script>
 <script>
 async function fetchAssets() {
-  try {
-    const response = await fetch('/Assets');
-    const assets = await response.json();
-    return assets;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Failed to fetch assets');
-  }
-}
+      try {
+        const response = await fetch('/Assets');
+        const assets = await response.json();
+        return assets;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch assets');
+      }
+    }
 
-async function displayAssets() {
-    try {
-        const assets = await fetchAssets();
+    async function displayAssets(assets) {
         const assetsContainer = document.getElementById('assets-container');
         assetsContainer.innerHTML = ''; // Clear previous content
 
@@ -327,12 +328,24 @@ async function displayAssets() {
                 assetsContainer.appendChild(rowDiv);
             }
         });
-    } catch (error) {
-        console.error(error);
     }
-}
 
-window.onload = displayAssets;
+    async function filterProperties() {
+        try {
+            const AssetID = document.getElementById('property-id-input').value;
+            const assets = await fetchAssets();
+            const filteredAssets = assets.filter(asset => asset.AssetID === parseInt(AssetID));
+            displayAssets(filteredAssets);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    window.onload = async function() {
+        const assets = await fetchAssets();
+        displayAssets(assets);
+    };
+
 </script>
 
 </body>
