@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>practicum</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/superfish.css">
+	<link rel="stylesheet" href="css/flexslider.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="js/modernizr-2.6.2.min.js"></script>
+
+    <header id="fh5co-header-section" class="sticky-banner">
+        <div class="container">
+            <div class="nav-header">
+                <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                <h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+                <nav id="fh5co-menu-wrap" role="navigation">
+                    <ul class="sf-menu" id="fh5co-primary-menu">
+                        <li class="active"><a href="HomeManager.html">Home</a></li>
+                        <li>
+                            <a>Assets</a>
+                                <ul class="fh5co-sub-menu">
+                                    <li><a href="all-Manager.html">All</a></li>
+                                    <li><a href="filter-Manager.html">Filter</a></li>
+                                </ul>
+                        </li>
+                        <li><a href="users-Manager.html">Users</a></li>
+                        <li><a href="blog-Manager.html">Blog</a></li>
+                        <li>
+                            <a>Activities</a>
+                                <ul class="fh5co-sub-menu">
+                                    <li><a href="addP-Manager.html">Add Property</a></li>
+                                    <li><a href="updateP-Manager.html">Update Property</a></li>
+                                    <li><a href="addC-Manager.html">Add a Customer</a></li>
+                                    <li><a href="updateC-Manager.html">Update Customer</a></li>
+                                    <li><a href="addD-Manager.html">Close A Deal</a></li>
+                                </ul>
+                        </li>
+                        <li>
+                            <a>Meetings</a>
+                                <ul class="fh5co-sub-menu">
+                                    <li><a href="meetingA-Manager.html">Add</a></li>
+                                    <li><a href="meetingV-Manager.html">View</a></li>
+                                </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+		<aside id="fh5co-hero" class="js-fullheight">
+			<div class="flexslider js-fullheight">
+				<ul class="slides">
+			   	<li style="background-image: url(images/cov.png);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+			   				<div class="slider-text-inner">
+		   						<h2 class="heading-title">Meeting</h2>
+		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
+			   				</div>
+			   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			  	</ul>
+		  	</div>
+		</aside>
+
+		<div id="fh5co-blog-section" class="fh5co-section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                        <h3>Add New Meeting</h3>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="container">
+                    <form id="meetingForm" action="/addMeeting" method="POST">
+						<div class="form-group">
+							<label for="customerID">Customer ID:</label>
+							<input type="text" class="form-control" id="customerID" name="customerID" required>
+						</div>
+						<div class="form-group">
+							<label for="date">Date:</label>
+							<input type="date" class="form-control" id="date" name="date" required>
+						</div>
+						<div class="form-group">
+							<label for="time">Time:</label>
+							<input type="time" class="form-control" id="time" name="time" required>
+						</div>
+						<div class="form-group">
+							<label for="location">Location:</label>
+							<input type="text" class="form-control" id="location" name="location" required>
+						</div> 
+						<div class="form-group">
+						<label for="meetingType">Meeting Type:</label>
+							<select class="form-control" id="meetingType" name="meetingType" required>
+								<option value="">Select Meeting Type</option>
+								<option value="Introduction Meeting">Introduction Meeting</option>
+								<option value="Asset Search Meeting">Asset Search Meeting</option>
+								<option value="Asset Visit Meeting">Asset Visit Meeting</option>
+								<option value="Negotiation Meeting">Negotiation Meeting</option>
+								<option value="Contract Signing Meeting">Contract Signing Meeting</option>
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label for="assetSelect">Select Asset:</label>
+							<select class="form-control" id="assetSelect" name="assetSelect" required>
+							  <option value="">Select Asset</option>
+							</select>
+						  </div>
+						<button type="submit" class="btn btn-primary" id="sub">Submit</button>
+						<div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
+							Meeting added successfully!
+						</div>
+					</form>
+                </div>
+            </div>
+			
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-3">
+							<h3 class="section-title">About Us</h3>
+							<p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
+						</div>
+						
+						<div class="col-md-3 col-md-push-1">
+							<h3 class="section-title">Links</h3>
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Assets</a></li>
+								<li><a href="#">Agent</a></li>
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</div>
+
+						<div class="col-md-3">
+							<h3 class="section-title">Information</h3>
+							<ul>
+								<li><a href="#">Terms &amp; Condition</a></li>
+								<li><a href="#">License</a></li>
+								<li><a href="#">Privacy &amp; Policy</a></li>
+								<li><a href="#">Contact Us</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3">
+							<h3 class="section-title">Newsletter</h3>
+							<p>Subscribe for our newsletter</p>
+							<form class="form-inline" id="fh5co-header-subscribe">
+								<div class="row">
+									<div class="col-md-12 col-md-offset-0">
+										<div class="form-group">
+											<input type="text" class="form-control" id="email" placeholder="Enter your email">
+											<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+	</div>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Fetch assets data from server and display them
+  fetch('/Assets')
+    .then(response => response.json())
+    .then(data => {
+        const assetSelect = document.getElementById('assetSelect');
+        data.forEach(asset => {
+            const option = document.createElement('option');
+            option.value = 'Street: '+asset.AssetStreet +' , Street Number: ' +asset.AssetStreetNumber +', Price: ' + asset.AssetPrice + ', Type: ' + asset.AssetType;
+            option.textContent = option.value;
+            assetSelect.appendChild(option);
+        });
+    })
+    .catch(error => console.error('Error fetching assets:', error));
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/Partners') // שינוי לנתיב המתאים לקבלת השותפים מהשרת
+        .then(response => response.json())
+        .then(data => {
+            const partnerSelect = document.getElementById('partner');
+            data.forEach(partner => {
+                const option = document.createElement('option');
+                option.value = partner.id; // ערך הערך של השותף
+                option.textContent = partner.UserName; // הטקסט המוצג למשתמש
+                partnerSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching partners:', error));
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("meetingForm");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        var customerID = document.getElementById("customerID").value;
+
+        // בדיקה אם הלקוח קיים
+        fetch(`/checkCustomerExists?customerID=${customerID}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
+                    sendMeetingData();
+                } else {
+                    // אם הלקוח לא קיים, הצג הודעת שגיאה
+                    console.log("Customer does not exist!");
+                }
+            })
+            .catch(error => console.error('Error checking customer:', error));
+    });
+});
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("meetingForm");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                var customerID = document.getElementById("customerID").value;
+
+                // בדיקה אם הלקוח קיים
+                fetch(`/checkCustomerExists?customerID=${customerID}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
+                            sendMeetingData();
+                        } else {
+                            // אם הלקוח לא קיים, הצג הודעת שגיאה
+                            alert("The user does not exist in the system, go to the add customer page to fill in details and then schedule an meeting again");
+                        }
+                    })
+                    .catch(error => console.error('Error checking customer:', error));
+            });
+        });
+
+        // עדכון לפונקציה sendMeetingData עם העברת האלמנט form כפרמטר
+        function sendMeetingData() {
+            var form = document.getElementById("meetingForm"); // הבהרה של המשתנה form
+            var assetSelect = form.querySelector("#assetSelect");
+            var selectedAssets = [];
+
+            // Fetch selected meeting type
+            var meetingType = form.querySelector("#meetingType").value;
+
+            // Fetch selected assets
+            for (var i = 0; i < assetSelect.options.length; i++) {
+                if (assetSelect.options[i].selected) {
+                    selectedAssets.push({
+                        AssetID: assetSelect.options[i].value,
+                        AssetStreet: assetSelect.options[i].dataset.street,
+                        AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
+                        AssetPrice: assetSelect.options[i].dataset.price,
+                        AssetType: assetSelect.options[i].dataset.type
+                    });
+                }
+            }
+
+            var formData = new FormData(form);
+            var data = {};
+            formData.forEach(function(value, key) {
+                data[key] = value;
+            });
+
+            data["selectedAssets"] = selectedAssets;
+            data["meetingType"] = meetingType;
+
+            fetch("/addMeeting", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    document.getElementById("successMessage").style.display = "block";
+                    console.log("Meeting added successfully");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+                } else {
+                    console.error("Failed to add meeting");
+                }
+            })
+            .catch(function(error) {
+                console.error("Error:", error);
+            });
+        }
+
+    </script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<script src="js/jquery.flexslider-min.js"></script>
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	<script src="js/main.js"></script>
+	</body>
+</html>

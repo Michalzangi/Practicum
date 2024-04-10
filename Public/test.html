@@ -1,0 +1,399 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  </head>
+  <style>
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #000;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; margin: 0;
+  overflow: hidden;
+}
+.feedback-container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-size: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 30px; max-width: 400px;
+}
+.feedback-container strong {
+  line-height: 20px;
+}
+.ratings-container {
+  display: flex;
+  margin: 20px 0;
+}   
+.rating {
+  flex: 1;
+  cursor: pointer;
+  padding: 20px;
+  margin: 10px 5px;
+}
+.rating:hover, .rating.active {
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.rating img {
+  width: 40px;
+}
+.rating small {
+  color: #555;
+  display: inline-block;
+  margin: 10px 0 0;
+}
+.rating:hover small,.rating.active small {
+  color: #111;
+}
+.btn {
+  background-color: #302d2b;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 12px 30px;
+  cursor: pointer;
+}
+.btn:focus {
+outline: 0;
+}
+.btn:active {
+transform: scale(0.98);
+}
+.fa-heart {
+  color: red;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #345d80;
+  font-family: "Rubik", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}
+
+h1{
+  color: #fff;
+}
+
+.music-container {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px 0 rgba(186, 184, 184, 0.6);
+  display: flex;
+  padding: 20px 30px;
+  position: relative;
+  margin: 100px 0;
+  z-index: 10;
+}
+
+.img-container {
+  position: relative;
+  width: 110px;
+}
+
+.img-container img {
+  border-radius: 50%;
+  object-fit: cover;
+  height: 110px;
+  width: inherit;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  animation: rotateImage 3s linear infinite;
+  animation-play-state: paused;
+}
+
+.img-container::after {
+  content: '';
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  bottom: 100%;
+  left: 50%;
+  height: 20px;
+  width: 20px;
+  transform: translate(-50%, 50%);
+}
+
+.music-container.play .img-container img {
+  animation-play-state: running;
+}
+
+@keyframes rotateImage {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.action-btn {
+  background-color: #fff;
+  border: 0;
+  color: #490349;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0 20px;
+}
+
+.action-btn:focus {
+  outline: none;
+}
+
+.action-btn:hover, .action-btn.action-btn-big:hover {
+  color: #8d91fe;
+}
+
+.action-btn.action-btn-big {
+  color: #0c085f;
+  font-size: 30px;
+}
+
+.music-info {
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 15px 15px 0 0;
+  position: absolute;
+  width: calc(100% - 40px);
+  padding: 10px 10px 10px 150px;
+  top: 0;
+  left: 20px;
+  opacity: 0;
+  transform: translateY(0%);
+  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+  z-index: 0;
+}
+
+.music-container.play .music-info {
+  opacity: 1;
+  transform: translateY(-100%);
+}
+
+.music-info h2 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.progress-container {
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  height: 4px;
+  width: 100%;
+}
+
+.progress {
+  background-color: #fe8daa;
+  border-radius: 5px;
+  height: 100%;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+  </style>
+
+  <body>
+    <div id="feedback" class="feedback-container">
+    <strong>How satisfied are you with our <br/> customer support service?</strong>
+      <div class="ratings-container">
+        <div class="rating">
+          <img src="https://img.icons8.com/external-neu-royyan-wijaya/64/000000/external-emoji-neumojis-smiley-neu-royyan-wijaya-17.png" alt="">
+          <small>unsatisfied</small>
+        </div>
+        <div class="rating"><img src="https://img.icons8.com/external-neu-royyan-wijaya/64/000000/external-emoji-neumojis-smiley-neu-royyan-wijaya-3.png" alt=""/>
+          <small>Neutral</small>
+        </div>
+        <div class="rating active"><img src="https://img.icons8.com/external-neu-royyan-wijaya/64/000000/external-emoji-neumojis-smiley-neu-royyan-wijaya-30.png" alt=""/>
+          <small>Happy</small>
+        </div>
+      </div>
+      <button class="btn" id="send">Send Review</button>
+    </div>
+    <h1>Music Player</h1>
+  
+    <div class="music-container" id="music-container">
+      <div class="music-info">
+        <h2 id="title" class="title"></h2>
+        <div class="progress-container" id="progress-container">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+      <audio
+        src="https://github.com/bradtraversy/vanillawebprojects/blob/master/music-player/music/summer.mp3?raw=true"
+        id="audio"
+      ></audio>
+      <div class="img-container">
+        <img
+          src="https://github.com/bradtraversy/vanillawebprojects/blob/master/music-player/images/summer.jpg?raw=true"
+          alt="music-cover"
+          id="cover"
+        />
+      </div>
+      <div class="navigation">
+        <button id="prev" class="action-btn">
+          <i class="fas fa-backward"></i>
+        </button>
+        <button id="play" class="action-btn action-btn-big">
+          <i class="fas fa-play"></i>
+        </button>
+        <button id="next" class="action-btn">
+          <i class="fas fa-forward"></i>
+        </button>
+      </div>
+    </div>
+    
+  </body>
+</html>
+<script>
+const ratings = document.querySelectorAll('.rating')
+const ratingsContainer = document.querySelector('.ratings-container')
+const sendBtn = document.querySelector('#send')
+const feedback = document.querySelector('#feedback')
+let selectedRating = 'Satisfied'
+ratingsContainer.addEventListener('click', (e) => {
+    if(e.target.parentNode.classList.contains('rating') && e.target.nextElementSibling) {
+        removeActive()
+        e.target.parentNode.classList.add('active')
+        selectedRating = e.target.nextElementSibling.innerHTML
+    } else if(
+        e.target.parentNode.classList.contains('rating') &&
+        e.target.previousSibling &&
+        e.target.previousElementSibling.nodeName === 'IMG'
+    ) {
+        removeActive()
+        e.target.parentNode.classList.add('active')
+        selectedRating = e.target.innerHTML
+    }
+})
+sendBtn.addEventListener('click', (e) => {
+    feedback.innerHTML = `
+        <i class="fas fa-heart"></i>
+        <strong>Thank You!</strong>
+        <br>
+        <strong>Feedback: ${selectedRating}</strong>
+<p>We'll use your feedback to improve our customer support</p>`
+});
+function removeActive() {
+    for(let i = 0; i < ratings.length; i++) {
+        ratings[i].classList.remove('active');
+    }
+ }
+
+ const musicContainer = document.getElementById("music-container");
+const playButton = document.getElementById("play");
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
+const audio = document.getElementById("audio");
+const progress = document.getElementById("progress");
+const progressContainer = document.getElementById("progress-container");
+const title = document.getElementById("title");
+const cover = document.getElementById("cover");
+
+const songs = ["hey", "summer", "ukulele"];
+let songIndex = 1;
+
+function getSongTitle(song) {
+  return song.charAt(0).toUpperCase() + song.slice(1);
+}
+
+function loadSong(song) {
+    title.innerText = getSongTitle(song);
+  audio.src = `https://github.com/bradtraversy/vanillawebprojects/blob/master/music-player/music/${song}.mp3?raw=true`;
+  cover.src = `https://github.com/bradtraversy/vanillawebprojects/blob/master/music-player/images/${song}.jpg?raw=true`;
+}
+
+// Call the loadSong function with "fireflies"
+loadSong("fireflies");
+function playSong() {
+  musicContainer.classList.add("play");
+  playButton.querySelector("i.fas").classList.remove("fa-play");
+  playButton.querySelector("i.fas").classList.add("fa-pause");
+  audio.play();
+}
+
+function pauseSong() {
+  musicContainer.classList.remove("play");
+  playButton.querySelector("i.fas").classList.remove("fa-pause");
+  playButton.querySelector("i.fas").classList.add("fa-play");
+  audio.pause();
+}
+
+function prevSong() {
+  songIndex--;
+  if (songIndex < 0) songIndex = songs.length - 1;
+  loadSong(songs[songIndex]);
+  playSong();
+}
+
+function nextSong() {
+  songIndex++;
+  if (songIndex > songs.length - 1) songIndex = 0;
+  loadSong(songs[songIndex]);
+  playSong();
+}
+
+function updateProgress(e) {
+  const { duration, currentTime } = e.srcElement;
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = `${progressPercent}%`;
+}
+
+function setProgress(e) {
+  const width = this.clientWidth;
+  const clickX = e.offsetX;
+  const duration = audio.duration;
+  audio.currentTime = (clickX / width) * duration;
+}
+
+// Event Listeners
+playButton.addEventListener("click", () => {
+  const isPlaying = musicContainer.classList.contains("play");
+  isPlaying ? pauseSong() : playSong();
+});
+
+prevButton.addEventListener("click", prevSong);
+nextButton.addEventListener("click", nextSong);
+
+audio.addEventListener("timeupdate", updateProgress);
+progressContainer.addEventListener("click", setProgress);
+
+audio.addEventListener("ended", nextSong);
+
+// Init
+loadSong(songs[songIndex]);
+</script>
