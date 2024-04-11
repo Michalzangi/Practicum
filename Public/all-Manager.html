@@ -298,11 +298,12 @@ async function fetchAssets() {
             const title = asset.AssetType;
             const description = `Price: $${asset.AssetPrice}`;
             const imageUrl = asset.AssetImage;
-            const status = asset.Status; // Rent or Sale
+            const status = asset.AssetStatus; // Rent or Sale
 
             assetDiv.innerHTML = `
                 <h2>${title}</h2>
                 <p>${description}</p>
+                <p>${status}</p>
                 <img src="${imageUrl}" alt="${title}">
             `;
             
