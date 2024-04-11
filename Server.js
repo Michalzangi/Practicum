@@ -7,9 +7,7 @@ const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedbac
 app.use(express.static('public'));
 app.use(express.json()); 
 const nodemailer = require('nodemailer');
-// Define a route handler for the root URL
 app.get('/', (req, res) => {
-  // You can optionally handle requests to the root URL separately here
   res.send('Hello from the root URL!');
 });
 
