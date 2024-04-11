@@ -453,6 +453,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 if (data.user && data.user.Role === 'Admin') {
+                    // Set "partner" field in session storage only for admin
+                    sessionStorage.setItem('username', username);
+                    console.log(sessionStorage.getItem('username'));
+                }
+
+                // Redirect to respective home page based on user role
+                if (data.user && data.user.Role === 'Admin') {
                     window.location.href = 'HomeManager.html';
                 } else if (data.user && data.user.Role === 'User') {
                     window.location.href = 'Home.html';
@@ -466,8 +473,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
-      
 
     </script>
     

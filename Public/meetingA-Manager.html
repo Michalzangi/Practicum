@@ -131,6 +131,7 @@
 								<option value="Contract Signing Meeting">Contract Signing Meeting</option>
 							</select>
 						</div>
+                        <input type="hidden" id="partner" name="partner" value="">
 						
 						<div class="form-group">
 							<label for="assetSelect">Select Asset:</label>
@@ -209,139 +210,108 @@
 	</div>
 
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Fetch assets data from server and display them
-  fetch('/Assets')
-    .then(response => response.json())
-    .then(data => {
-        const assetSelect = document.getElementById('assetSelect');
-        data.forEach(asset => {
-            const option = document.createElement('option');
-            option.value = 'Street: '+asset.AssetStreet +' , Street Number: ' +asset.AssetStreetNumber +', Price: ' + asset.AssetPrice + ', Type: ' + asset.AssetType;
-            option.textContent = option.value;
-            assetSelect.appendChild(option);
-        });
-    })
-    .catch(error => console.error('Error fetching assets:', error));
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/Partners') // שינוי לנתיב המתאים לקבלת השותפים מהשרת
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('/Assets')
         .then(response => response.json())
         .then(data => {
-            const partnerSelect = document.getElementById('partner');
-            data.forEach(partner => {
+            const assetSelect = document.getElementById('assetSelect');
+            data.forEach(asset => {
                 const option = document.createElement('option');
-                option.value = partner.id; // ערך הערך של השותף
-                option.textContent = partner.UserName; // הטקסט המוצג למשתמש
-                partnerSelect.appendChild(option);
+                option.value = 'Street: '+asset.AssetStreet +' , Street Number: ' +asset.AssetStreetNumber +', Price: ' + asset.AssetPrice + ', Type: ' + asset.AssetType;
+                option.textContent = option.value;
+                assetSelect.appendChild(option);
             });
         })
-        .catch(error => console.error('Error fetching partners:', error));
+        .catch(error => console.error('Error fetching assets:', error));
 });
 
-
-
+//
 document.addEventListener("DOMContentLoaded", function() {
+    const username = sessionStorage.getItem('username');
+    console.log(username);
+    const partnerField = document.getElementById('partner');
+    console.log(partnerField);
+    if (username) {
+            partnerField.value = username;
+            console.log(partnerField);
+        }
+     else {
+        console.error('Username not found in session storage');
+    }
+
     var form = document.getElementById("meetingForm");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
 
+        var partner = partnerField.value; 
         var customerID = document.getElementById("customerID").value;
 
-        // בדיקה אם הלקוח קיים
         fetch(`/checkCustomerExists?customerID=${customerID}`)
             .then(response => response.json())
             .then(data => {
                 if (data.exists) {
-                    // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
-                    sendMeetingData();
+                    sendMeetingData(partner);
                 } else {
-                    // אם הלקוח לא קיים, הצג הודעת שגיאה
-                    console.log("Customer does not exist!");
+                    alert("The user does not exist in the system. Please go to the add customer page to fill in details and then schedule a meeting again.");
                 }
             })
             .catch(error => console.error('Error checking customer:', error));
     });
-});
 
-        document.addEventListener("DOMContentLoaded", function() {
-            var form = document.getElementById("meetingForm");
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
+    function sendMeetingData(partner) {
+        var form = document.getElementById("meetingForm");
+        var assetSelect = form.querySelector("#assetSelect");
+        var selectedAssets = [];
+        var meetingType = form.querySelector("#meetingType").value;
 
-                var customerID = document.getElementById("customerID").value;
+        for (var i = 0; i < assetSelect.options.length; i++) {
+            if (assetSelect.options[i].selected) {
+                selectedAssets.push({
+                    AssetID: assetSelect.options[i].value,
+                    AssetStreet: assetSelect.options[i].dataset.street,
+                    AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
+                    AssetPrice: assetSelect.options[i].dataset.price,
+                    AssetType: assetSelect.options[i].dataset.type
+                });
+            }
+        }
 
-                // בדיקה אם הלקוח קיים
-                fetch(`/checkCustomerExists?customerID=${customerID}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.exists) {
-                            // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
-                            sendMeetingData();
-                        } else {
-                            // אם הלקוח לא קיים, הצג הודעת שגיאה
-                            alert("The user does not exist in the system, go to the add customer page to fill in details and then schedule an meeting again");
-                        }
-                    })
-                    .catch(error => console.error('Error checking customer:', error));
-            });
+        var formData = new FormData(form);
+        var data = {};
+        formData.forEach(function(value, key) {
+            data[key] = value;
         });
 
-        // עדכון לפונקציה sendMeetingData עם העברת האלמנט form כפרמטר
-        function sendMeetingData() {
-            var form = document.getElementById("meetingForm"); // הבהרה של המשתנה form
-            var assetSelect = form.querySelector("#assetSelect");
-            var selectedAssets = [];
 
-            // Fetch selected meeting type
-            var meetingType = form.querySelector("#meetingType").value;
+        data["partner"] = partner;
+        data["selectedAssets"] = selectedAssets;
+        data["meetingType"] = meetingType;
 
-            // Fetch selected assets
-            for (var i = 0; i < assetSelect.options.length; i++) {
-                if (assetSelect.options[i].selected) {
-                    selectedAssets.push({
-                        AssetID: assetSelect.options[i].value,
-                        AssetStreet: assetSelect.options[i].dataset.street,
-                        AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
-                        AssetPrice: assetSelect.options[i].dataset.price,
-                        AssetType: assetSelect.options[i].dataset.type
-                    });
-                }
+
+        fetch("/addMeeting", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            if (response.ok) {
+                document.getElementById("successMessage").style.display = "block";
+                console.log("Meeting added successfully");
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            } else {
+                console.error("Failed to add meeting");
             }
+        })
+        .catch(function(error) {
+            console.error("Error:", error);
+        });
+    }
+});
 
-            var formData = new FormData(form);
-            var data = {};
-            formData.forEach(function(value, key) {
-                data[key] = value;
-            });
-
-            data["selectedAssets"] = selectedAssets;
-            data["meetingType"] = meetingType;
-
-            fetch("/addMeeting", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    document.getElementById("successMessage").style.display = "block";
-                    console.log("Meeting added successfully");
-                    setTimeout(function() {
-                        location.reload();
-                    }, 3000);
-                } else {
-                    console.error("Failed to add meeting");
-                }
-            })
-            .catch(function(error) {
-                console.error("Error:", error);
-            });
-        }
 
     </script>
 	<script src="js/jquery.min.js"></script>

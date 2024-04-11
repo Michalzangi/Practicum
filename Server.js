@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
-  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,createDeal,checkCustomerExists }= require('./MongoDB')
+  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,createDeal,checkCustomerExists,getAllMeetings }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -28,11 +28,9 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/CustomerAssets', async (req, res) => {
-  // Retrieve parameters from query string
   const { assetType, assetPriceMin, assetPriceMax, roomNumber, assetStreetNumber, assetStreet } = req.query;
 
   try {
-    // Call FilterAssets function with parameters
     const filteredAssets = await filterAssets(assetType, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
     res.json(filteredAssets); // Return filtered assets as JSON response
   } catch (error) {
@@ -41,11 +39,9 @@ app.get('/CustomerAssets', async (req, res) => {
 });
 
 app.get('/CustomerAssetsForManager', async (req, res) => {
-  // Retrieve parameters from query string
   const { assetType, assetPriceMin, assetPriceMax, roomNumber, assetStreetNumber, assetStreet } = req.query;
 
   try {
-    // Call FilterAssets function with parameters
     const filteredAssets = await filterAssetsForManager(assetType, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
     res.json(filteredAssets); // Return filtered assets as JSON response
   } catch (error) {
@@ -80,7 +76,6 @@ app.post('/addDeal', async (req, res) => {
   }
 });
 
-
 app.post('/updateProperty', async (req, res) => {
   const { assetID, assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage } = req.body;
   console.log('Request Body:', req.body);
@@ -93,7 +88,6 @@ app.post('/updateProperty', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 
 app.post('/addFeedback', async (req, res) => {
@@ -114,8 +108,6 @@ app.post('/addFeedback', async (req, res) => {
       }
   }
 });
-
-
 
 
 const transporter = nodemailer.createTransport({
@@ -159,7 +151,6 @@ app.post('/addMeeting', async (req, res) => {
   const { customerID, date, time, location, partner, meetingType, assetSelect } = req.body;
 
   try {
-      // בדיקה האם הלקוח קיים טרם הוספת הפגישה
       const customerExists = await checkCustomerExists(customerID);
       if (!customerExists) {
           return res.status(400).json({ error: 'Customer does not exist' });
@@ -193,7 +184,6 @@ app.get('/Assets', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
-
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -254,11 +244,16 @@ app.post('/AddCustomer', async (req, res) => {
   }
 });
 
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////
+app.get('/meetings', async (req, res) => {
+  try {
+    const meetings = await getAllMeetings();
+    res.json(meetings);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to fetch meetings' });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
