@@ -30,9 +30,9 @@ app.get('/CustomerAssets', async (req, res) => {
 
   try {
     const filteredAssets = await filterAssets(assetType, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
-    res.json(filteredAssets); // Return filtered assets as JSON response
+    res.json(filteredAssets); 
   } catch (error) {
-    res.status(500).json({ error: error.message }); // Handle any errors
+    res.status(500).json({ error: error.message }); 
   }
 });
 
