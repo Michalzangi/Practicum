@@ -316,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             sendMeetingData();
                         } else {
                             // אם הלקוח לא קיים, הצג הודעת שגיאה
-                            alert("The user does not exist in the system, go to the add customer page to fill in details and then schedule an meeting again");
+                            alert("The user does not exist in the system, go to the join page to fill in details and then schedule an meeting again");
                         }
                     })
                     .catch(error => console.error('Error checking customer:', error));
@@ -378,6 +378,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
 
+		document.addEventListener("DOMContentLoaded", function() {
+    var assetSelect = document.getElementById("assetSelect");
+    var assetSelectLabel = document.querySelector("label[for='assetSelect']");
+
+    // סימון שדה הבחירה בנכסים ותוויתו כבלתי גלויים בתחילת העמוד
+    assetSelect.style.display = "none";
+    assetSelectLabel.style.display = "none";
+
+    var meetingTypeSelect = document.getElementById("meetingType");
+
+    meetingTypeSelect.addEventListener("change", function() {
+        var selectedMeetingType = meetingTypeSelect.value;
+
+        if (selectedMeetingType === "Introduction Meeting" || selectedMeetingType === "Asset Search Meeting") {
+            assetSelect.style.display = "none";
+            assetSelectLabel.style.display = "none";
+        } else {
+            assetSelect.style.display = "block";
+            assetSelectLabel.style.display = "block";
+        }
+    });
+});
 
 
 
