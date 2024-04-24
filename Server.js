@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
-  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,createDeal,checkCustomerExists,getAllMeetings }= require('./MongoDB')
+  getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,
+  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -250,6 +251,16 @@ app.get('/meetings', async (req, res) => {
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Failed to fetch meetings' });
+  }
+});
+app.delete('/meeting/:id', async (req, res) => {
+  const meetingId = req.params.id;
+  try {
+      await deleteMeetingById(meetingId);
+      res.sendStatus(204); // Send success status code
+  } catch (error) {
+      console.error('Error deleting meeting:', error);
+      res.sendStatus(500); // Send internal server error status code
   }
 });
 

@@ -243,7 +243,9 @@
 
 	<!-- jQuery -->
     <script>
-document.addEventListener("DOMContentLoaded", function() {
+	
+
+	document.addEventListener("DOMContentLoaded", function() {
   // Fetch assets data from server and display them
   fetch('/Assets')
     .then(response => response.json())
@@ -258,8 +260,6 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .catch(error => console.error('Error fetching assets:', error));
 });
-
-
 document.addEventListener("DOMContentLoaded", function() {
     fetch('/Partners') // שינוי לנתיב המתאים לקבלת השותפים מהשרת
         .then(response => response.json())
@@ -275,38 +275,11 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error('Error fetching partners:', error));
 });
 
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    var form = document.getElementById("meetingForm");
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        var customerID = document.getElementById("customerID").value;
-
-        // בדיקה אם הלקוח קיים
-        fetch(`/checkCustomerExists?customerID=${customerID}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.exists) {
-                    // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
-                    sendMeetingData();
-                } else {
-                    // אם הלקוח לא קיים, הצג הודעת שגיאה
-                    console.log("Customer does not exist!");
-                }
-            })
-            .catch(error => console.error('Error checking customer:', error));
-    });
-});
-
         document.addEventListener("DOMContentLoaded", function() {
             var form = document.getElementById("meetingForm");
             form.addEventListener("submit", function(event) {
                 event.preventDefault();
-
                 var customerID = document.getElementById("customerID").value;
-
                 // בדיקה אם הלקוח קיים
                 fetch(`/checkCustomerExists?customerID=${customerID}`)
                     .then(response => response.json())
@@ -322,16 +295,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     .catch(error => console.error('Error checking customer:', error));
             });
         });
-
         // עדכון לפונקציה sendMeetingData עם העברת האלמנט form כפרמטר
         function sendMeetingData() {
             var form = document.getElementById("meetingForm"); // הבהרה של המשתנה form
             var assetSelect = form.querySelector("#assetSelect");
             var selectedAssets = [];
-
             // Fetch selected meeting type
             var meetingType = form.querySelector("#meetingType").value;
-
             // Fetch selected assets
             for (var i = 0; i < assetSelect.options.length; i++) {
                 if (assetSelect.options[i].selected) {
@@ -344,16 +314,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     });
                 }
             }
-
             var formData = new FormData(form);
             var data = {};
             formData.forEach(function(value, key) {
                 data[key] = value;
             });
-
             data["selectedAssets"] = selectedAssets;
             data["meetingType"] = meetingType;
-
             fetch("/addMeeting", {
                 method: "POST",
                 headers: {
@@ -376,31 +343,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error("Error:", error);
             });
         }
-
-
-		document.addEventListener("DOMContentLoaded", function() {
-    var assetSelect = document.getElementById("assetSelect");
-    var assetSelectLabel = document.querySelector("label[for='assetSelect']");
-
-    // סימון שדה הבחירה בנכסים ותוויתו כבלתי גלויים בתחילת העמוד
-    assetSelect.style.display = "none";
-    assetSelectLabel.style.display = "none";
-
-    var meetingTypeSelect = document.getElementById("meetingType");
-
-    meetingTypeSelect.addEventListener("change", function() {
-        var selectedMeetingType = meetingTypeSelect.value;
-
-        if (selectedMeetingType === "Introduction Meeting" || selectedMeetingType === "Asset Search Meeting") {
-            assetSelect.style.display = "none";
-            assetSelectLabel.style.display = "none";
-        } else {
-            assetSelect.style.display = "block";
-            assetSelectLabel.style.display = "block";
-        }
-    });
-});
-
 
 
 

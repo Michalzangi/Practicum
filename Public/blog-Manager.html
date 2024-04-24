@@ -53,8 +53,62 @@
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<style>
+        .card {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 10fr));
+            gap: 20px;
+        }
+
+        .feedback-item {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .feedback-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-item h4 {
+            font-family: 'Kunstler Script', cursive;
+            margin-top: auto; 
+            margin-bottom: auto; 
+			
+            font-size: 50px;
+            color: rgba(120, 101, 101, 0.671); 
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feedback-item p {
+            margin: 0;
+            font-size: 16px;
+            color: #666666;
+            font-family: 'calibri';
+			margin-left: auto;
+        }
+
+        .feedback-item .date {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .feedback-item .location {
+            margin-top: 10px;
+        }
+
+        .feedback-item .customer {
+            margin-top: 10px;
+        }
+
+        .feedback-item .asset-details {
+            margin-top: 10px;
+        }
 		
-	</style>
+    </style>
 
 
 </head>
@@ -115,6 +169,7 @@
 		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
 			   				</div>
 			   			</div>
+						  
 				   		</div>
 			   		</div>
 			   	</li>
@@ -132,7 +187,7 @@
 					</div>
 				</div>
 			</div>
-			
+			<div class="card" id="feedbackList">
 			<div class="container">
 				<div class="container" id="feedbackListContainer">
 					<div class="row row-bottom-padded-md">

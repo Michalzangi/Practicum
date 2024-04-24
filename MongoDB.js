@@ -607,7 +607,34 @@ async function createDeal(assetId, customer1Id, customer2Id) {
   }
 }
 
+//delete meeting
+async function deleteMeetingById(meetingId) {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+      await client.connect();
+      console.log('Connected to MongoDB'); // לוג לקשר הוצאה
+      const db = client.db('Practicum');
+      const MeetingsCollection = db.collection('Meetings');
+      const userObjectId = new ObjectId(meetingId);
+      const result = await MeetingsCollection.deleteOne({ _id: userObjectId });
+      if (result.deletedCount === 1) {
+          console.log('Meeting deleted successfully');
+      } else {
+          console.log('Meetings not found or deletion failed');
+      }
+  } catch (err) {
+      console.error('Error deleting Meeting:', err);
+      throw err;
+  } finally {
+      await client.close();
+      console.log('MongoDB connection closed'); // לוג לסגירת קשר
+  }
+}
+
+
+
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings};
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById};
