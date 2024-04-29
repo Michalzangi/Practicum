@@ -49,6 +49,10 @@
         padding: 15px;
         width: fit-content; 
     }
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
     .property-button {
         margin: 0 10px;
         padding: 10px 20px;
@@ -82,20 +86,14 @@
                                 <ul class="fh5co-sub-menu">
                                     <li><a href="all-Manager.html">All</a></li>
                                     <li><a href="filter-Manager.html">Filter</a></li>
+                                    <li><a href="addA-Manager.html">Add</a></li>
+                                    <li><a href="updateA-Manager.html">Update</a></li>
                                 </ul>
                         </li>
                         <li><a href="users-Manager.html">Users</a></li>
+                        <li><a href="addC-Manager.html">Customer</a></li>
                         <li><a href="blog-Manager.html">Blog</a></li>
-                        <li>
-                            <a>Activities</a>
-                                <ul class="fh5co-sub-menu">
-                                    <li><a href="addP-Manager.html">Add Property</a></li>
-                                    <li><a href="updateP-Manager.html">Update Property</a></li>
-                                    <li><a href="addC-Manager.html">Add a Customer</a></li>
-                                    <li><a href="updateC-Manager.html">Update Customer</a></li>
-                                    <li><a href="addD-Manager.html">Close A Deal</a></li>
-                                </ul>
-                        </li>
+                        <li><a href="addD-Manager.html">Deal</a></li>
                         <li>
                             <a>Meetings</a>
                                 <ul class="fh5co-sub-menu">
@@ -118,7 +116,7 @@
                        <div class="row">
                            <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                <div class="slider-text-inner">
-                                   <h2 class="heading-title">Property</h2>
+                                   <h2 class="heading-title">Asset</h2>
                                    <p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
                                </div>
                            </div>
@@ -131,35 +129,49 @@
 
         
         <div class="container"><br><br><br><br><br>
-            <div id="updatePropertyForm">
-            <form id="propertyFormUpdate" action="/updateProperty" method="POST">
+            <form id="propertyForm" action="/addProperty" method="POST">
                 <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                    <h3>Update Property Information</h3>
-                </div>
-                <div class="form-group">
-                    <label for="assetID">AssetID:</label>
-                    <input type="text" class="form-control" id="assetID" name="assetID" required>
+                    <h3>Add Asset Information</h3>
                 </div>
                 <div class="form-group">
                     <label for="assetType">Asset Type:</label>
-                    <select class="form-control" id="assetType2" name="assetType">
+                    <select class="form-control" id="assetType" name="assetType">
                         <option value="sale">Sale</option>
                         <option value="rent">Rent</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="assetPrice">Price:</label>
-                    <input type="text" class="form-control" id="assetPrice2" name="assetPrice" required>
+                    <input type="text" class="form-control" id="assetPrice" name="assetPrice" required>
                 </div>
-                <button type="submit" class="btn btn-primary" id="sub">Submit</button>
-                <div id="successMessage2" style="display: none;" class="alert alert-success" role="alert">
-                    Property updated successfully!
+                <div class="form-group">
+                    <label for="assetStreet">Street:</label>
+                    <input type="text" class="form-control" id="assetStreet" name="assetStreet" required>
                 </div>
-            </form><br><br><br><br><br>
-        </div>
+                <div class="form-group">
+                    <label for="assetDescription">Description:</label>
+                    <input type="text" class="form-control" id="assetDescription" name="assetDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="assetStreetNumber">Street Number:</label>
+                    <input type="text" class="form-control" id="assetStreetNumber" name="assetStreetNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="roomNum">Room Number:</label>
+                    <input type="text" class="form-control" id="roomNum" name="roomNum" required>
+                </div>
+                <div class="form-group">
+                    <label for="assetImage">Image URL:</label>
+                    <input type="text" class="form-control" id="assetImage" name="assetImage" required>
+                </div> <br>
+                <button type="submit" class="btn btn-primary" id="sub">Submit</button><br><br><br><br>
+                <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
+                    Asset added successfully!
+                </div>
+            </form><br><br><br><br>
         </div>
     </div>
-
+    </div>
 
     <footer>
         <div id="footer">
@@ -219,43 +231,42 @@
             </div>
         </div>
     </footer>
-</div>
-</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var form2 = document.getElementById("propertyFormUpdate");
-        form2.addEventListener("submit", function(event) {
+        var form = document.getElementById("propertyForm");
+        form.addEventListener("submit", function(event) {
             event.preventDefault();
-            var formData2 = new FormData(form2);
-            var data2 = {};
-            formData2.forEach(function(value, key) {
-                data2[key] = value;
+            var formData = new FormData(form);
+            var data = {};
+            formData.forEach(function(value, key) {
+                data[key] = value;
             });
 
-    fetch("/updateProperty", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data2)
-    })
-    .then(function(response) {
-        if (response.ok) {
-            document.getElementById("successMessage2").style.display = "block";
-            console.log("Property updated successfully");
-            setTimeout(function() {
-                location.reload();
-            }, 3000); 
-        } else {
-            console.error("Failed to update property");
-        }
-    })
-    .catch(function(error) {
-        console.error("Error:", error);
+            fetch("/addProperty", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById("successMessage").style.display = "block";
+                    console.log("Property added successfully");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000); 
+                } else {
+                    console.error("Failed to add property");
+                }
+            })
+            .catch(function(error) {
+                console.error("Error:", error);
+            });
+        });
     });
-});
-});
 </script>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
@@ -269,5 +280,6 @@
 <script src="js/classie.js"></script>
 <script src="js/selectFx.js"></script>
 <script src="js/main.js"></script>
+
 </body>
 </html>
