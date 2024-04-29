@@ -57,6 +57,66 @@
 	<![endif]-->
 
 </head>
+<style>
+	      .card {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 10fr));
+            gap: 50px;
+			padding: 50px;
+			
+
+        }
+
+        .feedback-item {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .feedback-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-item h4 {
+            font-family: 'Kunstler Script', cursive;
+            margin-top: auto; 
+            margin-bottom: auto; 
+			
+            font-size: 50px;
+            color: rgba(120, 101, 101, 0.671); 
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feedback-item p {
+            margin: 0;
+            font-size: 16px;
+            color: #666666;
+            font-family: 'calibri';
+			margin-left: auto;
+        }
+
+        .feedback-item .date {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .feedback-item .location {
+            margin-top: 10px;
+        }
+
+        .feedback-item .customer {
+            margin-top: 10px;
+        }
+
+        .feedback-item .asset-details {
+            margin-top: 10px;
+        }
+
+</style>
 <body>
 	<div id="fh5co-wrapper">
 	<div id="fh5co-page">
@@ -119,27 +179,30 @@
 				</div>
 			</div>
 			
-			<div class="container">
-				<div class="container" id="feedbackListContainer">
-					<div class="row row-bottom-padded-md">
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="fh5co-blog animate-box">
-
-								
+			
+				<div class="card" id="feedbackList">
+				<div class="container">
+					<div class="container" id="feedbackListContainer">
+						<div class="row row-bottom-padded-md">
+							<div class="col-lg-4 col-md-4 col-sm-6">
+								<div class="fh5co-blog animate-box">
+	
+									
 						<div class="row row-bottom-padded-md" id="feedbackList">
-									<!-- Feedback items will be dynamically added here -->
+							<!-- Feedback items will be dynamically added here -->
+							<div class="clearfix visible-sm-block"></div>
+							<div class="clearfix visible-sm-block"></div>
+							<div class="clearfix visible-md-block"></div>
 						</div>
-								
-						</div>
-						<div class="clearfix visible-sm-block"></div>
-						<div class="clearfix visible-sm-block"></div>
-						<div class="clearfix visible-md-block"></div>
 					</div>
+				
+				</div>
+					</div>	</div>
+					
+	
 				</div>
 			</div>
-				</div>	</div>
-			</div>
-		</div>
+	
 
 		<div id="fh5co-blog-section" class="fh5co-section-gray">
             <div class="container">
