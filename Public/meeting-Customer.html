@@ -267,12 +267,12 @@ document.addEventListener("DOMContentLoaded", function() {
   fetch('/Partners')
     .then(response => response.json())
     .then(data => {
-        const assetSelect = document.getElementById('partner');
+        const partnerSelect = document.getElementById('partner');
         data.forEach(partner => {
             const option = document.createElement('option');
             option.value = partner.UserName;;
             option.textContent = option.value;
-            assetSelect.appendChild(option);
+            partnerSelect.appendChild(option);
         });
     })
     .catch(error => console.error('Error fetching partners:', error));
