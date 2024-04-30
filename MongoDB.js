@@ -519,30 +519,35 @@ const addCustomer = async (customerID, fullName, phone, email, customerType) => 
   }
 }
 
-
 async function createDeal(assetId, customer1Id, customer2Id) {
   try {
+      // Convert assetId to integer
+      assetId = parseInt(assetId);
+
+      if (customer1Id === customer2Id) {
+          console.log("Error: Customer IDs cannot be the same.");
+          return;
+      }
+
       const db = client.db("Practicum");
       const dealsCollection = db.collection("Deals");
       const customersCollection = db.collection("Customers");
       const assetsCollection = db.collection("Assets");
 
       // Fetch customer1 and customer2 documents
-      console.log(customer1Id);
-      console.log(customer2Id);
       const customer1 = await customersCollection.findOne({ CustomerID: customer1Id });
       const customer2 = await customersCollection.findOne({ CustomerID: customer2Id });
 
       if (!customer1 || !customer2) {
-          console.log("Customer 1 or Customer 2 not found.");
+          console.log("Error: Customer 1 or Customer 2 not found.");
           return;
       }
 
       // Fetch asset document
-      const asset = await assetsCollection.findOne({ AssetID: parseInt(assetId) });
+      const asset = await assetsCollection.findOne({ AssetID: assetId });
 
       if (!asset) {
-          console.log("Asset not found.");
+          console.log("Error: Asset not found.");
           return;
       }
 
@@ -559,36 +564,41 @@ async function createDeal(assetId, customer1Id, customer2Id) {
           customer2Role = "Buyer";
           dealCommission = asset.AssetPrice * 0.01;
       } else {
-          console.log("Invalid asset type. Asset type must be 'rent' or 'sale'.");
+          console.log("Error: Invalid asset type. Asset type must be 'rent' or 'sale'.");
           return;
       }
 
       // Generate a unique transaction number
       const highestDeal = await dealsCollection.findOne({}, { sort: { transactionNumber: -1 } });
-
-// Calculate the next transaction number
       const transactionNumber = highestDeal ? highestDeal.transactionNumber + 1 : 1;
 
-      // Create deal documents
+      // Create deal documents with separate fields for hour and date
+      const currentDate = new Date();
+      const hour = currentDate.getHours();
+      const date = currentDate.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+
       const deal1 = {
           transactionNumber,
           customerId: customer1Id,
           assetId,
           dealType,
           role: customer1Role,
-          dealCommission
+          dealCommission,
+          createdAtHour: hour,
+          createdAtDate: date
       };
-
 
       const transactionNumberForSecondDeal = transactionNumber + 1;
 
       const deal2 = {
-          transactionNumber:  transactionNumberForSecondDeal,
+          transactionNumber: transactionNumberForSecondDeal,
           customerId: customer2Id,
           assetId,
           dealType: (dealType === "Renting") ? "Rented" : "Selling",
           role: customer2Role,
-          dealCommission
+          dealCommission,
+          createdAtHour: hour,
+          createdAtDate: date
       };
 
       // Update asset status to "Unavailable"
@@ -606,6 +616,9 @@ async function createDeal(assetId, customer1Id, customer2Id) {
       console.error("Error creating deal:", error);
   }
 }
+
+
+
 
 //delete meeting
 async function deleteMeetingById(meetingId) {
