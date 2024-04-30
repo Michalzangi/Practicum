@@ -1386,40 +1386,36 @@ div.cs-select span {
 
 /* עיצוב חדש עבור התצוגה של התגים והנתונים */
 .feedback-card {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    background-color: #f9f9f9;
-    font-family: 'Calibri' ;
-    
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+  font-family: 'Calibri' ;
+  
 }
 
 
 
 .feedback-card p {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #666;
-    font-family: 'Calibri'  ;
-}
-.feedback-card h2 {
   margin-bottom: 10px;
-  font-size: 24px;
-  color: #e7169d;
+  font-size: 16px;
+  align-items: center; /* כדי למרכז את התוכן אופקית */
+  text-align: center; /* כדי למרכז את התוכן אנכית */
   font-family: 'Calibri'  ;
 }
+.feedback-card h2 {
+margin-bottom: 10px;
+font-size: 50px;
+color: #6c6c6c;
+font-family:'Kunstler Script'  ;
+align-items: center; /* כדי למרכז את התוכן אופקית */
+text-align: center; /* כדי למרכז את התוכן אנכית */
+font-weight:initial
 
-
-
-.feedback-item {
-  width: calc(33.33% - 20px);  /* כל פידבק בגודל של כשליש */
-  padding: 10px;
-  box-sizing: border-box;
-  display: inline-block; /* תצוגה כבלוקים סמוכים */
-  vertical-align: top; /* אלימות למעלה */
-  margin-bottom: 20px; /* מרווח בין הפידבקים */
 }
+
+
 
 body {
     font-family: 'Open Sans', sans-serif;
