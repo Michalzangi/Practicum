@@ -25,9 +25,9 @@
         .user-row {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
+            border-radius: 5px;
             margin-bottom: 15px;
             padding: 15px;
-            border-radius: 5px;
         }
         .users-header {
             text-align: center;
@@ -35,7 +35,65 @@
             font-size: 40px;
             font-weight: 400;
             position: relative;
-            color:  #de6277; 
+            color: #de6277;
+        }
+        .users-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .user-card {
+             width: 300px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            text-align: center; /* Center align content */
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-card p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #333333;
+        }
+
+        .user-card .user-info {
+            font-weight: bold;
+        }
+
+        .user-card .user-icon {
+            margin-right: 10px;
+        }
+
+        .user-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+
+        .delete-btn {
+            background-color:  #de6277;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            align-items: center;
+        }
+
+        .delete-btn:hover {
+            background-color: #000000;
         }
         .message-container {
             position: fixed;
@@ -52,6 +110,40 @@
         .message-container.right {
             right: 50px; /* Adjust the right distance from the side of the page */
         }
+        .filter-bar {
+    background-color: #f2f2f2;
+    border: 0px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-bar label {
+    font-weight: bold;
+    margin-right: 400px;
+}
+
+.filter-bar select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+}
+
+.filter-bar select:hover {
+    border-color: #999;
+}
+
+.filter-bar select:focus {
+    outline: none;
+    border-color: #dfb4c6;
+    box-shadow: 0 0 5px rgba(227, 139, 208, 0.5);
+}
+
+        
  
     </style>
 
@@ -115,9 +207,17 @@
 
 		<div id="fh5co-blog-section" class="fh5co-section-gray">
             <div class="container">
-				<h3 class="users-header">Users</h3>
-				<div id="users-container"></div>
-				<form id="add-user-form" class="user-row">
+                <h3 class="users-header">Users</h3><br>
+                <div class="filter-bar">
+                    <label for="filter">Filter by Role:</label>
+                    <select id="filter">
+                        <option value="all">All</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+                <div id="users-container" class="users-container"></div><br><br><br>
+                <form id="add-user-form" class="user-row">
                     <h3 class="users-header">Add New User</h3>
                     <div class="form-group">
                         <label for="username">Username:</label>
@@ -220,27 +320,49 @@
         const response = await fetch('/Users');
         const users = await response.json();
         const usersContainer = document.getElementById('users-container');
-        usersContainer.innerHTML = '';
+        const filterSelect = document.getElementById('filter');
+        const filterUsers = () => {
+            const selectedRole = filterSelect.value;
+            const filteredUsers = users.filter(user => {
+                if (selectedRole === 'all') {
+                    return true; // Show all users
+                } else {
+                    return user.Role.toLowerCase() === selectedRole; // Filter by role
+                }
+            });
 
-        users.forEach(user => {
-            addUserToUI(user);
-        });
+        usersContainer.innerHTML = '';
+        filteredUsers.forEach(user => {
+                addUserToUI(user);
+            });
+        };
+
+        // Initial load - show all users
+        filterUsers();
+
+        // Event listener for filter change
+        filterSelect.addEventListener('change', filterUsers);
     } catch (error) {
         console.error('Error fetching users:', error);
     }
 };
+
+
 
 function addUserToUI(user) {
     const usersContainer = document.getElementById('users-container');
     const userElement = document.createElement('div');
     userElement.classList.add('user-row');
     userElement.innerHTML = `
-        <p>UserName: ${user.UserName}</p>
-        <p>Password: ${user.Password}</p>
-        <p>Role: ${user.Role}</p>
-        `;
-    if (user.Role === 'Admin') {
-        userElement.innerHTML += `<button class="delete-btn" style="background-color: pink;" data-id="${user._id}">Delete</button>`;
+    <div class="user-card">
+        <img src="https://as1.ftcdn.net/jpg/05/53/79/60/220_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" alt="User Avatar">
+        <p class="user-info">UserName: ${user.UserName}</p>
+        <p class="user-info">Password: ${user.Password}</p>
+        <p class="user-info">Role: ${user.Role}</p>
+    </div>
+    `;
+    if (user.Role === 'Admin') { 
+        userElement.innerHTML += `<button class="delete-btn" style="display: block; margin: 0 auto;" data-id="${user._id}">Delete</button>`;
         userElement.querySelector('.delete-btn').addEventListener('click', async () => {
             const userId = user._id;
             try {
