@@ -65,10 +65,10 @@ app.post('/addProperty', async (req, res) => {
 });
 
 app.post('/addDeal', async (req, res) => {
-  const { AssetID, Customer1ID, Customer2ID } = req.body;
+  const { AssetID, Customer1ID, Customer2ID, PartnerUserName } = req.body;
 
   try {
-    const DealID = await createDeal(AssetID, Customer1ID, Customer2ID);
+    const DealID = await createDeal(AssetID, Customer1ID, Customer2ID, PartnerUserName);
     res.status(201).json({ message: 'Deals added successfully', DealID });
   } catch (error) {
     res.status(500).json({ error: error.message });

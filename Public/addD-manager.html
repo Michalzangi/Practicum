@@ -215,45 +215,54 @@
         </div>
     </footer>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var form = document.getElementById("DealForm");
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            var formData = new FormData(form);
-            var data = {};
-            formData.forEach(function(value, key) {
-                data[key] = value;
-            });
-
-            console.log(data);
-
-            fetch("/addDeal", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    // Show success message
-                    document.getElementById("successMessage").style.display = "block";
-                    console.log(data);
-                    console.log("Deals added successfully");
-                    setTimeout(function() {
-                        location.reload();
-                    }, 3000); 
-                } else {
-                    console.error("Failed to add property");
-                }
-            })
-            .catch(function(error) {
-                console.error("Error:", error);
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const username = sessionStorage.getItem('username');
+            if (!username) {
+                console.error('Username not found in session storage');
+                return;
+            }
+    
+            var form = document.getElementById("DealForm");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+                var formData = new FormData(form);
+                var data = {};
+                formData.forEach(function(value, key) {
+                    data[key] = value;
+                });
+    
+                // Add Partner'sUserName to the data object
+                data['PartnerUserName'] = username;
+    
+                console.log(data);
+    
+                fetch("/addDeal", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        // Show success message
+                        document.getElementById("successMessage").style.display = "block";
+                        console.log(data);
+                        console.log("Deals added successfully");
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000); 
+                    } else {
+                        console.error("Failed to add property");
+                    }
+                })
+                .catch(function(error) {
+                    console.error("Error:", error);
+                });
             });
         });
-    });
-</script>
+    </script>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
 <script src="js/bootstrap.min.js"></script>

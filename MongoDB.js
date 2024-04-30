@@ -519,7 +519,7 @@ const addCustomer = async (customerID, fullName, phone, email, customerType) => 
   }
 }
 
-async function createDeal(assetId, customer1Id, customer2Id) {
+async function createDeal(assetId, customer1Id, customer2Id, partnerUserName) {
   try {
       // Convert assetId to integer
       assetId = parseInt(assetId);
@@ -585,7 +585,8 @@ async function createDeal(assetId, customer1Id, customer2Id) {
           role: customer1Role,
           dealCommission,
           createdAtHour: hour,
-          createdAtDate: date
+          createdAtDate: date,
+          PartnerUserName: partnerUserName
       };
 
       const transactionNumberForSecondDeal = transactionNumber + 1;
@@ -598,7 +599,8 @@ async function createDeal(assetId, customer1Id, customer2Id) {
           role: customer2Role,
           dealCommission,
           createdAtHour: hour,
-          createdAtDate: date
+          createdAtDate: date,
+          PartnerUserName: partnerUserName
       };
 
       // Update asset status to "Unavailable"
