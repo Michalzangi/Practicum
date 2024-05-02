@@ -140,7 +140,7 @@
 							  <option value="">Select Asset</option>
 							</select>
 						  </div>
-						<button type="submit" class="btn btn-primary" id="sub">Submit</button>
+						<button type="submit" class="btn btn-primary" id="sub">Add Meeting</button>
 						<div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
 							Meeting added successfully!
 						</div>
@@ -211,7 +211,7 @@
 	</div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     const username = sessionStorage.getItem('username');
     const partnerField = document.getElementById('partner');
     if (username) {
@@ -305,6 +305,7 @@
         });
     }
 });
+
 
 
     </script>
