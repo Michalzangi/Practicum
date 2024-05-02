@@ -153,6 +153,9 @@
 						<div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
 							Customer added successfully!
 						</div>
+						<div id="errorMessage" style="display: none;" class="alert alert-danger" role="alert">
+							Failed to add customer. The ID you entered already exists.
+						  </div>
 					</form>
 				</div>
 			</div>
@@ -233,44 +236,47 @@
 
 	<!-- jQuery -->
 	<script>
-
 		document.addEventListener("DOMContentLoaded", function () {
-			var form = document.getElementById("customerForm");
-			form.addEventListener("submit", function (event) {
-				event.preventDefault();
-
-				var formData = new FormData(form);
-				var data = {};
-				formData.forEach(function (value, key) {
-					data[key] = value;
-				});
-
-				// Send data to server
-				fetch("/AddCustomer", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(data)
-				})
-					.then(function (response) {
-						if (response.ok) {
-							document.getElementById("successMessage").style.display = "block";
-							console.log("Customer added successfully");
-							setTimeout(function () {
-								location.reload();
-							}, 3000);
-						} else {
-							console.error("Failed to add customer");
-						}
-					})
-					.catch(function (error) {
-						console.error("Error:", error);
-					});
+		  var form = document.getElementById("customerForm");
+		  form.addEventListener("submit", function (event) {
+			event.preventDefault();
+	  
+			var formData = new FormData(form);
+			var data = {};
+			formData.forEach(function (value, key) {
+			  data[key] = value;
 			});
+	  
+			// Send data to server
+			fetch("/AddCustomer", {
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json"
+			  },
+			  body: JSON.stringify(data)
+			})
+			  .then(function (response) {
+				if (response.ok) {
+				  document.getElementById("successMessage").style.display = "block";
+				  console.log("Customer added successfully");
+				  setTimeout(function () {
+					location.reload();
+				  }, 3000);
+				} else {
+				  response.json().then(function (data) {
+					if (data.error) {
+					  document.getElementById("errorMessage").innerText = data.error;
+					  document.getElementById("errorMessage").style.display = "block";
+					}
+				  });
+				}
+			  })
+			  .catch(function (error) {
+				console.error("Error:", error);
+			  });
+		  });
 		});
-
-	</script>
+	  </script>
 
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
