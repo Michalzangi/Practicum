@@ -485,33 +485,35 @@ async function getAllPartners() {
 
 //add new Customer 
 const addCustomer = async (customerID, fullName, phone, email, customerType) => {
-  let client; // הגדרה של משתנה client
+  let client;
 
   try {
-    // חיבור למסד הנתונים MongoDB
     client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Connected to MongoDB');
-    // גישה למסד הנתונים ולאוסף Customers
+
     const database = client.db('Practicum');
     const collection = database.collection('Customers');
 
-    // הוספת מסמך הלקוח לאוסף Customers עם כל הפרטים המתאימים
+    // Check if customerID already exists
+    const existingCustomer = await collection.findOne({ CustomerID: customerID });
+    if (existingCustomer) {
+      throw new Error('The ID you entered already exists');
+    }
+
     const result = await collection.insertOne({
       CustomerID: customerID,
       FullName: fullName,
       Phone: phone,
       Email: email,
       CustomerType: customerType
-
     });
 
     console.log('Customer added successfully');
     return result.insertedId;
   } catch (error) {
     console.error('Error adding Customer:', error);
-    throw new Error('Failed to add Customer');
+    throw new Error('Failed to add Customer: ' + error.message);
   } finally {
-    // סגירת חיבור למסד הנתונים MongoDB
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
