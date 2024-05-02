@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
   getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,
-  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById }= require('./MongoDB')
+  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -263,6 +263,17 @@ app.delete('/meeting/:id', async (req, res) => {
       res.sendStatus(500); // Send internal server error status code
   }
 });
+app.get('/checkMeetingExists', async (req, res) => {
+  const { date,time,partner } = req.query;
+
+  try {
+      const exists = await checkMeetingExists(date,time,partner);
+      res.status(200).json({ exists }); // Return a JSON response
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Start the server
 app.listen(port, () => {

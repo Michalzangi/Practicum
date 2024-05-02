@@ -130,7 +130,14 @@
 						</div>
 						<div class="form-group">
 							<label for="time">Time:</label>
-							<input type="time" class="form-control" id="time" name="time" required>
+							<select class="form-control" id="time" name="time" required>
+								<option value="">Select Time</option>
+								<option value="09:00">09:00</option>
+								<option value="12:00">11:00</option>
+								<option value="15:00">15:00</option>
+								<option value="17:00">17:00</option>
+								<option value="19:00">19:00</option>
+							</select>
 						</div>
 						<div class="form-group">
 							<label for="location">Location:</label>
@@ -278,77 +285,90 @@ document.addEventListener("DOMContentLoaded", function() {
     .catch(error => console.error('Error fetching partners:', error));
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("meetingForm");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // מניעת שליחת הטופס במידת הצורך
 
-        document.addEventListener("DOMContentLoaded", function() {
-            var form = document.getElementById("meetingForm");
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                var customerID = document.getElementById("customerID").value;
-                // בדיקה אם הלקוח קיים
-                fetch(`/checkCustomerExists?customerID=${customerID}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.exists) {
-                            // אם הלקוח קיים, שלח את פרטי הפגישה לשרת
-                            sendMeetingData();
-                        } else {
-                            // אם הלקוח לא קיים, הצג הודעת שגיאה
-                            alert("The user does not exist in the system, go to the join page to fill in details and then schedule an meeting again");
-                        }
-                    })
-                    .catch(error => console.error('Error checking customer:', error));
-            });
-        });
-        // עדכון לפונקציה sendMeetingData עם העברת האלמנט form כפרמטר
-        function sendMeetingData() {
-            var form = document.getElementById("meetingForm"); // הבהרה של המשתנה form
-            var assetSelect = form.querySelector("#assetSelect");
-            var selectedAssets = [];
-            // Fetch selected meeting type
-            var meetingType = form.querySelector("#meetingType").value;
-            // Fetch selected assets
-            for (var i = 0; i < assetSelect.options.length; i++) {
-                if (assetSelect.options[i].selected) {
-                    selectedAssets.push({
-                        AssetID: assetSelect.options[i].value,
-                        AssetStreet: assetSelect.options[i].dataset.street,
-                        AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
-                        AssetPrice: assetSelect.options[i].dataset.price,
-                        AssetType: assetSelect.options[i].dataset.type
-                    });
-                }
-            }
-            var formData = new FormData(form);
-            var data = {};
-            formData.forEach(function(value, key) {
-                data[key] = value;
-            });
-            data["selectedAssets"] = selectedAssets;
-            data["meetingType"] = meetingType;
-            fetch("/addMeeting", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    document.getElementById("successMessage").style.display = "block";
-                    console.log("Meeting added successfully");
-                    setTimeout(function() {
-                        location.reload();
-                    }, 3000);
+        // איסוף פרטי הטופס
+        var customerID = document.getElementById("customerID").value;
+        var date = document.getElementById("date").value;
+        var time = document.getElementById("time").value;
+        var partner = document.getElementById("partner").value;
+
+        // בדיקה אם הלקוח קיים
+        fetch(`/checkCustomerExists?customerID=${customerID}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // אם הלקוח קיים, בדוק גם אם קיימת פגישה בתאריך, שעה ועם הפרטנר שנבחר
+                    return fetch(`/checkMeetingExists?date=${date}&time=${time}&partner=${partner}`);
                 } else {
-                    console.error("Failed to add meeting");
+                    // אם הלקוח לא קיים, הצג הודעת שגיאה
+                    alert("The user does not exist in the system, go to the join page to fill in details and then schedule a meeting again.");
+                    throw new Error("Customer does not exist");
                 }
             })
-            .catch(function(error) {
-                console.error("Error:", error);
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // אם קיימת פגישה, הצג הודעת שגיאה
+                    alert("There is already a meeting scheduled for this date, time, and partner. Please choose a different date, time, or partner.");
+                } else {
+                    // אם אין פגישה במועד הזה עם הפרטנר, שלח את פרטי הפגישה לשרת
+                    sendMeetingData();
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    });
+});
+
+function sendMeetingData() {
+    var form = document.getElementById("meetingForm");
+    var assetSelect = form.querySelector("#assetSelect");
+    var selectedAssets = [];
+    var meetingType = form.querySelector("#meetingType").value;
+
+    for (var i = 0; i < assetSelect.options.length; i++) {
+        if (assetSelect.options[i].selected) {
+            selectedAssets.push({
+                AssetID: assetSelect.options[i].value,
+                AssetStreet: assetSelect.options[i].dataset.street,
+                AssetStreetNumber: assetSelect.options[i].dataset.streetNumber,
+                AssetPrice: assetSelect.options[i].dataset.price,
+                AssetType: assetSelect.options[i].dataset.type
             });
         }
+    }
 
+    var formData = new FormData(form);
+    var data = {};
+    formData.forEach(function(value, key) {
+        data[key] = value;
+    });
+    data["selectedAssets"] = selectedAssets;
+    data["meetingType"] = meetingType;
 
+    fetch("/addMeeting", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            document.getElementById("successMessage").style.display = "block";
+            console.log("Meeting added successfully");
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
+        } else {
+            console.error("Failed to add meeting");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
 
     </script>
 

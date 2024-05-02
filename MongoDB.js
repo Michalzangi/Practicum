@@ -650,8 +650,38 @@ async function deleteMeetingById(meetingId) {
 }
 
 
+const checkMeetingExists = async (date,time,partner) => {
+  let client;
+
+  try {
+      client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log('Connected to MongoDB');
+
+      const database = client.db('Practicum');
+      const collection = database.collection('Meetings');
+      const dateTime = new Date(`${date}T${time}`);
+
+      // בדיקה אם הלקוח קיים במסד הנתונים על ידי ID
+      const meeting = await collection.findOne({ DateTime: dateTime ,Partner:partner});
+
+      if (meeting) {
+          return true; // הלקוח קיים
+      } else {
+          return false; // הלקוח לא קיים
+      }
+  } catch (error) {
+      console.error('Error checking meeting:', error);
+      throw new Error('Failed to check meeting');
+  } finally {
+      if (client) {
+          await client.close();
+          console.log('Connection to MongoDB closed');
+      }
+  }
+}
+
 
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById};
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists};
