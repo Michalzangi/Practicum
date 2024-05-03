@@ -131,6 +131,12 @@
                     </div>
                     <div class="col-xxs-12 col-xs-12">
                         <section>
+                            <label for="class">City:</label>
+                            <input type="text" class="form-control small-input" id="city" placeholder="Any" pattern="[A-Za-z]+" title="Please enter letters only" />
+                        </section>
+                    </div>
+                    <div class="col-xxs-12 col-xs-12">
+                        <section>
                             <label for="class">Asset Price:</label>
                             <div class="wide">
                                 <input type="number" class="form-control small-input" id="asset-price-min" placeholder="Min" min="0" step="any"/>
@@ -176,21 +182,24 @@
             
             // Gather data from input fields
             const assetType = document.getElementById("asset-type-select").value;
+            const assetCity = document.getElementById("city").value;
             const assetPriceMin = document.getElementById("asset-price-min").value;
             const assetPriceMax = document.getElementById("asset-price-max").value;
             const roomNumber = document.getElementById("room-number").value;
             const assetStreetNumber = document.getElementById("asset-street-number").value;
             const assetStreet = document.getElementById("from-place").value;
-    
-            // Construct the URL with query parameters
-			const url = `/CustomerAssetsForManager?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
+                
+    // Construct the URL with query parameters
+            const url = `/CustomerAssetsForManager?assetType=${assetType}&assetCity=${assetCity}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
             // Log gathered data for debugging
             console.log("Asset Type:", assetType);
+            console.log("Asset City:", assetCity);
             console.log("Asset Price (Min):", assetPriceMin);
             console.log("Asset Price (Max):", assetPriceMax);
             console.log("Room Number:", roomNumber);
             console.log("Asset Street Number:", assetStreetNumber);
             console.log("Asset Street:", assetStreet);
+
     
             // Make an asynchronous GET request
             try {
@@ -223,8 +232,9 @@
     				const details = document.createElement("div");
     				details.classList.add("asset-details");
     				details.innerHTML = `
-       				 <p>Asset Type: ${asset.AssetType}</p>
-       				 <p>Price: ${asset.AssetPrice}</p>
+                    <p>Asset City: ${asset.AssetCity}</p>
+       				<p>Asset Type: ${asset.AssetType}</p>
+       				<p>Price: ${asset.AssetPrice}</p>
         			<p>Street: ${asset.AssetStreet}</p>
         			<p>Room Number: ${asset.RoomNum}</p>
                     <p>Description: ${asset.AssetDescription}</p>

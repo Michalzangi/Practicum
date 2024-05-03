@@ -41,7 +41,7 @@ const loginUser = async (username, password) => {
 }
 
 //FilterAssets
-const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet, AssetStreetNumber, RoomNum) => {
+const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet, AssetStreetNumber, RoomNum, AssetCity) => {
   const client = new MongoClient(uri);
 
   try {
@@ -64,6 +64,7 @@ const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet
     if (AssetStreet) filter.AssetStreet = AssetStreet;
     if (AssetStreetNumber) filter.AssetStreetNumber = AssetStreetNumber;
     if (RoomNum) filter.RoomNum = RoomNum;
+    if (AssetCity) filter.AssetCity = AssetCity;
 
     console.log('Filter:', filter);
     const projection = { "AssetID": 0 }; // Exclude AssetID and AssetImage fields
@@ -80,7 +81,7 @@ const filterAssets = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet
 }
 
 
-const filterAssetsForManager = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet, AssetStreetNumber, RoomNum) => {
+const filterAssetsForManager = async (AssetType, AssetPriceMin, AssetPriceMax, AssetStreet, AssetStreetNumber, RoomNum, AssetCity) => {
   const client = new MongoClient(uri);
 
   try {
@@ -104,6 +105,7 @@ const filterAssetsForManager = async (AssetType, AssetPriceMin, AssetPriceMax, A
     if (AssetStreet) filter.AssetStreet = AssetStreet;
     if (AssetStreetNumber) filter.AssetStreetNumber = AssetStreetNumber;
     if (RoomNum) filter.RoomNum = RoomNum;
+    if (AssetCity) filter.AssetCity = AssetCity;
 
     console.log('Filter:', filter);
     const projection = { "AssetID": 0 }; // Exclude AssetID and AssetImage fields
@@ -169,7 +171,7 @@ const getFeedback = async () => {
 
 
 //Add New Asset
-const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription) => {
+const addProperty = async (assetType, city, bathrooms, SqrRoot, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription) => {
   let client; // Define the client variable
 
   try {
@@ -196,9 +198,12 @@ const addProperty = async (assetType, assetPrice, assetStreet, assetStreetNumber
     const formattedAssetType = assetType.charAt(0).toUpperCase() + assetType.slice(1).toLowerCase();
 
     // Insert the property document into the collection
-    const result = await collection.insertOne({
+    const result = await collection.insertOne({ 
       AssetID: newAssetId,
       AssetType: formattedAssetType,
+      AssetCity: city,
+      AssetBathrooms: bathrooms,
+      AssetSquareRoot: SqrRoot,
       AssetPrice: price,
       AssetStreet: assetStreet,
       AssetStreetNumber: assetStreetNumber,
@@ -681,7 +686,7 @@ const checkMeetingExists = async (date,time,partner) => {
   }
 }
 
-
+filterAssetsForManager();
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 

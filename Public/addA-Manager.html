@@ -145,8 +145,24 @@
                     <input type="text" class="form-control" id="assetPrice" name="assetPrice" required>
                 </div>
                 <div class="form-group">
+                    <label for="city">City:</label>
+                    <!-- Use pattern attribute to allow only regular text -->
+                    <input type="text" class="form-control" id="city" name="city" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required>
+                </div>        
+                <div class="form-group">
                     <label for="assetStreet">Street:</label>
                     <input type="text" class="form-control" id="assetStreet" name="assetStreet" required>
+                </div>
+                <div class="form-group">
+                    <label for="bathrooms">Bathrooms:</label>
+                    <!-- Use type="number" to allow only numbers -->
+                    <input type="number" class="form-control" id="bathrooms" name="bathrooms" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="SqrRoot">Square Root:</label>
+                    <!-- Use type="number" to allow only numbers -->
+                    <input type="number" class="form-control" id="SqrRoot" name="SqrRoot" required>
                 </div>
                 <div class="form-group">
                     <label for="assetDescription">Description:</label>

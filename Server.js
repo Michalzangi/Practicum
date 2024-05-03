@@ -38,10 +38,10 @@ app.get('/CustomerAssets', async (req, res) => {
 });
 
 app.get('/CustomerAssetsForManager', async (req, res) => {
-  const { assetType, assetPriceMin, assetPriceMax, roomNumber, assetStreetNumber, assetStreet } = req.query;
+  const { assetType, assetCity, assetPriceMin, assetPriceMax, roomNumber, assetStreetNumber, assetStreet } = req.query;
 
   try {
-    const filteredAssets = await filterAssetsForManager(assetType, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
+    const filteredAssets = await filterAssetsForManager(assetType, assetCity, assetPriceMin, assetPriceMax, assetStreet, assetStreetNumber, roomNumber);
     res.json(filteredAssets); // Return filtered assets as JSON response
   } catch (error) {
     res.status(500).json({ error: error.message }); // Handle any errors
@@ -54,10 +54,10 @@ app.get('/feedback', async (req, res) => {
 });
 
 app.post('/addProperty', async (req, res) => {
-  const { assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription } = req.body;
+  const { assetType, city, bathrooms, SqrRoot, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription } = req.body;
 
   try {
-    const propertyId = await addProperty(assetType, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription);
+    const propertyId = await addProperty(assetType, city, bathrooms, SqrRoot, assetPrice, assetStreet, assetStreetNumber, roomNum, assetImage, assetDescription);
     res.status(201).json({ message: 'Property added successfully', propertyId });
   } catch (error) {
     res.status(500).json({ error: error.message });
