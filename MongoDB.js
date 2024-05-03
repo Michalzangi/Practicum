@@ -268,12 +268,13 @@ const addMeeting = async (customerID, date, time, location, partner, meetingType
     const collection = database.collection('Meetings');
 
     // המרת התאריך והשעה לאובייקט JavaScript Date
-    const dateTime = new Date(`${date}T${time}`);
+
 
     // הוספת מסמך הפגישה לאוסף Meetings עם כל הפרטים המתאימים
     const result = await collection.insertOne({
       CustomerID: customerID,
-      DateTime: dateTime,
+      Date: date,
+      Time:time,
       Location: location,
       Partner: partner,
       MeetingType: meetingType,
