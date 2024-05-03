@@ -124,6 +124,7 @@ app.post('/submitMessage', async (req, res) => {
       const emailContent = `
           Name: ${formData.Name}
           Email: ${formData.Email}
+          Phone:${formData.Phone}
           Message: ${formData.Message}
       `;
 
