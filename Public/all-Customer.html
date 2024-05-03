@@ -32,92 +32,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
-        .asset-item {
-    margin-bottom: 60px; /* Increased margin for more space between properties */
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    position: relative;
-}
-
-.asset-item h2 {
-    margin-bottom: 10px;
-    color: rgb(192, 32, 93); /* White color for the number of rooms */
-    font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
-    font-weight: bold;
-}
-
-.asset-item p {
-    margin-bottom: 20px;
-    color: rgb(223, 19, 19); /* White color for the street */
-    font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
-}
-
-.asset-item img {
-    max-width: 100%;
-    height: 300px; /* Set a fixed height for all property images */
-    object-fit: cover; /* Ensure images maintain aspect ratio and cover the entire space */
-    border-radius: 5px;
-}
-
-/* Black bar at the bottom of the photo */
-.asset-item:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 40px; /* Height of the black bar */
-    background-color: black;
-    opacity: 0.8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 0 0 5px 5px;
-}
-
-/* Pink stripe on the side */
-.asset-item:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -20px; /* Width of the stripe */
-    height: 100%;
-    width: 20px; /* Width of the stripe */
-    background-color: rgb(230, 83, 107); /* Pink color */
-    border-radius: 5px 0 0 5px;
-}
-
-/* Pink stripe design */
-.pink-stripe {
-    position: absolute;
-    top: 50%;
-    right: -20px; /* Width of the stripe */
-    transform: translateY(-50%);
-    background-color: rgb(230, 83, 107); /* Pink color */
-    color: white;
-    padding: 5px 10px;
-    font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
-    font-weight: bold;
-    border-radius: 0 5px 5px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Animation for fade-in effect */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+       
     </style>
 </head>
 <body>
@@ -160,7 +75,7 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h2 class="heading-title">All our Properties</h2>
+                                        <h2 class="heading-title">All our Assets</h2>
                                         <p class="fh5co-lead">Coming Soon <i class="icon-heart3"></i>  </p>
                                     </div>
                                 </div>
@@ -176,7 +91,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                        <h3>All Properties</h3>
+                        <h3>All Assets</h3>
                     </div>
                 </div>
                 <div class="row" id="assets-container">
@@ -258,56 +173,53 @@
 <script src="js/selectFx.js"></script>
 <script src="js/main.js"></script>
 <script>
-    async function fetchAssets() {
-      try {
-        const response = await fetch('/Assets');
-        const assets = await response.json();
-        return assets;
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch assets');
-      }
-    }
-  
-    async function displayAssets() {
-        try {
-            const assets = await fetchAssets();
-            const assetsContainer = document.getElementById('assets-container');
-            assetsContainer.innerHTML = ''; // Clear previous content
+     async function fetchAssets() {
+            try {
+                const response = await fetch('/Assets');
+                const assets = await response.json();
+                return assets;
+            } catch (error) {
+                console.error(error);
+                throw new Error('Failed to fetch assets');
+            }
+        }
 
-            let rowDiv;
-            assets.forEach((asset, index) => {
-                if (index % 3 === 0) {
-                    // Create a new row for every third asset
-                    rowDiv = document.createElement('div');
-                    rowDiv.classList.add('row');
-                }
+        async function displayAssets(assets) {
+    const assetsContainer = document.getElementById('assets-container');
+    assetsContainer.innerHTML = ''; // Clear previous content
 
-                const assetDiv = document.createElement('div');
-                assetDiv.classList.add('col-md-4', 'asset-item');
+    // Create a single row for all assets
+    const rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
 
-                const title = asset.AssetType;
-                const description = `Price: $${asset.AssetPrice}`;
-                const imageUrl = asset.AssetImage;
-                const status = asset.Status; // Rent or Sale
+    assets.forEach((asset, index) => {
+        const assetDiv = document.createElement('div');
+        assetDiv.classList.add('col-md-4', 'asset-item');
 
-                assetDiv.innerHTML = `
-                    <h2>${title}</h2>
-                    <p>${description}</p>
-                    <img src="${imageUrl}" alt="${title}">
-                `;
-                
-                // Add black bar with street and rooms information
-                const streetAndRooms = `${asset.AssetStreet}, Rooms: ${asset.RoomNum}`;
-                const blackBar = document.createElement('div');
-                blackBar.textContent = streetAndRooms;
-                assetDiv.appendChild(blackBar);
+        const title = asset.AssetType;
+        const Price = `Price: $${asset.AssetPrice}`;
+        const imageUrl = asset.AssetImage;
+        const status = asset.AssetStatus;
+        const streetAndRooms = `Address: ${asset.AssetStreet} ${asset.AssetStreetNumber} ${asset.AssetCity}`; 
+        const Description = `Description: ${asset.assetDescription}`; 
 
-                // Add pink stripe with status information
-                const pinkStripe = document.createElement('div');
-                pinkStripe.classList.add('pink-stripe');
-                pinkStripe.textContent = status;
-                assetDiv.appendChild(pinkStripe);
+        assetDiv.innerHTML = `
+            <div class="property">
+                <a href="#" class="fh5co-property" style="background-image: url('${imageUrl}')">
+                    <span class="status">${title}</span>
+                    <ul class="list-details">
+                        <li>${asset.RoomNum} Bedroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetBathrooms} Bathroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetSquareRoot} ft sq</li>
+                    </ul>
+                </a>
+                    <div class="property-details">
+                        <span class="price">${Price}</span>
+                        <p>${Description}</p>
+                        <span class="address"><i class="icon-map"></i>${streetAndRooms}</span>
+                    </div>
+            </div>
+        `;
 
                 rowDiv.appendChild(assetDiv);
 
@@ -322,12 +234,13 @@
                     assetsContainer.appendChild(rowDiv);
                 }
             });
-        } catch (error) {
-            console.error(error);
         }
-    }
 
-    window.onload = displayAssets;
+        window.onload = async function() {
+            const assets = await fetchAssets();
+            displayAssets(assets);
+        };
+
   </script>
 
 </body>

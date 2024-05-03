@@ -32,6 +32,51 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
+        .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-container input[type=text] {
+        width: 60%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .search-container button {
+        background-color:  #de6277;;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-container button:hover {
+        background-color:  #d80f48;
+    }
+
+    @media (max-width: 768px) {
+        .search-container input[type=text] {
+            width: 100%;
+            margin-right: 0;
+        }
+    }
+    .property-details h3 {
+            color: green;
+            font-weight: bold;
+        }
+
+        .property-details h3.Not-Available {
+            color: red;
+            font-weight: bold;
+        }
+
         
     </style>
 <header id="fh5co-header-section" class="sticky-banner">
@@ -93,10 +138,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                    <h3>Assets</h3>
+                    <h3>All Assets</h3>
+                    <div class="search-container">
                     <input type="text" id="property-id-input" placeholder="Enter Property ID">
-                    <button onclick="filterProperties()">Filter</button>
+                    <button onclick="filterProperties()">Search</button>
                 </div>
+            </div>
             </div>
 
             <div class="row" id="assets-container">
@@ -208,7 +255,7 @@
         const Price = `Price: $${asset.AssetPrice}`;
         const imageUrl = asset.AssetImage;
         const status = asset.AssetStatus;
-        const streetAndRooms = `Address: ${asset.AssetStreet} ${asset.AssetStreetNumber}`; 
+        const streetAndRooms = `Address: ${asset.AssetStreet} ${asset.AssetStreetNumber} ${asset.AssetCity}`; 
         const Description = `Description: ${asset.assetDescription}`; 
 
         assetDiv.innerHTML = `
@@ -216,12 +263,13 @@
                 <a href="#" class="fh5co-property" style="background-image: url('${imageUrl}')">
                     <span class="status">${title}</span>
                     <ul class="list-details">
-                        <li>${asset.RoomNum} Bedroom</li>
-                        <li>4 Bathroom</li>
+                        <li>${asset.RoomNum} Bedroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetBathrooms} Bathroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetSquareRoot} ft sq</li>
                     </ul>
                 </a>
                     <div class="property-details">
-                        <h3>${status}</h3>
+                        <h3 class="${status === 'Available' ? 'Available' : 'Not-Available'}">${status}</h3>
                         <span class="price">${Price}</span>
                         <p>${Description}</p>
                         <span class="address"><i class="icon-map"></i>${streetAndRooms}</span>
@@ -245,15 +293,23 @@
         }
 
         async function filterProperties() {
-            try {
-                const AssetID = document.getElementById('property-id-input').value;
-                const assets = await fetchAssets();
-                const filteredAssets = assets.filter(asset => asset.AssetID === parseInt(AssetID));
-                displayAssets(filteredAssets);
-            } catch (error) {
-                console.error(error);
-            }
+    try {
+        const AssetID = document.getElementById('property-id-input').value;
+        
+        // If the input field is empty, fetch and display all properties
+        if (!AssetID.trim()) {
+            const assets = await fetchAssets();
+            displayAssets(assets);
+            return;
         }
+        
+        const assets = await fetchAssets();
+        const filteredAssets = assets.filter(asset => asset.AssetID === parseInt(AssetID));
+        displayAssets(filteredAssets);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
         window.onload = async function() {
             const assets = await fetchAssets();
