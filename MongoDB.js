@@ -686,8 +686,23 @@ const checkMeetingExists = async (date,time,partner) => {
   }
 }
 
+//get All Customers
+const getAllCustomers = async () => {
+  try {
+    const database = client.db('Practicum');
+    const collection = database.collection('Customers');
+    const Customers = await collection.find().toArray();
+    console.log('Customers:', Customers);
+    return Customers;
+  } catch (error) {
+    console.error('Error fetching Customers:', error);
+    throw new Error('Failed to fetch Customers');
+  }
+};
+
+
 filterAssetsForManager();
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists};
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers};
