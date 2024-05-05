@@ -686,7 +686,9 @@ const checkMeetingExists = async (date,time,partner) => {
   }
 }
 
-filterAssetsForManager();
+
+
+
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 

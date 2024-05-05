@@ -52,13 +52,27 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
     <style>
+        /* Style for centering the form */
+    .search-property {
+        margin: 0 auto; 
+        max-width: 600px;
+    }
+
+    /* Additional styles for form elements */
+    .s-holder h2 {
+        text-align: center;
+    }
+
+    .s-holder section {
+        margin-bottom: 15px;
+    }
 	</style>
     
 </head>
 <body>
     <div id="fh5co-wrapper">
     <div id="fh5co-page">
-
+    
         <header id="fh5co-header-section" class="sticky-banner">
 			<div class="container">
 				<div class="nav-header">
@@ -114,21 +128,20 @@
 
     <title>Search Assetss</title>
 
-    <div id="fh5co-search-map">
-        <div class="search-property">
-            <div class="s-holder">
-                <h2>Search Assets</h2>
-                <div class="row">
-                    <div class="col-xxs-12 col-xs-12">
-                        <section>
-                            <label for="class">Asset Type:</label>
-                            <select id="asset-type-select" class="cs-select cs-skin-border">
-                                <option value="" disabled selected>Any</option>
-                                <option value="Rent">Rent</option>
-                                <option value="Sell">Sell</option>
-                            </select>
-                        </section>
-                    </div>
+    <div class="search-property">
+        <div class="s-holder">
+            <h2>Search Assets</h2>
+            <div class="row">
+                <div class="col-xxs-12 col-xs-12">
+                    <section>
+                        <label for="class">Asset Type:</label>
+                        <select id="asset-type-select" class="cs-select cs-skin-border">
+                            <option value="" disabled selected>Any</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Sell">Sell</option>
+                        </select>
+                    </section>
+                </div>
                     <div class="col-xxs-12 col-xs-12">
                         <section>
                             <label for="class">City:</label>
@@ -164,7 +177,7 @@
                     </div>
                     <div class="col-xxs-12 col-xs-12 text-center">
                         <!-- Add an ID to the link for easy identification -->
-                        <p><a id="learn-more-link" class="btn btn-primary btn-lg" href="#">Learn More</a></p>
+                        <p><a id="learn-more-link" class="btn btn-primary btn-lg" href="#">Submit Form</a></p>
                     </div>
     
                     <!-- Add a div to display filtered assets -->
