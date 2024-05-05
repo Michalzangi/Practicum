@@ -452,21 +452,24 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
 
             if (response.ok) {
-                if (data.user && data.user.Role === 'Admin') {
-                    // Set "partner" field in session storage only for admin
-                    sessionStorage.setItem('username', username);
-                    console.log(sessionStorage.getItem('username'));
-                }
+    if (data.user) {
+        sessionStorage.setItem('username', username);
 
-                // Redirect to respective home page based on user role
-                if (data.user && data.user.Role === 'Admin') {
-                    window.location.href = 'HomeManager.html';
-                } else if (data.user && data.user.Role === 'User') {
-                    window.location.href = 'Home.html';
-                }
-            } else {
-                alert('Invalid username or password');
-            }
+        // Redirect based on user role
+        if (data.user.Role === 'Admin') {
+            window.location.href = 'HomeManager.html';
+        } else if (data.user.Role === 'User') {
+            window.location.href = 'Home.html';
+        } else {
+            // Handle other roles here
+            alert('Unsupported user role');
+        }
+    } else {
+        alert('User not found');
+    }
+} else {
+    alert('Invalid username or password');
+}
         } catch (error) {
             console.error('Error logging in:', error);
             alert('An error occurred while logging in');

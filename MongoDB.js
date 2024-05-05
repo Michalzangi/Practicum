@@ -428,24 +428,34 @@ async function deleteUserById(UserId) {
   }
 
 //add User
-  async function addUser(userData) {
-    try {
-        const db = client.db('Practicum');
-        const usersCollection = db.collection('Users');
-        const result = await usersCollection.insertOne(userData);
-        console.log('Insert result:', result);
-        if (result && result.insertedCount === 1) {
-            console.log('User added:', userData);
-            return userData;
-        } else {
-            console.error('Error adding user: No inserted document found');
-            return null;
-        }
-    } catch (error) {
-        console.error('Error adding user:', error);
-        throw error;
-    }
+async function addUser(userData) {
+  try {
+      const db = client.db('Practicum');
+      const usersCollection = db.collection('Users');
+
+      // Check if the username already exists
+      const existingUser = await usersCollection.findOne({ UserName: userData.UserName });
+      if (existingUser) {
+          throw new Error('Username is already existing. Please try again.');
+      }
+
+      // If the username is not taken, proceed to insert the user data
+      const result = await usersCollection.insertOne(userData);
+      console.log('Insert result:', result);
+      
+      if (result && result.insertedCount === 1) {
+          console.log('User added:', userData);
+          return userData;
+      } else {
+          console.error('Error adding user: No inserted document found');
+          return null;
+      }
+  } catch (error) {
+      console.error('Error adding user:', error);
+      throw error;
+  }
 }
+
 
 //add partner
 async function addPartner(partnerData) {
@@ -490,7 +500,7 @@ async function getAllPartners() {
 }
 
 //add new Customer 
-const addCustomer = async (customerID, fullName, phone, email, customerType) => {
+const addCustomer = async (customerID, fullName, phone, email, customerType, UserName) => {
   let client;
 
   try {
@@ -511,7 +521,8 @@ const addCustomer = async (customerID, fullName, phone, email, customerType) => 
       FullName: fullName,
       Phone: phone,
       Email: email,
-      CustomerType: customerType
+      CustomerType: customerType,
+      UserName: UserName
     });
 
     console.log('Customer added successfully');
@@ -686,15 +697,6 @@ const checkMeetingExists = async (date,time,partner) => {
   }
 }
 
-<<<<<<< HEAD
-
-
-
-
-module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
-   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists};
-=======
 //get All Customers
 const getAllCustomers = async () => {
   try {
@@ -709,10 +711,36 @@ const getAllCustomers = async () => {
   }
 };
 
+//getMeetingsbyCustomer(Username)
+async function getMeetingsByUsername(username) {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  try {
+      await client.connect();
+      const db = client.db('Practicum');
+      console.log(username);
+      
+      // Step 1: Find the customer document based on the username
+      const customer = await db.collection('Customers').findOne({ UserName: username });
+      if (!customer) {
+          console.log('Customer not found');
+          return [];
+      }
 
-filterAssetsForManager();
+      // Step 2: Find all meetings that match the CustomerID
+      const meetings = await db.collection('Meetings').find({ CustomerID: customer.CustomerID }).toArray();
+      console.log('Meetings:', meetings);
+      return meetings;
+  } catch (error) {
+      console.error('Error fetching meetings:', error);
+      throw error;
+  } finally {
+      // Close the MongoDB connection
+      await client.close();
+  }
+}
+
+
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers};
->>>>>>> 1a368faa5467f70384d52fd1f6e73802233a3b80
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername};

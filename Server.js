@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
   getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,
-  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers }= require('./MongoDB')
+  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -233,11 +233,11 @@ app.get('/Partners', async (req, res) => {
   }
 });
 
-app.post('/AddCustomer', async (req, res) => {
-  const { customerID, fullName, phone, email, customerType } = req.body;
+app.post('/addCustomer', async (req, res) => {
+  const { customerID, fullName, phone, email, customerType, UserName } = req.body;
 
   try {
-    const customerId = await addCustomer(customerID, fullName, phone, email, customerType);
+    const customerId = await addCustomer(customerID, fullName, phone, email, customerType, UserName);
     res.status(201).json({ message: 'Customer added successfully', customerId });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -282,6 +282,21 @@ app.get('/getCustomers', async (req, res) => {
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Failed to fetch Customers' });
+  }
+});
+
+app.get('/meetings-customer', async (req, res) => {
+  try {
+      const username = req.query.username;
+      if (!username) {
+          return res.status(400).json({ error: 'Username not provided' });
+      }
+
+      const meetings = await getMeetingsByUsername(username);
+      res.json(meetings);
+  } catch (error) {
+      console.error('Error fetching meetings:', error);
+      res.status(500).json({ error: 'Internal server error' });
   }
 });
 

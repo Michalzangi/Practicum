@@ -63,25 +63,30 @@
 				<div class="container">
 					<div class="nav-header">
 						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-						<h1 id="fh5co-logo"><a href="Home.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+						<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
 						<nav id="fh5co-menu-wrap" role="navigation">
 							<ul class="sf-menu" id="fh5co-primary-menu">
-								<li class="active"><a href="Home.html">Home</a></li>
+								<li class="active"><a href="HomeManager.html">Home</a></li>
 								<li>
 									<a>Assets</a>
 									<ul class="fh5co-sub-menu">
 										<li><a href="all-Customer.html">All</a></li>
-										<li><a href="filter-Customer.html">filter</a></li>
+										<li><a href="filter-Customer.html">Filter</a></li>
 										<li><a href="new-Customer.html">New</a></li>
 										<li><a href="sale-Customer.html">Sale</a></li>
 									</ul>
 								</li>
 								<li><a href="agent-Customer.html">Agent</a></li>
-								<li><a href="meeting-Customer.html">Meeting</a></li>
+								<li>
+									<a>Meeting</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="meeting-Customer.html">Add</a></li>
+										<li><a href="meetingV-Customer.html">View</a></li>
+									</ul>
+								</li>
 								<li><a href="blog-Customer.html">Blog</a></li>
 								<li><a href="contact-Customer.html">Contact</a></li>
-								<li><a href="">join</a></li>
-
+								<li><a href="">Join</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -236,46 +241,57 @@
 
 	<!-- jQuery -->
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-		  var form = document.getElementById("customerForm");
-		  form.addEventListener("submit", function (event) {
-			event.preventDefault();
-	  
-			var formData = new FormData(form);
-			var data = {};
-			formData.forEach(function (value, key) {
-			  data[key] = value;
-			});
-	  
-			// Send data to server
-			fetch("/AddCustomer", {
-			  method: "POST",
-			  headers: {
-				"Content-Type": "application/json"
-			  },
-			  body: JSON.stringify(data)
-			})
-			  .then(function (response) {
-				if (response.ok) {
-				  document.getElementById("successMessage").style.display = "block";
-				  console.log("Customer added successfully");
-				  setTimeout(function () {
-					location.reload();
-				  }, 3000);
-				} else {
-				  response.json().then(function (data) {
-					if (data.error) {
-					  document.getElementById("errorMessage").innerText = data.error;
-					  document.getElementById("errorMessage").style.display = "block";
-					}
-				  });
-				}
-			  })
-			  .catch(function (error) {
-				console.error("Error:", error);
-			  });
-		  });
-		});
+		document.addEventListener("DOMContentLoaded", function() {
+    const username = sessionStorage.getItem('username');
+    if (!username) {
+        console.error('Username not found in session storage');
+        return;
+    }
+
+    var form = document.getElementById("customerForm");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        var formData = new FormData(form);
+        var data = {};
+        formData.forEach(function(value, key) {
+            data[key] = value;
+        });
+
+        // Add UserName to the data object
+        data['UserName'] = username;
+
+        console.log(data);
+
+        fetch("/addCustomer", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            if (response.ok) {
+                // Show success message
+                document.getElementById("successMessage").style.display = "block";
+                console.log("Customer added successfully");
+                setTimeout(function() {
+                    location.reload();
+                }, 3000); 
+            } else {
+                response.json().then(function(data) {
+                    if (data.error) {
+                        document.getElementById("errorMessage").innerText = data.error;
+                        document.getElementById("errorMessage").style.display = "block";
+                    }
+                });
+            }
+        })
+        .catch(function(error) {
+            console.error("Error:", error);
+        });
+    });
+});
+
 	  </script>
 	  
 	<script src="js/jquery.min.js"></script>
