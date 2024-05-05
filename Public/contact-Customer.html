@@ -145,12 +145,17 @@
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
+										<input type="tel" class="form-control"  id="Phone" placeholder="Phone">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
 										<textarea name="" class="form-control" id="Message" cols="30" rows="7" placeholder="Message"></textarea>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<button class="btn btn-primary" type="button" onclick="submitMessage()">Send Message</button>
+										<button type="submit" class="btn btn-primary" id="sub" onclick="submitMessage()">Send Message</button>
 									</div>
 								</div>
 							</div>
@@ -198,7 +203,7 @@
 									<div class="col-md-12 col-md-offset-0">
 										<div class="form-group">
 											<input type="text" class="form-control" id="email" placeholder="Enter your email">
-											<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+											<button type="submit" class="btn btn-primary" id="sub"></i></button>
 										</div>
 									</div>
 								</div>
@@ -233,11 +238,13 @@
 	async function submitMessage() {
     const Name = document.getElementById('Name').value;
     const Email = document.getElementById('Email').value;
+	const Phone = document.getElementById('Phone').value;
     const Message = document.getElementById('Message').value;
 
     const formData = {
         Name: Name,
         Email: Email,
+		Phone:Phone,
         Message: Message
     };
 
@@ -260,6 +267,7 @@
             
             document.getElementById('Name').value = '';
             document.getElementById('Email').value = '';
+			document.getElementById('Phone').value = '';
             document.getElementById('Message').value = '';
         }
     })

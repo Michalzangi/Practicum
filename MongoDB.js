@@ -686,6 +686,7 @@ const checkMeetingExists = async (date,time,partner) => {
   }
 }
 
+<<<<<<< HEAD
 
 
 
@@ -693,3 +694,25 @@ const checkMeetingExists = async (date,time,partner) => {
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
    createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists};
+=======
+//get All Customers
+const getAllCustomers = async () => {
+  try {
+    const database = client.db('Practicum');
+    const collection = database.collection('Customers');
+    const Customers = await collection.find().toArray();
+    console.log('Customers:', Customers);
+    return Customers;
+  } catch (error) {
+    console.error('Error fetching Customers:', error);
+    throw new Error('Failed to fetch Customers');
+  }
+};
+
+
+filterAssetsForManager();
+
+module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
+   updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers};
+>>>>>>> 1a368faa5467f70384d52fd1f6e73802233a3b80

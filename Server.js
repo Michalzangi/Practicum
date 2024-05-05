@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
   getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,
-  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists }= require('./MongoDB')
+  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers }= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -124,6 +124,7 @@ app.post('/submitMessage', async (req, res) => {
       const emailContent = `
           Name: ${formData.Name}
           Email: ${formData.Email}
+          Phone:${formData.Phone}
           Message: ${formData.Message}
       `;
 
@@ -274,6 +275,15 @@ app.get('/checkMeetingExists', async (req, res) => {
   }
 });
 
+app.get('/getCustomers', async (req, res) => {
+  try {
+    const Customers = await getAllCustomers(); // Implement this function to fetch all users
+    res.json(Customers); // Send the users as a JSON response
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to fetch Customers' });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
