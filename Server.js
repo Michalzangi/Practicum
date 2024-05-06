@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
   getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,
-  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername }= require('./MongoDB')
+  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername, getAllDeals}= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -297,6 +297,16 @@ app.get('/meetings-customer', async (req, res) => {
   } catch (error) {
       console.error('Error fetching meetings:', error);
       res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/deals', async (req, res) => {
+  try {
+    const deals = await getAllDeals();
+    res.json(deals);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to fetch deals' });
   }
 });
 

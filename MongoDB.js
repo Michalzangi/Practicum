@@ -739,8 +739,22 @@ async function getMeetingsByUsername(username) {
   }
 }
 
+const getAllDeals = async () => {
+  try {
+    const database = client.db('Practicum');
+    const collection = database.collection('Deals');
+    const deals = await collection.find().toArray();
+    console.log('Meetings:', deals);
+    return deals;
+  } catch (error) {
+    console.error('Error fetching meetings:', error);
+    throw new Error('Failed to fetch meetings');
+  }
+};
+
+
 
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername};
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername, getAllDeals};
