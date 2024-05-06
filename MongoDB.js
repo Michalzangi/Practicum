@@ -516,6 +516,12 @@ const addCustomer = async (customerID, fullName, phone, email, customerType, Use
       throw new Error('The ID you entered already exists');
     }
 
+    // Check if UserName already exists
+    const existingUserName = await collection.findOne({ UserName: UserName });
+    if (!existingUserName) {
+      throw new Error("Username doesn't exist. Please make a new account for the future customer before making a new customer file.");
+    }
+
     const result = await collection.insertOne({
       CustomerID: customerID,
       FullName: fullName,
