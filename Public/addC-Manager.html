@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js">
-
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,49 +8,34 @@
 	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FREEHTML5.CO" />
-
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
-
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
-
-	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Superfish -->
 	<link rel="stylesheet" href="css/superfish.css">
-	<!-- Flexslider  -->
 	<link rel="stylesheet" href="css/flexslider.css">
-	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="css/magnific-popup.css">
-	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
-	<!-- CS Select -->
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
-
 	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<style>
 
 
-		.customer-card {
-    width: 100%;
-    max-width: 300px; /* רוחב מרבי */
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
-    text-align: center;
-	
-}
+.customer-card {
+        width: 100%;
+        max-width: 300px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        text-align: center;
+        position: relative;
+    }
 
 #customersList {
     display: grid;
@@ -114,6 +98,8 @@
     margin-bottom: 10px;
     object-fit: cover;
 }
+
+
 	</style>
 </head>
 
@@ -181,32 +167,39 @@
 					</ul>
 				</div>
 			</aside>
+
+			<div id="fh5co-blog-section" class="fh5co-section-gray">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>View All Customers</h3>
+						</div>
+					</div>
+				</div>
+
+
 			<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-				<h3>View All Customers</h3>
-			
 			<div class="card" id="customersList">
 				<div class="container">
 					<div class="container" id="customersListContainer">
 						<div class="row row-bottom-padded-md">
 							<div class="col-lg-4 col-md-4 col-sm-6">
 								<div class="fh5co-customer animate-box">
-	
+						
 									
 						<div class="row row-bottom-padded-md" id="customersList">
-							<!-- Feedback items will be dynamically added here -->
 							<div class="clearfix visible-sm-block"></div>
 							<div class="clearfix visible-sm-block"></div>
 							<div class="clearfix visible-md-block"></div>
 						</div>
 					</div>
-				
 				</div>
-					</div>	</div>
-					
-	
-				</div>
-			</div>
-			</div>
+			</div>	
+		</div>
+	</div>
+</div>
+</div></div>
+
             <div id="fh5co-blog-section" class="fh5co-section-gray">
                 <div class="container">
                     <div class="row">
@@ -215,9 +208,6 @@
                         </div>
                     </div>
                 </div>
-
-              
-     
 
 				<div class="container">
 					<form id="customerForm" action="/addCustomer" method="POST">
@@ -321,32 +311,20 @@
 				</div>
 			</footer>
 		</div>
-		<!-- END fh5co-page -->
 	</div>
-	<!-- END fh5co-wrapper -->
-
-	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<script src="js/sticky.js"></script>
-	<!-- Superfish -->
 	<script src="js/hoverIntent.js"></script>
 	<script src="js/superfish.js"></script>
-	<!-- Flexslider -->
 	<script src="js/jquery.flexslider-min.js"></script>
-	<!-- Date Picker -->
 	<script src="js/bootstrap-datepicker.min.js"></script>
-	<!-- CS Select -->
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
-
-	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -419,7 +397,6 @@
         })
         .catch(error => console.error("Error:", error));
 });
-
 
 	</script>
 </body>
