@@ -261,31 +261,35 @@ const addFeedback = async (customerId, feedbackData) => {
 
 //Add New Meeting
 const addMeeting = async (customerID, date, time, location, partner, meetingType, assetSelect) => {
-  let client; // הגדרה של משתנה client
+  let client; // Define client variable
 
   try {
-    // חיבור למסד הנתונים MongoDB
+    // Connect to MongoDB database
     client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Connected to MongoDB');
 
-    // גישה למסד הנתונים ולאוסף Meetings
+    // Access the MongoDB database and Meetings collection
     const database = client.db('Practicum');
     const collection = database.collection('Meetings');
 
-    // המרת התאריך והשעה לאובייקט JavaScript Date
+    // Convert date and time to JavaScript Date object
 
-
-    // הוספת מסמך הפגישה לאוסף Meetings עם כל הפרטים המתאימים
-    const result = await collection.insertOne({
+    // Add meeting document to Meetings collection with appropriate details
+    const meetingData = {
       CustomerID: customerID,
       Date: date,
-      Time:time,
+      Time: time,
       Location: location,
       Partner: partner,
-      MeetingType: meetingType,
-      AssetSelect: assetSelect
-       // הוספת סוג הפגישה למסמך הפגישה
-    });
+      MeetingType: meetingType
+    };
+
+    // Check if AssetSelect is not undefined before adding it to the document
+    if (assetSelect !== undefined) {
+      meetingData.AssetSelect = assetSelect;
+    }
+
+    const result = await collection.insertOne(meetingData);
 
     console.log('Meeting added successfully');
     return result.insertedId;
@@ -293,13 +297,15 @@ const addMeeting = async (customerID, date, time, location, partner, meetingType
     console.error('Error adding meeting:', error);
     throw new Error('Failed to add meeting');
   } finally {
-    // סגירת חיבור למסד הנתונים MongoDB
+    // Close connection to MongoDB database
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
     }
   }
 }
+
+
 
 //get All Meetings
 const getAllMeetings = async () => {

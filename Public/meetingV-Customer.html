@@ -343,8 +343,8 @@
                         <p class="icon-calendar">&nbsp;&nbsp;Date: ${meeting.Date} at  ${meeting.Time}</p><br>
                         <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.Location}</p><br>
                         <p class="icon-user">&nbsp;&nbsp;Customer Number: ${meeting.CustomerID}</p><br>
-                        <p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>
-                        <button  class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
+                        ${meeting.AssetSelect ? `<p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>` : ''}
+                        <button class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
                     `;
                     meetingList.appendChild(meetingItem);
                 });
@@ -359,6 +359,7 @@
             meetingList.innerHTML = '<p>Error fetching meetings. Please try again later.</p>';
         });
 });
+
 
         const deleteMeeting = (meetingId) => {
             fetch(`/meeting/${meetingId}`, {
