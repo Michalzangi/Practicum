@@ -764,9 +764,34 @@ const getAllDeals = async () => {
   }
 };
 
+const getCustomerByID = async (customerID) => {
+  let client;
+
+  try {
+      client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log('Connected to MongoDB');
+
+      const database = client.db('Practicum');
+      const collection = database.collection('Customers');
+
+      // בדיקה אם הלקוח קיים במסד הנתונים על ידי ID
+      const customer = await collection.findOne({ CustomerID: customerID });
+
+      return customer; // Return the customer object (which may be null if not found)
+  } catch (error) {
+      console.error('Error fetching customer:', error);
+      throw new Error('Failed to fetch customer');
+  } finally {
+      if (client) {
+          await client.close();
+          console.log('Connection to MongoDB closed');
+      }
+  }
+}
 
 
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
-   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername, getAllDeals};
+   createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername,
+    getAllDeals,getCustomerByID};

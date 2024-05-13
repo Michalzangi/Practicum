@@ -3,7 +3,8 @@ const app = express();
 const port = 4000;
 const {loginUser, filterAssets, getFeedback,getAllAssets, addProperty,addFeedback,addMeeting, updateProperty,
   getAllUsers,deleteUserById,addUser,addPartner,getAllPartners,addCustomer,filterAssetsForManager,
-  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername, getAllDeals}= require('./MongoDB')
+  createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,
+  getMeetingsByUsername, getAllDeals,getCustomerByID}= require('./MongoDB')
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -307,6 +308,21 @@ app.get('/deals', async (req, res) => {
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Failed to fetch deals' });
+  }
+});
+
+app.get('/getCustomerID', async (req, res) => {
+  const { customerID } = req.query;
+
+  try {
+      const customer = await getCustomerByID(customerID);
+      if (customer) {
+          res.status(200).json(customer); // Return the customer data if found
+      } else {
+          res.status(404).json({ error: 'Customer not found' }); // Return a 404 error if customer not found
+      }
+  } catch (error) {
+      res.status(500).json({ error: error.message });
   }
 });
 

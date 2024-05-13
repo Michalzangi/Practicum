@@ -105,6 +105,42 @@
 			margin-bottom: 15px;
 			padding: 15px;
 		}
+
+		.search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-container input[type=text] {
+        width: 60%;
+        padding: 18px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .search-container button {
+        background-color:  #de6277;;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-container button:hover {
+        background-color:  #d80f48;
+    }
+	.fh5co-section-gray {
+    background: rgba(0, 0, 0, 0.04);
+}
+#fh5co-blog-section{
+  clear: both;
+  padding: 0;
+}
 	</style>
 </head>
 
@@ -178,14 +214,20 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<br><br><br><br>
 							<h3>View All Customers</h3>
 						</div>
 					</div>
 				</div>
-			</div><br><br><br>
+			
 
-
-			<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+				<div class="form-group">
+				<label for="customerIDFilter" >Filter by Customer ID:</label>
+				<input type="text" class="search-container" id="customerIDFilter" >
+				<button type="button" id="filterBtn" class="btn btn-primary" >Filter</button>
+				</div>
+		
+				<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
 				<div class="card" id="customersList">
 					<div class="container">
 						<div class="container" id="customersListContainer">
@@ -205,12 +247,14 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
+			
+		</div>
+	
 			<div id="fh5co-blog-section" class="fh5co-section-gray">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<br><br><br><br>
 							<h3>Add New Customer</h3>
 						</div>
 					</div>
@@ -254,11 +298,17 @@
 						</div>
 						<div id="errorMessage" style="display: none;" class="alert alert-danger" role="alert">
 							Failed to add customer. The ID you entered already exists.
-						</div>
-					</form>
-				</div>
+						</div><br><br><br><br>
+					
+				
+			
+					
+		
+			
+		</form>
 			</div>
-
+		</div>
+			</div>
 			<footer>
 				<div id="footer">
 					<div class="container">
@@ -320,9 +370,11 @@
 						</div>
 					</div>
 				</div>
+				
 			</footer>
 		</div>
 	</div>
+
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.easing.1.3.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -409,6 +461,57 @@
 				})
 				.catch(error => console.error("Error:", error));
 		});
+		document.addEventListener("DOMContentLoaded", function () {
+    // קבלת הקישור לכפתור הסינון
+    var filterBtn = document.getElementById("filterBtn");
+    // הוספת אירוע לחיצה על כפתור הסינון
+    filterBtn.addEventListener("click", function () {
+        var customerIDFilter = document.getElementById("customerIDFilter").value;
+        // קריאה לפונקציה שתבצע את הסינון
+        filterCustomers(customerIDFilter);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+        var filterBtn = document.getElementById("filterBtn");
+        filterBtn.addEventListener("click", function () {
+            var customerIDFilter = document.getElementById("customerIDFilter").value;
+            filterCustomers(customerIDFilter);
+        });
+    });
+
+    function filterCustomers(customerIDFilter) {
+        fetch(`/getCustomerID?customerID=${customerIDFilter}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+			.then(data => {
+    console.log(data); // בדיקה של הנתונים המתקבלים
+    const customersList = document.getElementById("customersList");
+    customersList.innerHTML = ""; // ניקוי הרשימה לפני הוספת הפריטים המסוננים
+    const customerElement = document.createElement("div");
+    customerElement.classList.add('customer-row');
+    customerElement.innerHTML = `
+        <div class="customer-card">
+            <img src="https://as1.ftcdn.net/jpg/05/53/79/60/220_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" alt="User Avatar">
+            <p>Customer ID: ${data.CustomerID}</p>
+            <p>Name: ${data.FullName}</p>
+            <p>Phone: ${data.Phone}</p>
+            <p>Email: ${data.Email}</p>
+            <p>Type: ${data.CustomerType}</p>
+            <hr>
+        </div>
+    `;
+    customersList.appendChild(customerElement);
+})
+
+            .catch(error => console.error("Error:", error));
+    }
+
+
 
 	</script>
 </body>
