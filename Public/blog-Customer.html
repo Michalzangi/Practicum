@@ -169,6 +169,25 @@
     display: inline-block;/* מרווח מימין בין האייקון למספר */
 }
 
+	.fh5co-section-gray {
+		background: rgba(0, 0, 0, 0);
+	}
+
+	[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+	color:lightpink;
+
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}	
 </style>
 <body>
 	<div id="fh5co-wrapper">
@@ -432,6 +451,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             card.classList.add('feedback-card');
 
             card.innerHTML = `
+			<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
                 <h2><i class="icon-bubble2"></i> <i class="comment">${feedback.Name}</i></h2> <br>
                 <p>Date Posted: ${feedback.Date} </p>
                 <p>${feedback.FeedbackDesc}</p>

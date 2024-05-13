@@ -42,6 +42,7 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: flex-start;
+            padding: 15px;
         }
         .user-card {
              width: 300px;
@@ -52,6 +53,7 @@
             margin-bottom: 20px;
             transition: transform 0.3s ease;
             text-align: center; /* Center align content */
+            padding: 15px;
         }
 
         .user-card:hover {
@@ -142,7 +144,9 @@
     border-color: #dfb4c6;
     box-shadow: 0 0 5px rgba(227, 139, 208, 0.5);
 }
-
+.fh5co-section-gray {
+		background: rgba(0, 0, 0, 0);
+	}
         
  
     </style>
@@ -213,9 +217,14 @@
             </div>
         </aside>
 
-		<div id="fh5co-blog-section" class="fh5co-section-gray">
+	    <div id="fh5co-blog-section" class="fh5co-section-gray">
             <div class="container">
-                <h3 class="users-header">Users</h3><br>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                        <h3>Users</h3>
+                    </div>
+                </div>
+            
                 <div class="filter-bar">
                     <label for="filter">Filter by Role:</label>
                     <select id="filter">
@@ -223,10 +232,17 @@
                         <option value="admin">Admin</option>
                         <option value="user">User</option>
                     </select>
-                </div>
+                </div><br><br><br><br><br><br><br>
+            
                 <div id="users-container" class="users-container"></div><br><br><br>
-                <form id="add-user-form" class="user-row">
-                    <h3 class="users-header">Add New User</h3>
+                <form id="add-user-form" >
+                    <div id="fh5co-blog-section" class="fh5co-section-gray">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                                    <h3>Add New User</h3>
+                                </div>
+                            </div></div>
                     <div class="form-group">
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="UserName" class="form-control" required>
@@ -246,7 +262,7 @@
                     <button type="submit" class="btn btn-primary" id="sub">Add User</button><br></form>
 			</div>
         </div>
-
+    </div>
         <footer>
             <div id="footer">
                 <div class="container">
