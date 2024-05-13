@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,90 +23,88 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<style>
+		.customer-card {
+
+			max-width: 300px;
+			background-color: #ffffff;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			margin-bottom: 20px;
+			transition: transform 0.3s ease;
+			text-align: center;
 
 
-.customer-card {
-        width: 100%;
-        max-width: 300px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
-        transition: transform 0.3s ease;
-        text-align: center;
-        position: relative;
-    }
+		}
 
-#customersList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px; /* מרווחים בין הכרטיסים */
-	font-family: 'Open Sans', sans-serif;
-    color: #333;
-    background-color: #f8f8f8;
-}
+		#customersList {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			grid-gap: 20px;
+			/* מרווחים בין הכרטיסים */
+			font-family: 'Open Sans', sans-serif;
+			color: #333;
+			background-color: #f8f8f8;
+		}
 
-.fh5co-customer .animate-box {
-    position: relative;
-    margin-bottom: 30px; /* מרווח בין הכרטיסים לכלל התוכן */
-	color: #848484;
-}
- 
 
 
 		/* Styling for customer ID input */
-#customerID {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background-color: #fff;
-    font-size: 14px;
-    color: #333;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-}
+		#customerID {
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			background-color: #fff;
+			font-size: 14px;
+			color: #333;
+			width: 100%;
+			box-sizing: border-box;
+			margin-bottom: 15px;
+		}
 
-#customerID:hover {
-    border-color: #999;
-}
+		#customerID:hover {
+			border-color: #999;
+		}
 
-#customerID:focus {
-    outline: none;
-    border-color: #dfb4c6;
-    box-shadow: 0 0 5px rgba(227, 139, 208, 0.5);
-}
-
-
-.customer-card:hover {
-    transform: translateY(-5px);
-}
-
-.customer-card p {
-    margin: 5px 0;
-    font-size: 16px;
-    color: #333333;
-}
-
-.customer-card .customer-info {
-    font-weight: bold;
-}
-
-.user-card .user-icon {
-    margin-right: 10px;
-}
-
-.user-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-	margin-top: 10px;
-    object-fit: cover;
-}
+		#customerID:focus {
+			outline: none;
+			border-color: #dfb4c6;
+			box-shadow: 0 0 5px rgba(227, 139, 208, 0.5);
+		}
 
 
+		.customer-card:hover {
+			transform: translateY(-5px);
+		}
+
+		.customer-card p {
+			margin: 5px 0;
+			font-size: 16px;
+			color: #333333;
+			font-weight: bold;
+		}
+
+
+		.customer-card .customer-icon {
+			margin-right: 10px;
+		}
+
+
+		.customer-card img {
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			margin-bottom: 10px;
+			margin-top: 10px;
+			object-fit: cover;
+		}
+
+		.customer-row {
+			background-color: #f9f9f9;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			margin-bottom: 15px;
+			padding: 15px;
+		}
 	</style>
 </head>
 
@@ -116,7 +115,8 @@
 				<div class="container">
 					<div class="nav-header">
 						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-						<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+						<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real
+									Estate</span></a></h1>
 						<nav id="fh5co-menu-wrap" role="navigation">
 							<ul class="sf-menu" id="fh5co-primary-menu">
 								<li class="active"><a href="HomeManager.html">Home</a></li>
@@ -186,35 +186,35 @@
 
 
 			<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-			<div class="card" id="customersList">
-				<div class="container">
-					<div class="container" id="customersListContainer">
-						<div class="row row-bottom-padded-md">
-							<div class="col-lg-4 col-md-4 col-sm-6">
-								<div class="fh5co-customer animate-box">
-						
-									
-						<div class="row row-bottom-padded-md" id="customersList">
-							<div class="clearfix visible-sm-block"></div>
-							<div class="clearfix visible-sm-block"></div>
-							<div class="clearfix visible-md-block"></div>
+				<div class="card" id="customersList">
+					<div class="container">
+						<div class="container" id="customersListContainer">
+							<div class="row row-bottom-padded-md">
+								<div class="col-lg-4 col-md-4 col-sm-6">
+									<div class="fh5co-customer animate-box">
+
+
+										<div class="row row-bottom-padded-md" id="customersList">
+											<div class="clearfix visible-sm-block"></div>
+											<div class="clearfix visible-sm-block"></div>
+											<div class="clearfix visible-md-block"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>	
-		</div>
-	</div>
-</div>
-</div>
+			</div>
 
-            <div id="fh5co-blog-section" class="fh5co-section-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                            <h3>Add New Customer</h3>
-                        </div>
-                    </div>
-                </div>
+			<div id="fh5co-blog-section" class="fh5co-section-gray">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>Add New Customer</h3>
+						</div>
+					</div>
+				</div>
 
 				<div class="container">
 					<form id="customerForm" action="/addCustomer" method="POST">
@@ -265,7 +265,9 @@
 						<div class="row row-bottom-padded-md">
 							<div class="col-md-3">
 								<h3 class="section-title">About Us</h3>
-								<p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
+								<p>We, Bar Michal and Nofar, information systems management students at the College of
+									Management, own all the exclusive rights to this website <i class="icon-heart3"></i>
+								</p>
 							</div>
 
 							<div class="col-md-3 col-md-push-1">
@@ -295,15 +297,17 @@
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
 											<div class="form-group">
-												<input type="text" class="form-control" id="email" placeholder="Enter your email">
-												<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+												<input type="text" class="form-control" id="email"
+													placeholder="Enter your email">
+												<button type="submit" class="btn btn-default"><i
+														class="icon-paper-plane"></i></button>
 											</div>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
-							<div class="row">
+						<div class="row">
 							<div class="col-md-12">
 								<p class="fh5co-social-icons">
 									<a href="#"><i class="icon-twitter2"></i></a>
@@ -331,7 +335,7 @@
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
 	<script src="js/main.js"></script>
-	
+
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -376,21 +380,22 @@
 		});
 
 		document.addEventListener("DOMContentLoaded", function () {
-    fetch("/getCustomers")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data); // Add this line to inspect the data returned from the server
-            const customersList = document.getElementById("customersList");
-            customersList.innerHTML = ""; // Clear the list before adding new items
-            data.forEach(customer => {
-                const customerItem = document.createElement("div");
-                customerItem.className = "customer-card"; // Add the class name
-                customerItem.innerHTML = `
+			fetch("/getCustomers")
+				.then(response => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then(data => {
+					console.log(data); // Add this line to inspect the data returned from the server
+					const customersList = document.getElementById("customersList");
+					customersList.innerHTML = ""; // Clear the list before adding new items
+					data.forEach(customer => {
+						const customerElement = document.createElement("div");
+						customerElement.classList.add('customer-row');
+						customerElement.innerHTML = `
+   				 <div class="customer-card">
 				<img src="https://as1.ftcdn.net/jpg/05/53/79/60/220_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" alt="User Avatar">
                     <p>Customer ID: ${customer.CustomerID}</p>
                     <p>Name: ${customer.FullName}</p>
@@ -399,11 +404,11 @@
 					<p>Type: ${customer.CustomerType}</p>
                     <hr>
                 `;
-                customersList.appendChild(customerItem);
-            });
-        })
-        .catch(error => console.error("Error:", error));
-});
+						customersList.appendChild(customerElement);
+					});
+				})
+				.catch(error => console.error("Error:", error));
+		});
 
 	</script>
 </body>
