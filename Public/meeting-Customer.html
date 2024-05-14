@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
  <html class="no-js">
 	<head>
 	<meta charset="utf-8">
@@ -9,10 +8,6 @@
 	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FREEHTML5.CO" />
-
-  
-
-  	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
 	<meta property="og:image" content=""/>
 	<meta property="og:url" content=""/>
@@ -22,34 +17,18 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
-
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
-
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
-	
-	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Superfish -->
 	<link rel="stylesheet" href="css/superfish.css">
-	<!-- Flexslider  -->
 	<link rel="stylesheet" href="css/flexslider.css">
-	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="css/magnific-popup.css">
-	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
-	<!-- CS Select -->
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
-	
 	<link rel="stylesheet" href="css/style.css">
-
-
-	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
 
@@ -61,10 +40,10 @@
 			<div class="container">
 				<div class="nav-header">
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+					<h1 id="fh5co-logo"><a href="Home.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li class="active"><a href="HomeManager.html">Home</a></li>
+							<li class="active"><a href="Home.html">Home</a></li>
 							<li>
 								<a>Assets</a>
 								<ul class="fh5co-sub-menu">
@@ -74,7 +53,8 @@
 									<li><a href="sale-Customer.html">Sale</a></li>
 								</ul>
 							</li>
-							<li><a href="agent-Customer.html">Agent</a></li>
+							<li><a href="blog-Customer.html">Blog</a></li>
+							<li><a href="addC-Customer.html">Join</a></li>
 							<li>
 								<a>Meeting</a>
 								<ul class="fh5co-sub-menu">
@@ -82,16 +62,11 @@
 									<li><a href="meetingV-Customer.html">View</a></li>
 								</ul>
 							</li>
-							<li><a href="blog-Customer.html">Blog</a></li>
-							<li><a href="contact-Customer.html">Contact</a></li>
-							<li><a href="addC-Customer.html">Join</a></li>
 						</ul>
 					</nav>
 				</div>
 			</div>
 		</header>
-
-
 
 		<aside id="fh5co-hero" class="js-fullheight">
 			<div class="flexslider js-fullheight">
@@ -103,7 +78,7 @@
 				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
 			   				<div class="slider-text-inner">
 		   						<h2 class="heading-title">Meeting</h2>
-		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
+		   						<p class="fh5co-lead"><i class="icon-heart3"></i> </p>
 			   				</div>
 			   			</div>
 				   		</div>
@@ -112,8 +87,6 @@
 			  	</ul>
 		  	</div>
 		</aside>
-
-		
 
 		<div id="fh5co-blog-section" class="fh5co-section-gray">
             <div class="container">
@@ -168,14 +141,14 @@
 							</select>
 						</div>
 						
-						<div class="form-group">
+						<div class="form-group asset-select-container" style="display: none;">
 							<label for="assetSelect">Select Asset:</label>
 							<select class="form-control" id="assetSelect" name="assetSelect" required>
-							  <option value="">Select Asset</option>
-							  <!-- Options will be dynamically populated here -->
+								<option value="">Select Asset</option>
+								<!-- Options will be dynamically populated here -->
 							</select>
-						  </div>
-						<button type="submit" class="btn btn-primary" id="sub">Add Meeting</button>
+						</div>
+						<button type="submit" class="btn btn-primary" id="sub">Add Meeting</button><br><br>
 						<div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
 							Meeting added successfully!
 						</div>
@@ -184,9 +157,6 @@
                 </div>
             </div>
 			
-
-
-
 		<footer>
 			<div id="footer">
 				<div class="container">
@@ -246,18 +216,10 @@
 			</div>
 		</footer>
 
-	
-
 	</div>
-	<!-- END fh5co-page -->
-
 	</div>
-	<!-- END fh5co-wrapper -->
 
-	<!-- jQuery -->
     <script>
-	
-
 	document.addEventListener("DOMContentLoaded", function() {
   // Fetch assets data from server and display them
   fetch('/Assets')
@@ -328,12 +290,46 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error("Error:", error));
     });
 });
+///
+function toggleAssetSelection() {
+    var meetingTypeSelect = document.getElementById("meetingType");
+    var assetSelectContainer = document.querySelector(".asset-select-container");
+    var assetSelect = document.getElementById("assetSelect");
 
+    // Get the selected meeting type
+    var selectedMeetingType = meetingTypeSelect.value;
+
+    // Check if the selected meeting type requires asset selection
+    if (selectedMeetingType === "Asset Visit Meeting" || selectedMeetingType === "Negotiation Meeting" || selectedMeetingType === "Contract Signing Meeting") {
+        assetSelectContainer.style.display = "block"; // Show the asset selection field
+        assetSelect.disabled = false; // Enable the asset selection field
+    } else {
+        assetSelectContainer.style.display = "none"; // Hide the asset selection field
+        assetSelect.disabled = true; // Disable the asset selection field
+        assetSelect.value = "Not yet known"; // Set default value
+    }
+}
+
+    // Add onchange event listener to the meeting type select element
+    document.getElementById("meetingType").addEventListener("change", toggleAssetSelection);
+
+    // Call toggleAssetSelection function initially to set the initial state
+    toggleAssetSelection();
+///
 function sendMeetingData() {
     var form = document.getElementById("meetingForm");
     var assetSelect = form.querySelector("#assetSelect");
     var selectedAssets = [];
     var meetingType = form.querySelector("#meetingType").value;
+    var propertyType = "Not yet known"; // Default value for property type
+
+    if (assetSelect.disabled) {
+        // If asset selection is disabled, set property type as "Not yet known"
+        propertyType = "Not yet known";
+    } else {
+        // If asset selection is enabled, get the selected property type from the asset select element
+        propertyType = assetSelect.options[assetSelect.selectedIndex].dataset.type;
+    }
 
     for (var i = 0; i < assetSelect.options.length; i++) {
         if (assetSelect.options[i].selected) {
@@ -354,6 +350,7 @@ function sendMeetingData() {
     });
     data["selectedAssets"] = selectedAssets;
     data["meetingType"] = meetingType;
+    data["propertyType"] = propertyType; // Include property type in the data sent to the server
 
     fetch("/addMeeting", {
         method: "POST",
@@ -368,7 +365,7 @@ function sendMeetingData() {
             console.log("Meeting added successfully");
             setTimeout(function() {
                 location.reload();
-            }, 3000);
+            }, 5000);
         } else {
             console.error("Failed to add meeting");
         }
@@ -377,29 +374,17 @@ function sendMeetingData() {
 }
 
     </script>
-
 	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<script src="js/sticky.js"></script>
-	<!-- Superfish -->
 	<script src="js/hoverIntent.js"></script>
 	<script src="js/superfish.js"></script>
-	<!-- Flexslider -->
 	<script src="js/jquery.flexslider-min.js"></script>
-	<!-- Date Picker -->
 	<script src="js/bootstrap-datepicker.min.js"></script>
-	<!-- CS Select -->
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
-
-	
-	<!-- Main JS -->
 	<script src="js/main.js"></script>
-
 	</body>
 </html>

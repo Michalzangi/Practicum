@@ -710,16 +710,16 @@ div.cs-select span {
   margin-left: 10px; }
 
 #fh5co-about .fh5co-staff {
-  margin-bottom: 3em; }
+  margin-bottom: 50px; }
 #fh5co-about .fh5co-staff img {
   width: 230px;
   height: 230px;
   margin: 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   background: #fff;
-  -webkit-box-shadow: 0px 10px 30px -13px rgba(0, 0, 0, 0.21);
-  -moz-box-shadow: 0px 10px 30px -13px rgba(0, 0, 0, 0.21);
-  box-shadow: 0px 10px 30px -13px rgba(0, 0, 0, 0.21);
+  -webkit-box-shadow: 0px 10px 50px -13px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 0px 10px 50px -13px rgba(0, 0, 0, 0.21);
+  box-shadow: 0px 10px 50px -13px rgba(0, 0, 0, 0.21);
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
@@ -730,12 +730,12 @@ div.cs-select span {
 #fh5co-about .fh5co-staff h3 {
   font-size: 24px; }
 #fh5co-about .fh5co-staff p {
-  margin-bottom: 30px; }
+  margin-bottom: 50px; }
 #fh5co-about .fh5co-staff:hover img {
   background: rgba(68, 198, 98, 0.2); }
 #fh5co-about .fh5co-staff .list-prop {
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   color:  #de6277;
   font-weight: 400; }
 
