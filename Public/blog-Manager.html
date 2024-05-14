@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 
- <html class="no-js">
-	<head>
+<html class="no-js">
+
+<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>practicum</title>
@@ -11,14 +11,14 @@
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FREEHTML5.CO" />
 
-  
 
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
+
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:site_name" content="" />
+	<meta property="og:description" content="" />
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
@@ -28,7 +28,7 @@
 	<link rel="shortcut icon" href="favicon.ico">
 
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
-	
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -46,9 +46,10 @@
 	<!-- CS Select -->
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
-	
+
 	<link rel="stylesheet" href="css/style.css">
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -58,355 +59,436 @@
 	<![endif]-->
 
 	<style>
-        .card {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 10fr));
-            gap: 50px;
+		.card {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(320px, 10fr));
+			gap: 50px;
 			padding: 50px;
-			
 
-        }
 
-        .feedback-item {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-			align-items: center; /* כדי למרכז את התוכן אופקית */
-    text-align: center; /* כדי למרכז את התוכן אנכית */
-        }
+		}
 
-        .feedback-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
+		.feedback-item {
+			background-color: #ffffff;
+			border-radius: 20px;
+			padding: 20px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s ease-in-out;
+			align-items: center;
+			/* כדי למרכז את התוכן אופקית */
+			text-align: center;
+			/* כדי למרכז את התוכן אנכית */
+			font-weight: bold;
+		}
 
-        .feedback-item h4 {
-            font-family: 'Kunstler Script', cursive;
-            margin-top: auto; 
-            margin-bottom: auto; 
-			
-            font-size: 50px;
-            color: rgba(120, 101, 101, 0.671); 
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .feedback-item p {
-            margin: 0;
-            font-size: 16px;
-            color: #666666;
-            font-family: 'calibri';
+		.feedback-item:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+		}
+
+		.feedback-item h2 {
+			font-family: 'Kunstler Script', cursive;
+			margin-top: auto;
+			margin-bottom: auto;
+			font-weight: bold;
+			font-size: 50px;
+			color: rgba(120, 101, 101, 0.671);
+			text-align: center;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+		}
+
+		.feedback-item p {
+			margin: 0;
+			font-size: 16px;
+			color: #666666;
+			font-family: 'calibri';
 			margin-left: auto;
-			align-items: center; /* כדי למרכז את התוכן אופקית */
-    text-align: center; /* כדי למרכז את התוכן אנכית */
-        }
+			align-items: center;
+			/* כדי למרכז את התוכן אופקית */
+			text-align: center;
+			/* כדי למרכז את התוכן אנכית */
+			font-weight: bold;
+		}
+	
 
+		.feedback-card p {
+			margin-bottom: 10px;
+			font-size: 16px;
+			align-items: center;
+			text-align: center;
+			font-family: 'Calibri';
+			font-weight: bold;
 
-        .feedback-item .date {
-            font-weight: bold;
-            color: #007bff;
-        }
+		}
 
-        .feedback-item .location {
-            margin-top: 10px;
-        }
-
-        .feedback-item .customer {
-            margin-top: 10px;
-        }
-
-        .feedback-item .asset-details {
-            margin-top: 10px;
-        }
+		.feedback-card h2 {
+			margin-bottom: 10px;
+			font-size: 50px;
+			color: #6c6c6c;
+			font-family: 'Kunstler Script';
+			align-items: center;
+			/* כדי למרכז את התוכן אופקית */
+			text-align: center;
+			/* כדי למרכז את התוכן אנכית */
+			font-weight: initial
+		}
 
 		.star-rating {
-    display: inline-block;
-    unicode-bidi: bidi-override;
-    color: #ffcc00; /* צבע הכוכבים */
-    font-size: 20px; /* גודל הכוכבים */
-    height: 1em;
-    width: auto;
-    margin-left: 10px; /* מרווח משמאל */
+			display: inline-block;
+			unicode-bidi: bidi-override;
+			color: #ffcc00;
+			/* צבע הכוכבים */
+			font-size: 20px;
+			/* גודל הכוכבים */
+			height: 1em;
+			width: auto;
+
+			/* מרווח משמאל */
+			position: relative;
+			padding: 0;
+		}
+
+		.star-rating::before {
+			content: "\2605";
+			/* תו של כוכב */
+			position: absolute;
+			opacity: 0;
+			/* החלק הבא ישנה את השקיפות כדי להציג את מספר הכוכבים */
+		}
+
+		.star-rating:hover::before,
+		.star-rating:hover~.star-rating::before {
+			opacity: 1;
+			color: #ffcc00;
+			/* צבע הכוכבים במצב השקיפות */
+		}
+
+		.feedback-item .rating {
+			display: inline-block;
+			font-size: 16px;
+			/* גודל הטקסט של מספר הכוכבים */
+			vertical-align: middle;
+		}
+
+		.star-rating {
+			display: inline-block;
+			color: #ffcc00;
+			/* צבע הכוכבים */
+			font-size: 20px;
+			/* גודל הכוכבים */
+			vertical-align: middle;
+			text-align: center;
+			/* לישור כוכבים למרכז */
+			width: 100%;
+			/* לקחת את כל הרוחב של המרכז */
+		}
+
+		.star-rating::before {
+			content: "\f005";
+			/* תו של כוכב בגופן Font Awesome */
+			font-family: 'Font Awesome';
+			/* שם הגופן */
+			font-weight: normal;
+			font-style: normal;
+
+			/* מרווח מימין בין האייקון למספר */
+			display: inline-block;
+			/* מרווח מימין בין האייקון למספר */
+		}
+
+		[class^="icon-"],
+		[class*=" icon-"] {
+			/* use !important to prevent issues with browser extensions that change fonts */
+			font-family: 'icomoon' !important;
+			color: lightpink;
+
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+
+			/* Better Font Rendering =========== */
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		.fh5co-section-gray {
+			background: rgba(0, 0, 0, 0);
+		}
+
+		.speech-bubble {
+			position: relative;
+			background-color: #ffffff;
+			border-radius: 10px;
+			padding: 15px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+
+		.triangle {
+			position: absolute;
+			bottom: -10px;
+			/* מרחק מהקצה התחתון של הבועה */
+			left: 20px;
+			/* מיקום אופקי */
+			width: 0;
+			height: 0;
+			border-left: 20px solid transparent;
+			/* צבע המשולש נבחר בצורה שקופה */
+			border-right: 20px solid transparent;
+			border-top: 10px solid #ffffff;
+			/* צבע המשולש */
+		}
+
+		.feedback-card {
     position: relative;
-    padding: 0;
-}
+  }
 
-.star-rating::before {
-    content: "\2605"; /* תו של כוכב */
+  .feedback-card .date {
     position: absolute;
-    opacity: 0; /* החלק הבא ישנה את השקיפות כדי להציג את מספר הכוכבים */
-}
-
-.star-rating:hover::before,
-.star-rating:hover~.star-rating::before {
-    opacity: 1;
-    color: #ffcc00; /* צבע הכוכבים במצב השקיפות */
-}
-
-.feedback-item .rating {
-    display: inline-block;
-    font-size: 16px; /* גודל הטקסט של מספר הכוכבים */
-    vertical-align: middle;
-}
-
-.star-rating {
-    display: inline-block;
-    color: #ffcc00; /* צבע הכוכבים */
-    font-size: 20px; /* גודל הכוכבים */
-    vertical-align: middle;
-	text-align: center; /* לישור כוכבים למרכז */
-    width: 100%; /* לקחת את כל הרוחב של המרכז */
-}
-
-.star-rating::before {
-    content: "\f005"; /* תו של כוכב בגופן Font Awesome */
-    font-family: 'Font Awesome'; /* שם הגופן */
-    font-weight: normal;
-    font-style: normal;
-    margin-right: 5px; /* מרווח מימין בין האייקון למספר */
-    display: inline-block;/* מרווח מימין בין האייקון למספר */
-}
-[class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
-	color:lightpink;
-
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.fh5co-section-gray {
-		background: rgba(0, 0, 0, 0);
-	}
-    </style>
+    top: 0;
+    right: 0;
+    font-size: 16px;
+    font-weight: bold;
+    padding-right: 20px;
+	padding-top: 10px;
+  }
+	</style>
 
 
 </head>
+
 <body>
 	<div id="fh5co-wrapper">
-	<div id="fh5co-page">
+		<div id="fh5co-page">
 
-		<header id="fh5co-header-section" class="sticky-banner">
-			<div class="container">
-				<div class="nav-header">
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
-					<nav id="fh5co-menu-wrap" role="navigation">
-						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li class="active"><a href="HomeManager.html">Home</a></li>
-							<li>
-								<a>Assets</a>
-								<ul class="fh5co-sub-menu">
-									<li><a href="all-Manager.html">All</a></li>
-									<li><a href="filter-Manager.html">Filter</a></li>
-									<li><a href="addA-Manager.html">Add</a></li>
-									<li><a href="updateA-Manager.html">Update</a></li>
-								</ul>
-							</li>
-							<li><a href="users-Manager.html">Users</a></li>
-							<li><a href="addC-Manager.html">Customer</a></li>
-							<li><a href="blog-Manager.html">Blog</a></li>
-							<!-- New "Deals" tab containing "Deal" and "Deals View" links -->
-							<li>
-								<a>Deals</a>
-								<ul class="fh5co-sub-menu">
-									<li><a href="addD-Manager.html">Add Deal</a></li>
-									<li><a href="DealsV-Manager.html">View Deals</a></li>
-								</ul>
-							</li>
-							<!-- End of "Deals" tab -->
-							<li>
-								<a>Meetings</a>
-								<ul class="fh5co-sub-menu">
-									<li><a href="meetingA-Manager.html">Add</a></li>
-									<li><a href="meetingV-Manager.html">View</a></li>
-								</ul>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</header>
-
-		<aside id="fh5co-hero" class="js-fullheight">
-			<div class="flexslider js-fullheight">
-				<ul class="slides">
-			   	<li style="background-image: url(images/cov.png);">
-			   		<div class="overlay"></div>
-			   		<div class="container-fluid">
-			   			<div class="row">
-				   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
-			   				<div class="slider-text-inner">
-		   						<h2 class="heading-title">Our Blog</h2>
-		   						<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
-			   				</div>
-			   			</div>
-						  
-				   		</div>
-			   		</div>
-			   	</li>
-			  	</ul>
-		  	</div>
-		</aside>
-
-		
-
-		<div id="fh5co-blog-section" class="fh5co-section-gray">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-						<h3>Our Blog</h3>
-					</div>
-				</div>
-			</div>
-			<div class="card" id="feedbackList">
-			<div class="container">
-				<div class="container" id="feedbackListContainer">
-					<div class="row row-bottom-padded-md">
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="fh5co-blog animate-box">
-
-								
-					<div class="row row-bottom-padded-md" id="feedbackList">
-						<!-- Feedback items will be dynamically added here -->
-						<div class="clearfix visible-sm-block"></div>
-						<div class="clearfix visible-sm-block"></div>
-						<div class="clearfix visible-md-block"></div>
-					</div>
-				</div>
-			
-			</div>
-				</div>	</div>
-				
-
-			</div>
-		</div>
-
-	<!-- fh5co-blog-section -->
-
-		<!-- fh5co-blog-section -->
-		</div>
-		<footer>
-			<div id="footer">
+			<header id="fh5co-header-section" class="sticky-banner">
 				<div class="container">
-					<div class="row row-bottom-padded-md">
-						<div class="col-md-3">
-							<h3 class="section-title">About Us</h3>
-							<p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
-						</div>
-						
-						<div class="col-md-3 col-md-push-1">
-							<h3 class="section-title">Links</h3>
-							<ul>
-								<li><a href="#">Home</a></li>
-								<li><a href="#">Assets</a></li>
-								<li><a href="#">Agent</a></li>
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">Contact</a></li>
+					<div class="nav-header">
+						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+						<h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real
+									Estate</span></a></h1>
+						<nav id="fh5co-menu-wrap" role="navigation">
+							<ul class="sf-menu" id="fh5co-primary-menu">
+								<li class="active"><a href="HomeManager.html">Home</a></li>
+								<li>
+									<a>Assets</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="all-Manager.html">All</a></li>
+										<li><a href="filter-Manager.html">Filter</a></li>
+										<li><a href="addA-Manager.html">Add</a></li>
+										<li><a href="updateA-Manager.html">Update</a></li>
+									</ul>
+								</li>
+								<li><a href="users-Manager.html">Users</a></li>
+								<li><a href="addC-Manager.html">Customer</a></li>
+								<li><a href="blog-Manager.html">Blog</a></li>
+								<!-- New "Deals" tab containing "Deal" and "Deals View" links -->
+								<li>
+									<a>Deals</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="addD-Manager.html">Add Deal</a></li>
+										<li><a href="DealsV-Manager.html">View Deals</a></li>
+									</ul>
+								</li>
+								<!-- End of "Deals" tab -->
+								<li>
+									<a>Meetings</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="meetingA-Manager.html">Add</a></li>
+										<li><a href="meetingV-Manager.html">View</a></li>
+									</ul>
+								</li>
 							</ul>
-						</div>
+						</nav>
+					</div>
+				</div>
+			</header>
 
-						<div class="col-md-3">
-							<h3 class="section-title">Information</h3>
-							<ul>
-								<li><a href="#">Terms &amp; Condition</a></li>
-								<li><a href="#">License</a></li>
-								<li><a href="#">Privacy &amp; Policy</a></li>
-								<li><a href="#">Contact Us</a></li>
-							</ul>
-						</div>
-						<div class="col-md-3">
-							<h3 class="section-title">Newsletter</h3>
-							<p>Subscribe for our newsletter</p>
-							<form class="form-inline" id="fh5co-header-subscribe">
+			<aside id="fh5co-hero" class="js-fullheight">
+				<div class="flexslider js-fullheight">
+					<ul class="slides">
+						<li style="background-image: url(images/cov.png);">
+							<div class="overlay"></div>
+							<div class="container-fluid">
 								<div class="row">
-									<div class="col-md-12 col-md-offset-0">
-										<div class="form-group">
-											<input type="text" class="form-control" id="email" placeholder="Enter your email">
-											<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+									<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+										<div class="slider-text-inner">
+											<h2 class="heading-title">Our Blog</h2>
+											<p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
 										</div>
 									</div>
+
 								</div>
-							</form>
-						</div>
-					</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</aside>
+
+
+
+			<div id="fh5co-blog-section" class="fh5co-section-gray">
+				<div class="container">
 					<div class="row">
-						<div class="col-md-12">
-							<p class="fh5co-social-icons">
-								<a href="#"><i class="icon-twitter2"></i></a>
-								<a href="#"><i class="icon-facebook2"></i></a>
-								<a href="#"><i class="icon-instagram"></i></a>
-								<a href="#"><i class="icon-dribbble2"></i></a>
-								<a href="#"><i class="icon-youtube"></i></a>
-							</p>
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>Our Blog</h3>
 						</div>
 					</div>
 				</div>
+				<div class="card" id="feedbackList">
+					<div class="container">
+						<div class="container" id="feedbackListContainer">
+							<div class="row row-bottom-padded-md">
+								<div class="col-lg-4 col-md-4 col-sm-6">
+									<div class="fh5co-blog animate-box">
+
+
+										<div class="row row-bottom-padded-md" id="feedbackList">
+											<!-- Feedback items will be dynamically added here -->
+											<div class="clearfix visible-sm-block"></div>
+											<div class="clearfix visible-sm-block"></div>
+											<div class="clearfix visible-md-block"></div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<!-- fh5co-blog-section -->
+
+				<!-- fh5co-blog-section -->
 			</div>
-		</footer>
+			<footer>
+				<div id="footer">
+					<div class="container">
+						<div class="row row-bottom-padded-md">
+							<div class="col-md-3">
+								<h3 class="section-title">About Us</h3>
+								<p>We, Bar Michal and Nofar, information systems management students at the College of
+									Management, own all the exclusive rights to this website <i class="icon-heart3"></i>
+								</p>
+							</div>
 
-	
+							<div class="col-md-3 col-md-push-1">
+								<h3 class="section-title">Links</h3>
+								<ul>
+									<li><a href="#">Home</a></li>
+									<li><a href="#">Assets</a></li>
+									<li><a href="#">Agent</a></li>
+									<li><a href="#">Blog</a></li>
+									<li><a href="#">Contact</a></li>
+								</ul>
+							</div>
 
-	</div>
-	<!-- END fh5co-page -->
+							<div class="col-md-3">
+								<h3 class="section-title">Information</h3>
+								<ul>
+									<li><a href="#">Terms &amp; Condition</a></li>
+									<li><a href="#">License</a></li>
+									<li><a href="#">Privacy &amp; Policy</a></li>
+									<li><a href="#">Contact Us</a></li>
+								</ul>
+							</div>
+							<div class="col-md-3">
+								<h3 class="section-title">Newsletter</h3>
+								<p>Subscribe for our newsletter</p>
+								<form class="form-inline" id="fh5co-header-subscribe">
+									<div class="row">
+										<div class="col-md-12 col-md-offset-0">
+											<div class="form-group">
+												<input type="text" class="form-control" id="email"
+													placeholder="Enter your email">
+												<button type="submit" class="btn btn-default"><i
+														class="icon-paper-plane"></i></button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<p class="fh5co-social-icons">
+									<a href="#"><i class="icon-twitter2"></i></a>
+									<a href="#"><i class="icon-facebook2"></i></a>
+									<a href="#"><i class="icon-instagram"></i></a>
+									<a href="#"><i class="icon-dribbble2"></i></a>
+									<a href="#"><i class="icon-youtube"></i></a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+
+
+		</div>
+		<!-- END fh5co-page -->
 
 	</div>
 	<!-- END fh5co-wrapper -->
 
 	<!-- jQuery -->
 
-<script>
-	document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const response = await fetch('/feedback');
-        if (!response.ok) {
-            throw new Error('Failed to fetch feedback data');
-        }
-        const data = await response.json();
+	<script>
+		document.addEventListener('DOMContentLoaded', async () => {
+			try {
+				const response = await fetch('/feedback');
+				if (!response.ok) {
+					throw new Error('Failed to fetch feedback data');
+				}
+				const data = await response.json();
 
-        const feedbackList = document.getElementById('feedbackList');
-        if (!feedbackList) {
-            throw new Error('Element with ID "feedbackList" not found');
-        }
+				const feedbackList = document.getElementById('feedbackList');
+				if (!feedbackList) {
+					throw new Error('Element with ID "feedbackList" not found');
+				}
 
-        feedbackList.innerHTML = '';
+				feedbackList.innerHTML = '';
 
-        data.forEach((feedback) => {
-            const card = document.createElement('div');
-            card.classList.add('feedback-card');
+				data.forEach((feedback) => {
+					const card = document.createElement('div');
+					card.classList.add('feedback-card');
 
-            card.innerHTML = `
-			<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
-                <h2><i class="icon-bubble2"></i> <i class="comment">${feedback.Name}</i></h2> <br>
-                <p>Date Posted: ${feedback.Date} </p>
-                <p>${feedback.FeedbackDesc}</p>
-                <p class="rating star-rating"></p>
-            `;
-
-            const ratingElement = card.querySelector('.rating.star-rating');
-            if (ratingElement) {
-                const stars = '\u2605'; // אייקון של כוכב ב-Unicode
-                ratingElement.textContent = stars.repeat(feedback.rating); // משנה את התוכן למספר המציין כמות כוכבים
-            }
-
-            feedbackList.appendChild(card);
-        });
-    } catch (error) {
-        console.error('Error fetching feedback:', error.message);
-    }
-});
+					card.innerHTML = `
+					<div class="speech-bubble">
+						<span class="triangle"></span>
+						<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+						<h2><i class="icon-bubble2"></i> <i class="comment">${feedback.Name}</i></h2>
+						<p class="date"> ${feedback.Date}  <i class="far fa-calendar"></i></p> <!-- כאן יש להוסיף את הקלאס של התאריך -->
+						<p>${feedback.FeedbackDesc}</p>
+						<p class="rating star-rating"></p>
+					</div>
+					`;
 
 
 
-</script>
+
+
+					const ratingElement = card.querySelector('.rating.star-rating');
+					if (ratingElement) {
+						const stars = '\u2605'; // אייקון של כוכב ב-Unicode
+						ratingElement.textContent = stars.repeat(feedback.rating); // משנה את התוכן למספר המציין כמות כוכבים
+					}
+
+					feedbackList.appendChild(card);
+				});
+			} catch (error) {
+				console.error('Error fetching feedback:', error.message);
+			}
+		});
+
+
+
+	</script>
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>
@@ -426,10 +508,10 @@
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
 
-	
+
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
 
-	</body>
-</html>
+</body>
 
+</html>
