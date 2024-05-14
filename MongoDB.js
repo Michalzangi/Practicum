@@ -789,9 +789,31 @@ const getCustomerByID = async (customerID) => {
   }
 }
 
+async function getAvailableAssets() {
+  const client = new MongoClient(uri);
+
+  try {
+    console.log('Connecting to the database...');
+    await client.connect();
+    console.log('Connected to the database.');
+    const database = client.db('Practicum');
+    const collection = database.collection('Assets');
+    const projection = { "_id": 0 };
+    const filter = { "AssetStatus": "Available" };
+    const assets = await collection.find(filter, { projection }).toArray();
+    console.log(assets);
+    return assets;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch available assets.');
+  } finally {
+    await client.close();
+  }
+}
+
 
 
 module.exports = { run ,loginUser ,getAllAssets ,filterAssets ,getFeedback, addProperty,addFeedback,addMeeting,
    updateProperty,getAllUsers, deleteUserById, addUser,addPartner,getAllPartners,addCustomer, filterAssetsForManager, 
    createDeal,checkCustomerExists,getAllMeetings,deleteMeetingById,checkMeetingExists,getAllCustomers,getMeetingsByUsername,
-    getAllDeals,getCustomerByID};
+    getAllDeals,getCustomerByID, getAvailableAssets};

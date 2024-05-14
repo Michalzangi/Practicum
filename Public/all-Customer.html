@@ -35,7 +35,6 @@ rel='stylesheet' type='text/css'>
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
 
-
 #filter-form-container select#asset-type-select,
 #filter-form-container input#from-place,
 #filter-form-container input#asset-price-min,
@@ -54,7 +53,6 @@ in the width */
 #fh5co-search-map {
     position: relative;
 }
-
 
 
 #search-property {
@@ -116,46 +114,87 @@ filter button */
     width: 150px;
 }
 
+#empty-assets-message {
+    font-family: 'Dancing Script', cursive;
+    font-size: 42px;
+    color: #fff;
+    background-color: #ec336e;
+    border: none;
+    padding: 40px;
+    border-radius: 15px; /* Reduce border-radius for a smaller frame */
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 1.5s steps(40, end) forwards, fadeInDown 1s ease;
+    position: relative;
+}
 
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
 
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#empty-assets-message::before,
+#empty-assets-message::after {
+    content: '';
+    position: abso
+}
 
     </style>
 </head>
 <body>
 
-<div id="fh5co-wrapper">
-    <div id="fh5co-page">
-        <header id="fh5co-header-section" class="sticky-banner">
-            <div class="container">
-                <div class="nav-header">
-                    <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-                    <h1 id="fh5co-logo"><a href="Home.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
-                    <nav id="fh5co-menu-wrap" role="navigation">
-                        <ul class="sf-menu" id="fh5co-primary-menu">
-                            <li class="active"><a href="Home.html">Home</a></li>
-                            <li>
-                                <a>Assets</a>
-                                <ul class="fh5co-sub-menu">
-                                    <li><a href="all-Customer.html">All</a></li>
-                                    <li><a href="filter-Customer.html">Filter</a></li>
-                                    <li><a href="new-Customer.html">New</a></li>
-                                    <li><a href="sale-Customer.html">Sale</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="blog-Customer.html">Blog</a></li>
-                            <li><a href="addC-Customer.html">Join</a></li>
-                            <li>
-                                <a>Meeting</a>
-                                <ul class="fh5co-sub-menu">
-                                    <li><a href="meeting-Customer.html">Add</a></li>
-                                    <li><a href="meetingV-Customer.html">View</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <header id="fh5co-header-section" class="sticky-banner">
+                <div class="container">
+                    <div class="nav-header">
+                        <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                        <h1 id="fh5co-logo"><a href="Home.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+                        <nav id="fh5co-menu-wrap" role="navigation">
+                            <ul class="sf-menu" id="fh5co-primary-menu">
+                                <li class="active"><a href="Home.html">Home</a></li>
+                                <li>
+                                    <a>Assets</a>
+                                    <ul class="fh5co-sub-menu">
+                                        <li><a href="all-Customer.html">All</a></li>
+                                        <li><a href="filter-Customer.html">Filter</a></li>
+                                        <li><a href="new-Customer.html">New</a></li>
+                                        <li><a href="sale-Customer.html">Sale</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="blog-Customer.html">Blog</a></li>
+                                <li><a href="addC-Customer.html">Join</a></li>
+                                <li>
+                                    <a>Meeting</a>
+                                    <ul class="fh5co-sub-menu">
+                                        <li><a href="meeting-Customer.html">Add</a></li>
+                                        <li><a href="meetingV-Customer.html">View</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
         <aside id="fh5co-hero" class="js-fullheight">
             <div class="flexslider js-fullheight">
@@ -188,7 +227,6 @@ btn-lg">All Assets</button>
 btn-lg">Filter</button>
         </div>
 
-
     <div id="fh5co-search-map">
         <div id="search-property">
             <div class="map" style="background-image:
@@ -201,13 +239,12 @@ url(images/cover_bg_1.jpg);"></div>
                             <section>
                                 <label for="asset-type-select">Asset
 Type:</label>
-                                <select id="asset-type-select"
-class="cs-select cs-skin-border">
-                                    <option value="" disabled
-selected>Any</option>
-                                    <option value="Rent">Rent</option>
-                                    <option value="Sale">Sale</option>
-                                </select>
+<select id="asset-type-select" class="cs-select cs-skin-border">
+    <option value="" selected>Any</option> <!-- Neutral option -->
+    <option value="Rent">Rent</option>
+    <option value="Sale">Sale</option>
+</select>
+
                             </section>
                         </div>
                         <!-- Asset Price Inputs -->
@@ -278,7 +315,6 @@ btn-lg">Close</button>
             </div>
         </div>
     </div>
-
 
 
 
@@ -380,6 +416,16 @@ class="btn btn-default"><i class="icon-paper-plane"></i></button>
     const closeFilterSlide = document.getElementById("close-filter-slide");
     const allAssetsButton = document.getElementById("all-assets-button");
 
+    // Function to reset form fields
+    function resetFormFields() {
+        document.getElementById("asset-type-select").value = "";
+        document.getElementById("asset-price-min").value = "";
+        document.getElementById("asset-price-max").value = "";
+        document.getElementById("room-number").value = "";
+        document.getElementById("asset-street-number").value = "";
+        document.getElementById("from-place").value = "";
+    }
+
     filterMobileButton.addEventListener("click", function() {
         // Hide filter button
         filterMobileButton.style.display = "none";
@@ -387,6 +433,9 @@ class="btn btn-default"><i class="icon-paper-plane"></i></button>
         allAssetsButton.style.display = "none";
         // Show slide
         searchProperty.classList.add("show");
+
+        // Reset form fields
+        resetFormFields();
     });
 
     closeFilterSlide.addEventListener("click", function() {
@@ -396,8 +445,10 @@ class="btn btn-default"><i class="icon-paper-plane"></i></button>
         allAssetsButton.style.display = "block";
         // Hide slide
         searchProperty.classList.remove("show");
-    });
 
+        // Reset form fields
+        resetFormFields();
+    });
 
     allAssetsButton.addEventListener("click", async function() {
         // Reload the page
@@ -432,13 +483,11 @@ async function searchAssets() {
     const assetPriceMin = document.getElementById("asset-price-min").value;
     const assetPriceMax = document.getElementById("asset-price-max").value;
     const roomNumber = document.getElementById("room-number").value;
-    const assetStreetNumber =
-document.getElementById("asset-street-number").value;
+    const assetStreetNumber = document.getElementById("asset-street-number").value;
     const assetStreet = document.getElementById("from-place").value;
 
     // Construct the URL with query parameters
-    const url =
-`/CustomerAssets?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
+    const url = `/CustomerAssets?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
 
     try {
         // Make an asynchronous GET request
@@ -452,8 +501,15 @@ document.getElementById("asset-street-number").value;
         const data = await response.json();
         console.log(data); // Log response for debugging
 
-        // Display the filtered assets
-        displayAssets(data);
+        const assetsContainer = document.getElementById('assets-container');
+
+        if (data.length === 0) {
+            // Display message when no assets are found
+            assetsContainer.innerHTML = '<div id="empty-assets-message">Didn\'t find any relevant assets.</div>';
+        } else {
+            // Display the filtered assets
+            displayAssets(data);
+        }
     } catch (error) {
         console.error('Error:', error);
     }
@@ -471,7 +527,7 @@ function closeSlider() {
 
 async function fetchAssets() {
     try {
-        const response = await fetch('/Assets');
+        const response = await fetch('/AssetsForCustomer');
         const assets = await response.json();
         return assets;
     } catch (error) {
@@ -542,8 +598,8 @@ window.onload = async function() {
     displayAssets(assets);
 };
 
-
   </script>
 
 </body>
 </html>
+
