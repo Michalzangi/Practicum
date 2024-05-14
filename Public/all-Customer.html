@@ -500,7 +500,7 @@ async function searchAssets() {
 
         const data = await response.json();
         console.log(data); // Log response for debugging
-
+        console.log('hi!');
         const assetsContainer = document.getElementById('assets-container');
 
         if (data.length === 0) {
