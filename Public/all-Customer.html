@@ -6,7 +6,8 @@
     <title>practicum</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+    <meta name="keywords" content="free html5, free template, free
+bootstrap, html5, css3, mobile first, responsive" />
     <meta name="author" content="FREEHTML5.CO" />
     <meta property="og:title" content=""/>
     <meta property="og:image" content=""/>
@@ -19,7 +20,8 @@
     <meta name="twitter:card" content="" />
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300'
+rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -32,35 +34,127 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
-       
+
+
+#filter-form-container select#asset-type-select,
+#filter-form-container input#from-place,
+#filter-form-container input#asset-price-min,
+#filter-form-container input#asset-price-max,
+#filter-form-container input#room-number,
+#filter-form-container input#asset-street-number {
+    width: 100%;
+    height: 40px; /* Adjust the height as needed */
+    border-radius: 0px; /* Ensure rounded corners */
+    border: 1px solid #fffdfd; /* Add border for clarity */
+    padding: 8px; /* Add padding for spacing */
+    box-sizing: border-box; /* Ensure padding and border are included
+in the width */
+}
+
+#fh5co-search-map {
+    position: relative;
+}
+
+
+
+#search-property {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 30%;
+    height: auto; /* Change height to auto to allow content to
+determine height */
+    max-height: 100%; /* Limit height to the viewport height */
+    overflow-y: auto; /* Add scrollbars if content exceeds height */
+    background-color: rgb(235, 65, 130);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#search-property.show {
+    right: 0;
+}
+
+#filter-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+#filter-mobile-button, #all-assets-button {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px; /* Adjust spacing between buttons */
+}
+
+#filter-mobile-button:hover, #all-assets-button:hover {
+    background-color: #e91e63; /* Darker pink on hover */
+}
+
+#all-assets-button {
+    /* display: none; */ /* Initially hidden */
+    position: fixed;
+    bottom: 20px;
+    right: calc(20px + 160px); /* Adjust based on the width of the
+filter button */
+    z-index: 999;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 150px;
+}
+
+
+
+
     </style>
 </head>
 <body>
+
 <div id="fh5co-wrapper">
     <div id="fh5co-page">
-		<header id="fh5co-header-section" class="sticky-banner">
+        <header id="fh5co-header-section" class="sticky-banner">
             <div class="container">
                 <div class="nav-header">
-                    <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-                    <h1 id="fh5co-logo"><a href="HomeManager.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+                    <a href="#" class="js-fh5co-nav-toggle
+fh5co-nav-toggle dark"><i></i></a>
+                    <h1 id="fh5co-logo"><a href="HomeManager.html"><i
+class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">
-                            <li class="active"><a href="HomeManager.html">Home</a></li>
+                            <li class="active"><a
+href="HomeManager.html">Home</a></li>
                             <li>
                                 <a>Assets</a>
                                 <ul class="fh5co-sub-menu">
                                     <li><a href="all-Customer.html">All</a></li>
-                                    <li><a href="filter-Customer.html">Filter</a></li>
+                                    <li><a
+href="filter-Customer.html">Filter</a></li>
                                     <li><a href="new-Customer.html">New</a></li>
-                                    <li><a href="sale-Customer.html">Sale</a></li>
+                                    <li><a
+href="sale-Customer.html">Sale</a></li>
                                 </ul>
                             </li>
                             <li><a href="agent-Customer.html">Agent</a></li>
                             <li>
                                 <a>Meeting</a>
                                 <ul class="fh5co-sub-menu">
-                                    <li><a href="meeting-Customer.html">Add</a></li>
-                                    <li><a href="meetingV-Customer.html">View</a></li>
+                                    <li><a
+href="meeting-Customer.html">Add</a></li>
+                                    <li><a
+href="meetingV-Customer.html">View</a></li>
                                 </ul>
                             </li>
                             <li><a href="blog-Customer.html">Blog</a></li>
@@ -79,10 +173,13 @@
                         <div class="overlay"></div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                                <div class="col-md-8 col-md-offset-2
+text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h2 class="heading-title">All our Assets</h2>
-                                        <p class="fh5co-lead">Coming Soon <i class="icon-heart3"></i>  </p>
+                                        <h2 class="heading-title">All
+our Assets</h2>
+                                        <p class="fh5co-lead">Coming
+Soon <i class="icon-heart3"></i>  </p>
                                     </div>
                                 </div>
                             </div>
@@ -93,10 +190,112 @@
             </div>
         </aside>
 
+        <div id="filter-wrapper">
+            <button id="all-assets-button" class="btn btn-primary
+btn-lg">All Assets</button>
+            <button id="filter-mobile-button" class="btn btn-pink
+btn-lg">Filter</button>
+        </div>
+
+
+    <div id="fh5co-search-map">
+        <div id="search-property">
+            <div class="map" style="background-image:
+url(images/cover_bg_1.jpg);"></div>
+            <div class="s-holder">
+                <h2>Search Properties</h2>
+                <div class="row">
+                    <div id="filter-form-container">
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-type-select">Asset
+Type:</label>
+                                <select id="asset-type-select"
+class="cs-select cs-skin-border">
+                                    <option value="" disabled
+selected>Any</option>
+                                    <option value="Rent">Rent</option>
+                                    <option value="Sale">Sale</option>
+                                </select>
+                            </section>
+                        </div>
+                        <!-- Asset Price Inputs -->
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-price-min">Minimum
+Price:</label>
+                                <div class="wide">
+                                    <input type="number"
+class="form-control small-input" id="asset-price-min"
+placeholder="Min" min="0" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-price-max">Maximum
+Price:</label>
+                                <div class="wide">
+                                    <input type="number"
+class="form-control small-input" id="asset-price-max"
+placeholder="Max" min="0" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-room-number">Asset's
+Room Number:</label>
+                                <div class="wide">
+                                    <input type="number"
+class="form-control small-input" id="room-number" placeholder="Any"
+min="1" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label
+for="asset-street-number">Asset's Street Number:</label>
+                                <div class="wide">
+                                    <input type="number"
+class="form-control small-input" id="asset-street-number"
+placeholder="Any" min="1" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <!-- Room Number Input -->
+                        <!-- Asset Street Input -->
+                        <div class="col-xxs-12 col-xs-12">
+                            <div class="input-field">
+                                <label for="from-place">Asset Street:</label>
+                                <input type="text"
+class="form-control" id="from-place" placeholder="Any"/>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Learn More Button -->
+                        <div class="col-xxs-12 col-xs-12 text-center">
+                            <p><a id="learn-more-link" class="btn
+btn-primary btn-lg" href="#">Search</a></p>
+                        </div>
+                    </div>
+                </div>
+                <button id="close-filter-slide" class="btn btn-pink
+btn-lg">Close</button>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
         <div id="fh5co-properties" class="fh5co-section-gray">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center
+heading-section animate-box">
                         <h3>All Assets</h3>
                     </div>
                 </div>
@@ -111,7 +310,9 @@
                     <div class="row row-bottom-padded-md">
                         <div class="col-md-3">
                             <h3 class="section-title">About Us</h3>
-                            <p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
+                            <p>We, Bar Michal and Nofar, information
+systems management students at the College of Management, own all the
+exclusive rights to this website <i class="icon-heart3"></i></p>
                         </div>
 
                         <div class="col-md-3 col-md-push-1">
@@ -137,12 +338,15 @@
                         <div class="col-md-3">
                             <h3 class="section-title">Newsletter</h3>
                             <p>Subscribe for our newsletter</p>
-                            <form class="form-inline" id="fh5co-header-subscribe">
+                            <form class="form-inline"
+id="fh5co-header-subscribe">
                                 <div class="row">
                                     <div class="col-md-12 col-md-offset-0">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="email" placeholder="Enter your email">
-                                            <button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+                                            <input type="text"
+class="form-control" id="email" placeholder="Enter your email">
+                                            <button type="submit"
+class="btn btn-default"><i class="icon-paper-plane"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -179,18 +383,113 @@
 <script src="js/selectFx.js"></script>
 <script src="js/main.js"></script>
 <script>
-     async function fetchAssets() {
-            try {
-                const response = await fetch('/Assets');
-                const assets = await response.json();
-                return assets;
-            } catch (error) {
-                console.error(error);
-                throw new Error('Failed to fetch assets');
-            }
-        }
+   document.addEventListener("DOMContentLoaded", function() {
+    const filterMobileButton = document.getElementById("filter-mobile-button");
+    const searchProperty = document.getElementById("search-property");
+    const closeFilterSlide = document.getElementById("close-filter-slide");
+    const allAssetsButton = document.getElementById("all-assets-button");
 
-        async function displayAssets(assets) {
+    filterMobileButton.addEventListener("click", function() {
+        // Hide filter button
+        filterMobileButton.style.display = "none";
+        // Hide all assets button
+        allAssetsButton.style.display = "none";
+        // Show slide
+        searchProperty.classList.add("show");
+    });
+
+    closeFilterSlide.addEventListener("click", function() {
+        // Show filter button
+        filterMobileButton.style.display = "block";
+        // Show all assets button
+        allAssetsButton.style.display = "block";
+        // Hide slide
+        searchProperty.classList.remove("show");
+    });
+
+
+    allAssetsButton.addEventListener("click", async function() {
+        // Reload the page
+        location.reload();
+    });
+
+    const learnMoreButton = document.getElementById("learn-more-link");
+    learnMoreButton.addEventListener("click", async function(event) {
+        // Prevent default link behavior
+        event.preventDefault();
+
+        // Close the slider
+        closeSlider();
+
+        // Call the search function
+        await searchAssets();
+
+        // Show filter button and all assets button
+        filterMobileButton.style.display = "block";
+        allAssetsButton.style.display = "block";
+    });
+
+    allAssetsButton.addEventListener("click", function() {
+        // Reload the page to display all assets
+        location.reload();
+    });
+});
+
+async function searchAssets() {
+    // Gather data from input fields
+    const assetType = document.getElementById("asset-type-select").value;
+    const assetPriceMin = document.getElementById("asset-price-min").value;
+    const assetPriceMax = document.getElementById("asset-price-max").value;
+    const roomNumber = document.getElementById("room-number").value;
+    const assetStreetNumber =
+document.getElementById("asset-street-number").value;
+    const assetStreet = document.getElementById("from-place").value;
+
+    // Construct the URL with query parameters
+    const url =
+`/CustomerAssets?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
+
+    try {
+        // Make an asynchronous GET request
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        console.log(data); // Log response for debugging
+
+        // Display the filtered assets
+        displayAssets(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function closeSlider() {
+    // Show filter button
+    const filterMobileButton = document.getElementById("filter-mobile-button");
+    filterMobileButton.style.display = "block";
+
+    // Hide slide
+    const searchProperty = document.getElementById("search-property");
+    searchProperty.classList.remove("show");
+}
+
+async function fetchAssets() {
+    try {
+        const response = await fetch('/Assets');
+        const assets = await response.json();
+        return assets;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch assets');
+    }
+}
+
+async function displayAssets(assets) {
     const assetsContainer = document.getElementById('assets-container');
     assetsContainer.innerHTML = ''; // Clear previous content
 
@@ -206,46 +505,52 @@
         const Price = `Price: $${asset.AssetPrice}`;
         const imageUrl = asset.AssetImage;
         const status = asset.AssetStatus;
-        const streetAndRooms = `Address: ${asset.AssetStreet} ${asset.AssetStreetNumber} ${asset.AssetCity}`; 
-        const Description = `Description: ${asset.assetDescription}`; 
+        const streetAndRooms = `Address: ${asset.AssetStreet}
+${asset.AssetStreetNumber} ${asset.AssetCity}`;
+        const Description = `Description: ${asset.AssetDescription}`;
 
         assetDiv.innerHTML = `
             <div class="property">
-                <a href="#" class="fh5co-property" style="background-image: url('${imageUrl}')">
+                <a href="#" class="fh5co-property"
+style="background-image: url('${imageUrl}')">
                     <span class="status">${title}</span>
                     <ul class="list-details">
-                        <li>${asset.RoomNum} Bedroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                        <li>${asset.AssetBathrooms} Bathroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.RoomNum} Bedroom
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetBathrooms} Bathroom
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                         <li>${asset.AssetSquareRoot} ft sq</li>
                     </ul>
                 </a>
                     <div class="property-details">
                         <span class="price">${Price}</span>
                         <p>${Description}</p>
-                        <span class="address"><i class="icon-map"></i>${streetAndRooms}</span>
+                        <span class="address"><i
+class="icon-map"></i>${streetAndRooms}</span>
                     </div>
             </div>
         `;
 
-                rowDiv.appendChild(assetDiv);
+        rowDiv.appendChild(assetDiv);
 
-                // Apply fade-in animation to each asset item
-                setTimeout(() => {
-                    assetDiv.style.opacity = 1;
-                    assetDiv.style.transform = 'translateY(0)';
-                }, index * 200); // Delay each asset item for better animation
+        // Apply fade-in animation to each asset item
+        setTimeout(() => {
+            assetDiv.style.opacity = 1;
+            assetDiv.style.transform = 'translateY(0)';
+        }, index * 200); // Delay each asset item for better animation
 
-                if ((index + 1) % 3 === 0 || index === assets.length - 1) {
-                    // Append the row when it contains three properties or it's the last row
-                    assetsContainer.appendChild(rowDiv);
-                }
-            });
+        if ((index + 1) % 3 === 0 || index === assets.length - 1) {
+            // Append the row when it contains three properties or it's the last row
+            assetsContainer.appendChild(rowDiv);
         }
+    });
+}
 
-        window.onload = async function() {
-            const assets = await fetchAssets();
-            displayAssets(assets);
-        };
+window.onload = async function() {
+    const assets = await fetchAssets();
+    displayAssets(assets);
+};
+
 
   </script>
 
