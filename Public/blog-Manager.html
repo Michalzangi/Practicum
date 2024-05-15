@@ -59,7 +59,7 @@
 	<![endif]-->
 
 	<style>
-		.card {
+	 .card {
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(320px, 10fr));
 			gap: 50px;
@@ -201,7 +201,6 @@
 			/* use !important to prevent issues with browser extensions that change fonts */
 			font-family: 'icomoon' !important;
 			color: lightpink;
-
 			font-style: normal;
 			font-weight: normal;
 			font-variant: normal;
@@ -263,6 +262,28 @@
     background: #de6277;
     border: none;
 }
+ .quote {
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    text-align: center;
+    font-size: 30px;
+    display: table;
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    margin-top: -30px;
+    background: lightpink;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+}
+#fh5co-testimonial .box-testimony blockquote .quote > span {
+    display: table-cell;
+    vertical-align: middle;
+}
+		
 	</style>
 
 
@@ -477,15 +498,15 @@
 					card.classList.add('feedback-card');
 
 					card.innerHTML = `
-					<div class="speech-bubble">
-						<span class="triangle"></span>
-						<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
-						<h2><i class="icon-bubble2"></i> <i class="comment">${feedback.Name}</i></h2>
-						<p class="date"> ${feedback.Date}  <i class="far fa-calendar"></i></p> <!-- כאן יש להוסיף את הקלאס של התאריך -->
-						<p>${feedback.FeedbackDesc}</p>
-						<p class="rating star-rating"></p>
-					</div>
-					`;
+				<div class="speech-bubble">
+					<span class="triangle"></span>
+					<span class="quote"><i class="icon-quotes-right" style="color:white"></i></span><br>
+					<h2><i class="icon-bubble2"></i> <i class="comment">${feedback.Name}</i></h2>
+					<p class="date">${feedback.Date} <i class="far fa-calendar"></i></p>
+					<p>${feedback.FeedbackDesc}</p>
+					<p class="rating star-rating"></p>
+				</div>
+			`;
 
 
 
