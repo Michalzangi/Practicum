@@ -301,6 +301,7 @@ app.get('/meetings-customer', async (req, res) => {
   }
 });
 
+
 app.get('/deals', async (req, res) => {
   try {
     const deals = await getAllDeals();

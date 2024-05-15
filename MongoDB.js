@@ -756,11 +756,11 @@ const getAllDeals = async () => {
     const database = client.db('Practicum');
     const collection = database.collection('Deals');
     const deals = await collection.find().toArray();
-    console.log('Meetings:', deals);
+    console.log('deals:', deals);
     return deals;
   } catch (error) {
-    console.error('Error fetching meetings:', error);
-    throw new Error('Failed to fetch meetings');
+    console.error('Error fetching deals:', error);
+    throw new Error('Failed to fetch Deals');
   }
 };
 

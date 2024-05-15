@@ -186,6 +186,71 @@
     background: #de6277;
     border: none;
 }
+.my-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.my-table th, 
+.my-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid hsl(0, 86%, 86%);
+}
+  
+.my-table th {
+    background-color: rgba(247, 161, 188, 0.331);
+    color:rgb(0, 0, 0)
+}
+  
+.my-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+  
+.my-table tbody tr:hover {
+    background-color:rgba(85, 73, 81, 0.622);
+}
+
+.my-table th:first-child {
+    border-top-left-radius: 8px;
+}
+  
+.my-table th:last-child {
+    border-top-right-radius: 8px;
+}
+  
+.my-table td:first-child {
+    border-bottom-left-radius: 8px;
+}
+  
+.my-table td:last-child {
+    border-bottom-right-radius: 8px;
+}
+#header ul#navigation li a:hover{
+    color: rgba(255, 193, 201, 0.897);
+    font-size: 20px;
+}
+
+
+
+.fh5co-section-gray {
+		background: rgba(0, 0, 0, 0);
+	}
+
+    .button-container {
+    display: flex;
+    justify-content: space-around; /* שורה אחת כלפי ימין ושנייה כלפי שמאל */
+    margin-bottom: 20px; /* מרווח בין הכפתורים לתוכן אחר, אם יש צורך */
+}
+
+.btn {
+    /* עיצוב נוסף לכפתורים */
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
     </style>
 
 
@@ -212,7 +277,6 @@
                         <ul class="fh5co-sub-menu">
                             <li><a href="addD-Manager.html">Add Deal</a></li>
                             <li><a href="DealsV-Manager.html">View Deals</a></li>
-                            <li><a href="Dealall.html">View all Deals</a></li>
                         </ul>
                     </li>
                     <li><a href="blog-Manager.html">Blog</a></li>
@@ -259,10 +323,16 @@
                     <h3>View Deals</h3>
                 </div>
             </div>
-            <div class="calendar" id="dealList">
-            </div><br><br><br><br><br>
+            <div id="dealList"></div> <!-- כאן יוצג תוכן הטבלה -->
         </div>
+    </div><br><br>
+    
+    <div class="button-container">
+        <button onclick="window.print()" class="btn btn-primary" id="printButton">Print</button>
+        <button onclick="exportToExcel()" class="btn btn-primary" id="excelButton">Export to Excel</button>
     </div>
+    
+
 
     <footer>
         <div id="footer">
@@ -330,37 +400,78 @@
     </div>
 
     <script>
-       document.addEventListener("DOMContentLoaded", function () {
-        const username = sessionStorage.getItem('username');
-            if (!username) {
-                console.error('Username not found in session storage');
-                return;
-            }
-        // Fetch deals for the current partner
-        fetch('/deals?PartnerUserName=${username}')
-            .then(response => response.json())
-            .then(data => {
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchDeals();
+        });
+    
+        async function fetchDeals() {
+            try {
+                const response = await fetch('/deals');
+                const data = await response.json();
                 const dealList = document.getElementById('dealList');
+                const table = document.createElement('table');
+                table.classList.add('my-table');
+    
+                // Create table header
+                const headerRow = document.createElement('tr');
+                headerRow.innerHTML = `
+                    <th>Transaction Number</th>
+                    <th>Customer ID</th>
+                    <th>Asset ID</th>
+                    <th>Deal Type</th>
+                    <th>Role</th>
+                    <th>Deal Commission</th>
+                    <th>Created At</th>
+                `;
+                table.appendChild(headerRow);
+    
+                // Populate table with deal information
                 data.forEach(deal => {
-                    const dealItem = document.createElement('div');
-                    dealItem.classList.add('meeting-item');
-                    // Populate dealItem with deal information
-                    dealItem.innerHTML = `
-                        <h4>Transaction Number: ${deal.transactionNumber}</h4>
-                        <p>Customer ID: ${deal.customerId}</p>
-                        <p>Asset ID: ${deal.assetId}</p>
-                        <p>Deal Type: ${deal.dealType}</p>
-                        <p>Role: ${deal.role}</p>
-                        <p>Deal Commission: ${deal.dealCommission}</p>
-                        <p>Created At: ${deal.createdAtDate} ${deal.createdAtHour}</p>
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${deal.transactionNumber}</td>
+                        <td>${deal.customerId}</td>
+                        <td>${deal.assetId}</td>
+                        <td>${deal.dealType}</td>
+                        <td>${deal.role}</td>
+                        <td>${deal.dealCommission}</td>
+                        <td>${deal.createdAtDate} ${deal.createdAtHour}</td>
                     `;
-                    dealList.appendChild(dealItem);
+                    table.appendChild(row);
                 });
-            })
-            .catch(error => console.error('Error fetching deals:', error));
-    });
+    
+                // Append table to dealList container
+                dealList.appendChild(table);
+            } catch (error) {
+                console.error('Error fetching deals:', error);
+            }
+        }
+        function exportToExcel() {
+        const table = document.querySelector('.my-table'); // בחר את הטבלה שברצונך לייצא לאקסל
+        const rows = table.querySelectorAll('tr');
+        let csv = [];
 
+        for (let i = 0; i < rows.length; i++) {
+            const row = [], cols = rows[i].querySelectorAll('td, th');
+            for (let j = 0; j < cols.length; j++) {
+                row.push(cols[j].innerText);
+            }
+            csv.push(row.join(','));
+        }
+
+        // צור את הבלוב של ה-CSV
+        const csvBlob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+
+        // צור קישור להורדה
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(csvBlob);
+        link.setAttribute('download', 'deals.csv'); // שם הקובץ להורדה
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
     </script>
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -376,3 +487,4 @@
     </body>
 
 </html>
+
