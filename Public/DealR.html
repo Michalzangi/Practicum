@@ -34,150 +34,8 @@
 
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .meeting-item {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .meeting-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .meeting-item h4 {
-            font-family: 'Kunstler Script';
-            margin-top: auto;
-            margin-bottom: auto;
-            font-size: 50px;
-            color: rgba(120, 101, 101, 0.671);
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .meeting-item p {
-            margin: 0;
-            font-size: 16px;
-            color: #666666;
-            font-family: 'calibri';
-        }
-
-        .meeting-item .date {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .meeting-item .location {
-            margin-top: 10px;
-        }
-
-        .meeting-item .customer {
-            margin-top: 10px;
-        }
-
-        .meeting-item .asset-details {
-            margin-top: 10px;
-        }
-
-        .btn1 {
-            -webkit-transition: 0.3s;
-            -o-transition: 0.3s;
-            transition: 0.3s;
-        }
-
-        .btn1 {
-            letter-spacing: 1px;
-            -webkit-transition: 0.3s;
-            -o-transition: 0.3s;
-            transition: 0.3s;
-        }
-
-        .btn1.btn1-primary {
-            background: #de6277;
-            color: #fff;
-            border: none;
-            border: 2px solid transparent;
-        }
-
-        .btn1.btn1-primary:hover,
-        .btn1.btn1-primary:active,
-        .btn1.btn1-primary:focus {
-            box-shadow: none;
-            background: #de6277;
-            color: #fff;
-        }
-
-        .btn1:hover,
-        .btn1:active,
-        .btn1:focus {
-            background: #393e46;
-            color: #fff;
-            outline: none;
-        }
-
-        .btn1.btn1-default:hover,
-        .btn1.btn1-default:focus,
-        .btn1.btn1-default:active {
-            border-color: transparent;
-        }
-
-        .btn1.btn1-outline {
-            background: transparent;
-            color: #de6277;
-            border: 2px solid #de6277;
-        }
-
-        .btn1.btn1-outline:hover,
-        .btn1.btn1-outline:focus,
-        .btn1.btn1-outline:active {
-            background: #de6277;
-            color: #fff;
-        }
-
-        .tab-content .btn1 {
-            letter-spacing: 0;
-            font-weight: bold;
-            font-size: 8px;
-            text-transform: none !important;
-        }
-
-        #sub1 {
-            display: block;
-            margin: 0 auto;
-            padding: 6px;
-            width: fit-content;
-        }
-
-        .btn1.btn1-primary:hover,
-        .btn1.btn1-primary:active,
-        .btn1.btn1-primary:focus {
-            box-shadow: none;
-            background: #de6277;
-            color: #fff !important;
-        }
-
-        .btn1:hover,
-        .btn1:active,
-        .btn1:focus {
-            background: #393e46 !important;
-            color: #fff;
-            outline: none !important;
-        }
-
-        .btn1.btn1-default:hover,
-        .btn1.btn1-default:focus,
-        .btn1.btn1-default:active {
-            border-color: transparent;
-        }
-        #footer #fh5co-header-subscribe button {
+      
+      #footer #fh5co-header-subscribe button {
     position: absolute;
     top: 20px;
     right: -20px;
@@ -190,6 +48,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
+    margin:auto;
 }
 
 .my-table th, 
@@ -209,7 +68,7 @@
 }
   
 .my-table tbody tr:hover {
-    background-color:rgba(85, 73, 81, 0.622);
+    background-color:rgba(250, 168, 199, 0.622);
 }
 
 .my-table th:first-child {
@@ -288,6 +147,13 @@
                             <li><a href="meetingV-Manager.html">View</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a>Reports</a>
+                        <ul class="fh5co-sub-menu">
+                            <li><a href="CustomerR.html">Customers</a></li>
+                            <li><a href="DealR.html">Deals</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -323,9 +189,28 @@
                     <h3>View Deals</h3>
                 </div>
             </div>
-            <div id="dealList"></div> <!-- כאן יוצג תוכן הטבלה -->
+            <div id="dealList" class="my-table"> 
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction Number</th>
+                            <th>Customer ID</th>
+                            <th>Asset ID</th>
+                            <th>Deal Type</th>
+                            <th>Role</th>
+                            <th>Deal Commission</th>
+                            <th>Created At</th>
+                            <th>Partner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Table rows will be populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+                    
         </div>
-    </div><br><br>
+    </div></div><br><br>
     
     <div class="button-container">
         <button onclick="window.print()" class="btn btn-primary" id="printButton">Print</button>
@@ -400,52 +285,38 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetchDeals();
-        });
-    
-        async function fetchDeals() {
-            try {
-                const response = await fetch('/deals');
-                const data = await response.json();
-                const dealList = document.getElementById('dealList');
-                const table = document.createElement('table');
-                table.classList.add('my-table');
-    
-                // Create table header
-                const headerRow = document.createElement('tr');
-                headerRow.innerHTML = `
-                    <th>Transaction Number</th>
-                    <th>Customer ID</th>
-                    <th>Asset ID</th>
-                    <th>Deal Type</th>
-                    <th>Role</th>
-                    <th>Deal Commission</th>
-                    <th>Created At</th>
-                `;
-                table.appendChild(headerRow);
-    
-                // Populate table with deal information
-                data.forEach(deal => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
+         document.addEventListener("DOMContentLoaded", function () {
+            fetch("/deals")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Add this line to inspect the data returned from the server
+                    const dealList = document.getElementById("dealList");
+                    const tbody = dealList.querySelector("tbody");
+                    tbody.innerHTML = ""; // Clear the table body before adding new rows
+                    data.forEach(deal => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
                         <td>${deal.transactionNumber}</td>
                         <td>${deal.customerId}</td>
                         <td>${deal.assetId}</td>
                         <td>${deal.dealType}</td>
                         <td>${deal.role}</td>
                         <td>${deal.dealCommission}</td>
-                        <td>${deal.createdAtDate} ${deal.createdAtHour}</td>
+                        <td>${deal.createdAtDate} </td>
+                        <td>${deal.PartnerUserName}</td>
                     `;
-                    table.appendChild(row);
-                });
-    
-                // Append table to dealList container
-                dealList.appendChild(table);
-            } catch (error) {
-                console.error('Error fetching deals:', error);
-            }
-        }
+                    });
+                })
+                .catch(error => console.error("Error:", error));
+        });
+      
+        
+        
         function exportToExcel() {
         const table = document.querySelector('.my-table'); // בחר את הטבלה שברצונך לייצא לאקסל
         const rows = table.querySelectorAll('tr');
