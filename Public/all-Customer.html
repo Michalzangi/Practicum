@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="css/cs-select.css">
     <link rel="stylesheet" href="css/cs-skin-border.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
 
@@ -169,6 +170,24 @@ filter button */
         margin-top: 20px; /* Adjust this value to move the button down */
     }
 
+    @keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#filter-mobile-button {
+  animation: pulse 2s infinite; /* הפעלת האנימציה pulse באורך של 2 שניות ובחזרה אינסופית */
+}
+
+
+
     </style>
 </head>
 <body>
@@ -238,7 +257,7 @@ filter button */
             <div class="map" style="background-image: url(images/cover_bg_1.jpg);"></div>
             <div class="s-holder">
                 <h2>Search Properties</h2>
-                <div class="row">
+                <div class="row">  
                     <div id="filter-form-container"><br>
                         <h2>Search Properties</h2>
                         <div class="col-xxs-12 col-xs-12">
@@ -300,7 +319,9 @@ filter button */
                         </div>
                     </div>
                 </div>
-                <button id="close-filter-slide" class="btn btn-pink btn-lg">Close</button>
+                <button id="close-filter-slide" class="btn btn-pink btn-lg">
+                    <i class="fas fa-times"></i> 
+                </button>
 
             </div>
         </div>

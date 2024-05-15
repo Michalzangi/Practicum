@@ -145,7 +145,6 @@
 							<label for="assetSelect">Select Asset:</label>
 							<select class="form-control" id="assetSelect" name="assetSelect" required>
 								<option value="">Select Asset</option>
-								<!-- Options will be dynamically populated here -->
 							</select>
 						</div>
 						<button type="submit" class="btn btn-primary" id="sub">Add Meeting</button><br><br>
@@ -221,7 +220,6 @@
 
     <script>
 	document.addEventListener("DOMContentLoaded", function() {
-  // Fetch assets data from server and display them
   fetch('/Assets')
     .then(response => response.json())
     .then(data => {
@@ -236,9 +234,7 @@
     .catch(error => console.error('Error fetching assets:', error));
 });
 
-
 document.addEventListener("DOMContentLoaded", function() {
-  // Fetch assets data from server and display them
   fetch('/Partners')
     .then(response => response.json())
     .then(data => {
@@ -310,10 +306,8 @@ function toggleAssetSelection() {
     }
 }
 
-    // Add onchange event listener to the meeting type select element
     document.getElementById("meetingType").addEventListener("change", toggleAssetSelection);
 
-    // Call toggleAssetSelection function initially to set the initial state
     toggleAssetSelection();
 ///
 function sendMeetingData() {
@@ -324,7 +318,6 @@ function sendMeetingData() {
     var propertyType = "Not yet known"; // Default value for property type
 
     if (assetSelect.disabled) {
-        // If asset selection is disabled, set property type as "Not yet known"
         propertyType = "Not yet known";
     } else {
         // If asset selection is enabled, get the selected property type from the asset select element
@@ -373,7 +366,10 @@ function sendMeetingData() {
     .catch(error => console.error("Error:", error));
 }
 
+////////////////////////
     </script>
+
+
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.easing.1.3.js"></script>
 	<script src="js/bootstrap.min.js"></script>
