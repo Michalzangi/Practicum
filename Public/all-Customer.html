@@ -6,8 +6,7 @@
     <title>practicum</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-    <meta name="keywords" content="free html5, free template, free
-bootstrap, html5, css3, mobile first, responsive" />
+    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
     <meta name="author" content="FREEHTML5.CO" />
     <meta property="og:title" content=""/>
     <meta property="og:image" content=""/>
@@ -20,8 +19,7 @@ bootstrap, html5, css3, mobile first, responsive" />
     <meta name="twitter:card" content="" />
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300'
-rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -64,7 +62,7 @@ in the width */
 determine height */
     max-height: 100%; /* Limit height to the viewport height */
     overflow-y: auto; /* Add scrollbars if content exceeds height */
-    background-color: rgb(235, 65, 130);
+    background-color: #de6277;
     z-index: 1000;
     transition: right 0.3s ease-in-out;
     padding: 20px;
@@ -83,7 +81,7 @@ determine height */
 }
 
 #filter-mobile-button, #all-assets-button {
-    background-color: #ff4081;
+    background-color: #de6277;
     color: white;
     border: none;
     border-radius: 5px;
@@ -104,7 +102,7 @@ determine height */
     right: calc(20px + 160px); /* Adjust based on the width of the
 filter button */
     z-index: 999;
-    background-color: #ff4081;
+    background-color:#de6277;
     color: white;
     border: none;
     border-radius: 5px;
@@ -158,6 +156,19 @@ filter button */
     position: abso
 }
 
+.form-group {
+            display: flex;
+            align-items: center;
+        }
+    
+        .form-group input[type="text"] {
+            margin-left: -30px; /* Adjust this value as needed */
+        }
+
+        .form-group button[type="submit"] {
+        margin-top: 20px; /* Adjust this value to move the button down */
+    }
+
     </style>
 </head>
 <body>
@@ -203,13 +214,10 @@ filter button */
                         <div class="overlay"></div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-8 col-md-offset-2
-text-center js-fullheight slider-text">
+                                <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h2 class="heading-title">All
-our Assets</h2>
-                                        <p class="fh5co-lead">Coming
-Soon <i class="icon-heart3"></i>  </p>
+                                        <h2 class="heading-title">All our Assets</h2>
+                                        <p class="fh5co-lead"><i class="icon-heart3"></i>  </p>
                                     </div>
                                 </div>
                             </div>
@@ -221,74 +229,59 @@ Soon <i class="icon-heart3"></i>  </p>
         </aside>
 
         <div id="filter-wrapper">
-            <button id="all-assets-button" class="btn btn-primary
-btn-lg">All Assets</button>
-            <button id="filter-mobile-button" class="btn btn-pink
-btn-lg">Filter</button>
+            <button id="all-assets-button" class="btn btn-primary btn-lg">All Assets</button>
+            <button id="filter-mobile-button" class="btn btn-pink btn-lg">Filter</button>
         </div>
 
     <div id="fh5co-search-map">
         <div id="search-property">
-            <div class="map" style="background-image:
-url(images/cover_bg_1.jpg);"></div>
+            <div class="map" style="background-image: url(images/cover_bg_1.jpg);"></div>
             <div class="s-holder">
                 <h2>Search Properties</h2>
                 <div class="row">
-                    <div id="filter-form-container">
+                    <div id="filter-form-container"><br>
+                        <h2>Search Properties</h2>
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label for="asset-type-select">Asset
-Type:</label>
-<select id="asset-type-select" class="cs-select cs-skin-border">
-    <option value="" selected>Any</option> <!-- Neutral option -->
-    <option value="Rent">Rent</option>
-    <option value="Sale">Sale</option>
-</select>
+                                <label for="asset-type-select">Asset Type:</label>
+                                <select id="asset-type-select" class="cs-select cs-skin-border">
+                                    <option value="" selected>Any</option> <!-- Neutral option -->
+                                    <option value="Rent">Rent</option>
+                                    <option value="Sale">Sale</option>
+                                </select>
 
                             </section>
                         </div>
                         <!-- Asset Price Inputs -->
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label for="asset-price-min">Minimum
-Price:</label>
+                                <label for="asset-price-min">Minimum Price:</label>
                                 <div class="wide">
-                                    <input type="number"
-class="form-control small-input" id="asset-price-min"
-placeholder="Min" min="0" step="any"/>
+                                    <input type="number" class="form-control small-input" id="asset-price-min" placeholder="Min" min="0" step="any"/>
                                 </div>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label for="asset-price-max">Maximum
-Price:</label>
+                                <label for="asset-price-max">Maximum Price:</label>
                                 <div class="wide">
-                                    <input type="number"
-class="form-control small-input" id="asset-price-max"
-placeholder="Max" min="0" step="any"/>
+                                    <input type="number" class="form-control small-input" id="asset-price-max" placeholder="Max" min="0" step="any"/>
                                 </div>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label for="asset-room-number">Asset's
-Room Number:</label>
+                                <label for="asset-room-number">Asset's Room Number:</label>
                                 <div class="wide">
-                                    <input type="number"
-class="form-control small-input" id="room-number" placeholder="Any"
-min="1" step="any"/>
+                                    <input type="number" class="form-control small-input" id="room-number" placeholder="Any" min="1" step="any"/>
                                 </div>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label
-for="asset-street-number">Asset's Street Number:</label>
+                                <label for="asset-street-number">Asset's Street Number:</label>
                                 <div class="wide">
-                                    <input type="number"
-class="form-control small-input" id="asset-street-number"
-placeholder="Any" min="1" step="any"/>
+                                    <input type="number" class="form-control small-input" id="asset-street-number" placeholder="Any" min="1" step="any"/>
                                 </div>
                             </section>
                         </div>
@@ -297,20 +290,17 @@ placeholder="Any" min="1" step="any"/>
                         <div class="col-xxs-12 col-xs-12">
                             <div class="input-field">
                                 <label for="from-place">Asset Street:</label>
-                                <input type="text"
-class="form-control" id="from-place" placeholder="Any"/>
+                                <input type="text" class="form-control" id="from-place" placeholder="Any"/>
                             </div>
                             </div>
                         </div>
                         <!-- Learn More Button -->
                         <div class="col-xxs-12 col-xs-12 text-center">
-                            <p><a id="learn-more-link" class="btn
-btn-primary btn-lg" href="#">Search</a></p>
+                            <p><a id="learn-more-link" class="btn btn-primary btn-lg" href="#">Search</a></p>
                         </div>
                     </div>
                 </div>
-                <button id="close-filter-slide" class="btn btn-pink
-btn-lg">Close</button>
+                <button id="close-filter-slide" class="btn btn-pink btn-lg">Close</button>
 
             </div>
         </div>
@@ -321,8 +311,7 @@ btn-lg">Close</button>
         <div id="fh5co-properties" class="fh5co-section-gray">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center
-heading-section animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
                         <h3>All Assets</h3>
                     </div>
                 </div>
@@ -337,9 +326,7 @@ heading-section animate-box">
                     <div class="row row-bottom-padded-md">
                         <div class="col-md-3">
                             <h3 class="section-title">About Us</h3>
-                            <p>We, Bar Michal and Nofar, information
-systems management students at the College of Management, own all the
-exclusive rights to this website <i class="icon-heart3"></i></p>
+                            <p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
                         </div>
 
                         <div class="col-md-3 col-md-push-1">
@@ -365,15 +352,12 @@ exclusive rights to this website <i class="icon-heart3"></i></p>
                         <div class="col-md-3">
                             <h3 class="section-title">Newsletter</h3>
                             <p>Subscribe for our newsletter</p>
-                            <form class="form-inline"
-id="fh5co-header-subscribe">
+                            <form class="form-inline" id="fh5co-header-subscribe">
                                 <div class="row">
                                     <div class="col-md-12 col-md-offset-0">
                                         <div class="form-group">
-                                            <input type="text"
-class="form-control" id="email" placeholder="Enter your email">
-                                            <button type="submit"
-class="btn btn-default"><i class="icon-paper-plane"></i></button>
+                                            <input type="text" class="form-control" id="email" placeholder="Enter your email">
+                                            <button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -553,28 +537,23 @@ async function displayAssets(assets) {
         const Price = `Price: $${asset.AssetPrice}`;
         const imageUrl = asset.AssetImage;
         const status = asset.AssetStatus;
-        const streetAndRooms = `Address: ${asset.AssetStreet}
-${asset.AssetStreetNumber} ${asset.AssetCity}`;
+        const streetAndRooms = `Address: ${asset.AssetStreet} ${asset.AssetStreetNumber} ${asset.AssetCity}`;
         const Description = `Description: ${asset.AssetDescription}`;
 
         assetDiv.innerHTML = `
             <div class="property">
-                <a href="#" class="fh5co-property"
-style="background-image: url('${imageUrl}')">
+                <a href="#" class="fh5co-property" style="background-image: url('${imageUrl}')">
                     <span class="status">${title}</span>
                     <ul class="list-details">
-                        <li>${asset.RoomNum} Bedroom
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                        <li>${asset.AssetBathrooms} Bathroom
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.RoomNum} Bedroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetBathrooms} Bathroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                         <li>${asset.AssetSquareRoot} ft sq</li>
                     </ul>
                 </a>
                     <div class="property-details">
                         <span class="price">${Price}</span>
                         <p>${Description}</p>
-                        <span class="address"><i
-class="icon-map"></i>${streetAndRooms}</span>
+                        <span class="address"><i class="icon-map"></i>${streetAndRooms}</span>
                     </div>
             </div>
         `;

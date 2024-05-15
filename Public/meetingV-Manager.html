@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -177,6 +176,19 @@
         .btn1.btn1-default:active {
             border-color: transparent;
         }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+    
+        .form-group input[type="text"] {
+            margin-left: -30px; /* Adjust this value as needed */
+        }
+
+        .form-group button[type="submit"] {
+        margin-top: 20px; /* Adjust this value to move the button down */
+    }
     </style>
 
 <header id="fh5co-header-section" class="sticky-banner">
@@ -232,7 +244,7 @@
                             <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                 <div class="slider-text-inner">
                                     <h2 class="heading-title">Meeting</h2>
-                                    <p class="fh5co-lead"> Coming Soon <i class="icon-heart3"></i> </p>
+                                    <p class="fh5co-lead"><i class="icon-heart3"></i> </p>
                                 </div>
                             </div>
                         </div>
@@ -328,29 +340,81 @@
                 console.error('Username not found in session storage');
                 return;
             }
-
+        
             fetch(`/meetings?partner=${username}`)
-                .then(response => response.json())
-                .then(data => {
-                    const userMeetings = data.filter(meeting => meeting.Partner === username);
-                    const meetingList = document.getElementById('meetingList');
-                    userMeetings.forEach(meeting => {
-                        const meetingItem = document.createElement('div');
-                        meetingItem.classList.add('meeting-item');
-                        meetingItem.innerHTML = `
+        .then(response => response.json())
+        .then(data => {
+            const userMeetings = data.filter(meeting => meeting.Partner === username);
+            const meetingList = document.getElementById('meetingList');
+            userMeetings.forEach(meeting => {
+                const meetingItem = document.createElement('div');
+                meetingItem.classList.add('meeting-item');
+                meetingItem.innerHTML = `
                     <h4>${meeting.MeetingType}</h4><br><br>
                     <p class="icon-calendar">&nbsp;&nbsp;Date: ${meeting.Date} at  ${meeting.Time}</p><br>
                     <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.Location}</p><br>
-                    <p class="icon-user">&nbsp;&nbsp;Customer Number: ${meeting.CustomerID}</p><br>
+                    <p class="icon-user" id="customerFullName_${meeting._id}">&nbsp;&nbsp;Customer Name: Fetching...</p><br>
+                    <p class="icon-phone" id="customerPhone_${meeting._id}">&nbsp;&nbsp;Customer's phone: Fetching...</p><br>
                     <p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>
                     <button  class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
                 `;
-                        meetingList.appendChild(meetingItem);
-                    });
-                })
-                .catch(error => console.error('Error fetching meetings:', error));
-        });
+                meetingList.appendChild(meetingItem);
 
+                // Fetch customer full name and update the HTML content
+                fetchCustomerData(meeting.CustomerID, meeting._id);
+            });
+        })
+        .catch(error => console.error('Error fetching meetings:', error));
+});
+
+const fetchCustomerData = (customerId, meetingId) => {
+    if (!customerId) {
+        console.error('Customer ID is empty');
+        return;
+    }
+    fetch(`/getCustomerID?customerID=${customerId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(customer => {
+            if (customer) {
+                const customerFullName = customer.FullName;
+                const customerPhone = customer.Phone;
+                const customerFullNameElement = document.getElementById(`customerFullName_${meetingId}`);
+                const customerPhoneElement = document.getElementById(`customerPhone_${meetingId}`);
+                if (customerFullNameElement) {
+                    customerFullNameElement.innerHTML = `&nbsp;&nbsp;Customer Name: ${customerFullName}`;
+                }
+                if (customerPhoneElement) {
+                    customerPhoneElement.innerHTML = `&nbsp;&nbsp;Customer's phone ${customerPhone}`;
+                }
+            } else {
+                console.error('Customer not found');
+                const customerFullNameElement = document.getElementById(`customerFullName_${meetingId}`);
+                const customerPhoneElement = document.getElementById(`customerPhone_${meetingId}`);
+                if (customerFullNameElement) {
+                    customerFullNameElement.innerHTML = `&nbsp;&nbsp;Customer Name: Not Available`;
+                }
+                if (customerPhoneElement) {
+                    customerPhoneElement.innerHTML = `&nbsp;&nbsp;Customer's phone: Not Available`;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching customer data:', error);
+            const customerFullNameElement = document.getElementById(`customerFullName_${meetingId}`);
+            const customerPhoneElement = document.getElementById(`customerPhone_${meetingId}`);
+            if (customerFullNameElement) {
+                customerFullNameElement.innerHTML = `&nbsp;&nbsp;Customer Name: Not Available`;
+            }
+            if (customerPhoneElement) {
+                customerPhoneElement.innerHTML = `&nbsp;&nbsp;Customer's phone: Not Available`;
+            }
+        });
+};
 
         const deleteMeeting = (meetingId) => {
             fetch(`/meeting/${meetingId}`, {
@@ -381,12 +445,6 @@
                     alert('An error occurred while deleting the meeting. Please try again later.');
                 });
         };
-
-
-
-
-
-
 
     </script>
     <script src="js/jquery.min.js"></script>
