@@ -337,11 +337,12 @@
                 return;
             }
         // Fetch deals for the current partner
-        fetch('/deals?PartnerUserName=${username}')
+        fetch(`/deals?PartnerUserName=${username}`)
             .then(response => response.json())
             .then(data => {
+                const PartnerDeals = data.filter(deal => deal.PartnerUserName === username);
                 const dealList = document.getElementById('dealList');
-                data.forEach(deal => {
+                PartnerDeals.forEach(deal => {
                     const dealItem = document.createElement('div');
                     dealItem.classList.add('meeting-item');
                     // Populate dealItem with deal information
@@ -359,6 +360,7 @@
             })
             .catch(error => console.error('Error fetching deals:', error));
     });
+
 
     </script>
     <script src="js/jquery.min.js"></script>
