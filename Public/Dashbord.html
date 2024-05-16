@@ -399,6 +399,19 @@
 							<canvas id="customerChart" width="400" height="200"></canvas>
 						</div>
 					</div><br><br><br>
+
+					<div style="border-bottom: 5px solid rgb(255, 255, 255);"></div><br><br><br>
+					<div class="container" >
+						<div class="row">
+							<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+								<h3>Count of Deals Per Month </h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<canvas id="dealChart" width="400" height="200"></canvas>
+							</div>
+						</div><br><br><br>
                     
 				</div>
         </div></div>
@@ -683,7 +696,81 @@
     }
 });
 
-      
+document.addEventListener("DOMContentLoaded", function() {
+    fetch("/deals")
+    .then(response => response.json())
+    .then(data => {
+        const countsByMonth = {};
+
+        // Initialize counts for all months to zero
+        const allMonths = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        allMonths.forEach(month => {
+            countsByMonth[month] = 0;
+        });
+
+        // Iterate through the data and count deals per month
+        data.forEach(deal => {
+            const createdAtDate = deal.createdAtDate;
+
+            if (!isValidDateFormat(createdAtDate)) {
+                console.error(`Invalid date format: ${createdAtDate}`);
+            } else {
+                const dateParts = createdAtDate.split('/');
+                const monthNumber = parseInt(dateParts[1], 10);
+                const monthName = getMonthName(monthNumber);
+
+                countsByMonth[monthName]++;
+            }
+        });
+
+        // Create the chart using Chart.js
+        const ctx = document.getElementById('dealChart').getContext('2d');
+        const dealChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: allMonths,
+                datasets: [{
+                    label: 'Deals per Month',
+                    data: allMonths.map(month => countsByMonth[month]),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        ticks: {
+                            integer: true  // Display only integer ticks
+                        }
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching customer data:', error);
+    });
+
+    // Function to check if the date string is in valid format (DD/MM/YYYY)
+    function isValidDateFormat(dateString) {
+        const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+        return regex.test(dateString);
+    }
+
+    // Function to get the month name from its number (1-12)
+    function getMonthName(monthNumber) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthNumber - 1];
+    }
+});
+
  
 
 

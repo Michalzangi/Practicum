@@ -161,6 +161,10 @@
                     <label for="Customer2ID">Buyer/Tenant's ID:</label>
                     <input type="text" class="form-control" id="Customer2ID" name="Customer2ID" required>
                 </div>
+                <div class="form-group" style="display: none;">
+                    <label for="joinDate">Signature Date:</label>
+                    <input type="text" class="form-control" id="SignatureDate" name="SignatureDate" value="" disabled>
+                </div>
             
                 <br>
                 <button type="submit" class="btn btn-primary" id="sub">Submit</button><br><br><br><br>
@@ -232,52 +236,55 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const username = sessionStorage.getItem('username');
-            if (!username) {
-                console.error('Username not found in session storage');
-                return;
-            }
-    
-            var form = document.getElementById("DealForm");
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                var formData = new FormData(form);
-                var data = {};
-                formData.forEach(function(value, key) {
-                    data[key] = value;
-                });
-    
-                // Add Partner'sUserName to the data object
-                data['PartnerUserName'] = username;
-    
-                console.log(data);
-    
-                fetch("/addDeal", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(function(response) {
-                    if (response.ok) {
-                        // Show success message
-                        document.getElementById("successMessage").style.display = "block";
-                        console.log(data);
-                        console.log("Deals added successfully");
-                        setTimeout(function() {
-                            location.reload();
-                        }, 3000); 
-                    } else {
-                        console.error("Failed to add property");
-                    }
-                })
-                .catch(function(error) {
-                    console.error("Error:", error);
-                });
-            });
+       document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('DealForm');
+    const username = sessionStorage.getItem('username');
+    if (!username) {
+        console.error('Username not found in session storage');
+        return;
+    }
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(form);
+        var data = {};
+        formData.forEach(function(value, key) {
+            data[key] = value;
         });
+        var currentDate = new Date();
+        var formattedDate = currentDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric'
+        });
+        data['SignatureDate'] = formattedDate;
+        data['PartnerUserName'] = username;
+
+        fetch("/addDeal", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            if (response.ok) {
+                document.getElementById("successMessage").style.display = "block";
+                console.log("Deals added successfully");
+                setTimeout(function() {
+                    location.reload();
+                }, 3000); 
+            } else {
+                console.error("Failed to add deal");
+            }
+        })
+        .catch(function(error) {
+            console.error("Error:", error);
+        });
+    });
+});
+
     </script>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>

@@ -552,7 +552,7 @@ const addCustomer = async (customerID, fullName, phone, email,joinDate ,customer
   }
 }
 
-async function createDeal(assetId, customer1Id, customer2Id, partnerUserName) {
+async function createDeal(assetId, customer1Id, customer2Id, SignatureDate,partnerUserName) {
   try {
       // Convert assetId to integer
       assetId = parseInt(assetId);
@@ -608,8 +608,7 @@ async function createDeal(assetId, customer1Id, customer2Id, partnerUserName) {
       // Create deal documents with separate fields for hour and date
       const currentDate = new Date();
       const hour = currentDate.getHours();
-      const date = currentDate.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
-
+      
       const deal1 = {
           transactionNumber,
           customerId: customer1Id,
@@ -618,7 +617,7 @@ async function createDeal(assetId, customer1Id, customer2Id, partnerUserName) {
           role: customer1Role,
           dealCommission,
           createdAtHour: hour,
-          createdAtDate: date,
+          createdAtDate: SignatureDate,
           PartnerUserName: partnerUserName
       };
 
@@ -632,7 +631,7 @@ async function createDeal(assetId, customer1Id, customer2Id, partnerUserName) {
           role: customer2Role,
           dealCommission,
           createdAtHour: hour,
-          createdAtDate: date,
+          createdAtDate: SignatureDate,
           PartnerUserName: partnerUserName
       };
 
