@@ -72,7 +72,7 @@
 			background-color: #ffffff;
 			border-radius: 20px;
 			padding: 20px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 7px 7px rgba(0, 0, 0, 0.1);
 			transition: all 0.3s ease-in-out;
 			align-items: center;
 			/* כדי למרכז את התוכן אופקית */
@@ -221,7 +221,7 @@
 			background-color: #ffffff;
 			border-radius: 10px;
 			padding: 15px;
-			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 7px 7px rgba(0, 0, 0, 0.1);
 		}
 
 
@@ -283,7 +283,9 @@
     display: table-cell;
     vertical-align: middle;
 }
-		
+.feedback-card:hover {
+			transform: translateY(-5px);
+		}	
 	</style>
 
 
@@ -396,18 +398,7 @@
 
 					</div>
 				</div>
-				<div style="border-bottom: 5px solid rgb(255, 255, 255);"></div><br><br><br>
-				<div class="container" id="ratingsChartContainer">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-							<h3>Customer Reviews</h3>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<canvas id="ratingsChart" width="400" height="200"></canvas>
-						</div>
-					</div>
+				
 				</div>
 				<!-- fh5co-blog-section -->
 
@@ -534,83 +525,7 @@
 			}
 		});
 
-		document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const response = await fetch('/feedback');
-            if (!response.ok) {
-                throw new Error('Failed to fetch feedback data');
-            }
-            const data = await response.json();
-
-            // Calculate ratings count
-            const ratingsCount = {
-                '1 stars': 0,
-                '2 stars': 0,
-                '3 stars': 0,
-                '4 stars': 0,
-                '5 stars': 0
-            };
-
-            data.forEach((feedback) => {
-                ratingsCount[`${feedback.rating} stars`] += 1;
-            });
-
-            // Draw ratings chart
-            const ratingsChartCanvas = document.getElementById('ratingsChart');
-            if (!ratingsChartCanvas) {
-                throw new Error('Element with ID "ratingsChart" not found');
-            }
-
-            new Chart(ratingsChartCanvas, {
-                type: 'bar',
-                data: {
-                    labels: ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'],
-                    datasets: [{
-                        label: 'Ratings Count',
-                        data: [
-                            ratingsCount['1 stars'],
-                            ratingsCount['2 stars'],
-                            ratingsCount['3 stars'],
-                            ratingsCount['4 stars'],
-                            ratingsCount['5 stars']
-                        ],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(255, 159, 64, 0.5)',
-                            'rgba(255, 205, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(54, 162, 235, 0.5)'
-                        ],
-                        borderColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-				options: {
-    scales: {
 		
-        y: {
-            beginAtZero: true,
-            stepSize: 1,
-            ticks: {
-                integer: true  // Display only integer ticks
-            }
-        }
-		
-    }
-}
-
-            });
-        } catch (error) {
-            console.error('Error fetching feedback:', error.message);
-        }
-    });
-
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	
