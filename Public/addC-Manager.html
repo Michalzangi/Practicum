@@ -111,9 +111,9 @@
         margin-bottom: 20px;
     }
 
-    .search-container input[type=text] {
+	.search-container input[type=text] {
         width: 60%;
-        padding: 18px;
+        padding: 12px;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
@@ -230,17 +230,15 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
 							<br><br><br><br>
-							<h3>View All Customers</h3>
+							<h3>View All Customers</h3><br>
+								<div class="search-container">
+								<input type="text" id="customerIDFilter" placeholder="Enter Customer ID">
+								<button type="button" id="filterBtn" class="btn btn-primary" >Filter</button>
+							</div>
 						</div>
-					</div>
+						</div>
 				</div>
-			
-
-				<div class="form-group">
-				<label for="customerIDFilter" >Filter by Customer ID:</label>
-				<input type="text" class="search-container" id="customerIDFilter" >
-				<button type="button" id="filterBtn" class="btn btn-primary" >Filter</button>
-				</div>
+		
 		
 				<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
 				<div class="card" id="customersList">
