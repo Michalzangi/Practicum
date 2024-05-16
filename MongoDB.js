@@ -506,7 +506,7 @@ async function getAllPartners() {
 }
 
 //add new Customer 
-const addCustomer = async (customerID, fullName, phone, email, customerType, UserName) => {
+const addCustomer = async (customerID, fullName, phone, email, joinDate,customerType, UserName) => {
   let client;
 
   try {
@@ -533,6 +533,7 @@ const addCustomer = async (customerID, fullName, phone, email, customerType, Use
       FullName: fullName,
       Phone: phone,
       Email: email,
+      joinDate: joinDate,
       CustomerType: customerType,
       UserName: UserName
     });

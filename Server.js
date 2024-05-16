@@ -235,10 +235,10 @@ app.get('/Partners', async (req, res) => {
 });
 
 app.post('/addCustomer', async (req, res) => {
-  const { customerID, fullName, phone, email, customerType, UserName } = req.body;
+  const { customerID, fullName, phone, email,joinDate ,customerType, UserName } = req.body;
 
   try {
-    const customerId = await addCustomer(customerID, fullName, phone, email, customerType, UserName);
+    const customerId = await addCustomer(customerID, fullName, phone, email,joinDate ,customerType, UserName);
     res.status(201).json({ message: 'Customer added successfully', customerId });
   } catch (error) {
     res.status(500).json({ error: error.message });

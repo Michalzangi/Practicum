@@ -197,6 +197,7 @@
 										<li><a href="DealR.html">Deals</a></li>
 									</ul>
 								</li>
+								<li><a href="Dashbord.html">Dashbord</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -295,6 +296,10 @@
 						<div class="form-group">
 							<label for="email">Email:</label>
 							<input type="email" class="form-control" id="email" name="email" required>
+						</div>
+						<div class="form-group" style="display: none;">
+							<label for="joinDate">Join Date:</label>
+							<input type="text" class="form-control" id="joinDate" name="joinDate" value="" disabled>
 						</div>
 						<div class="form-group">
 							<label for="customerType">Customer Type:</label>
@@ -414,6 +419,17 @@
 				formData.forEach(function (value, key) {
 					data[key] = value;
 				});
+				     // Add current month name to the data object
+		var currentDate = new Date();
+		var formattedDate = currentDate.toLocaleDateString('en-GB', {
+			day: 'numeric',
+			month: 'numeric',
+			year: 'numeric'
+		});
+
+		data['Date'] = formattedDate;
+
+        console.log(data);
 
 				// Send data to server
 				fetch("/AddCustomer", {

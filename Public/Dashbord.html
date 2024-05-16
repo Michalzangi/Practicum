@@ -334,7 +334,7 @@
 										<li><a href="DealR.html">Deals</a></li>
 									</ul>
 								</li>
-								<li><a href="Dashbord.html">Dashbord</a></li>
+                                <li><a href="Dashbord.html">Dashbord</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -350,7 +350,7 @@
 								<div class="row">
 									<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
 										<div class="slider-text-inner">
-											<h2 class="heading-title">Our Blog</h2>
+											<h2 class="heading-title">Our Dashbord</h2>
 											<p class="fh5co-lead"><i class="icon-heart3"></i> </p>
 										</div>
 									</div>
@@ -368,34 +368,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-							<h3>Our Blog</h3>
+							<h3>Our Dashbord</h3>
 						</div>
 					</div>
 				</div>
-				<div class="card" id="feedbackList">
-					<div class="container">
-						<div class="container" id="feedbackListContainer">
-							<div class="row row-bottom-padded-md">
-								<div class="col-lg-4 col-md-4 col-sm-6">
-									<div class="fh5co-blog animate-box">
-
-
-										<div class="row row-bottom-padded-md" id="feedbackList">
-											<!-- Feedback items will be dynamically added here -->
-											<div class="clearfix visible-sm-block"></div>
-											<div class="clearfix visible-sm-block"></div>
-											<div class="clearfix visible-md-block"></div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-				<div style="border-bottom: 5px solid rgb(255, 255, 255);"></div><br><br><br>
 				<div class="container" id="ratingsChartContainer">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
@@ -407,7 +383,24 @@
 							<canvas id="ratingsChart" width="400" height="200"></canvas>
 						</div>
 					</div>
+				</div><br><br><br>
+
+
+                <div style="border-bottom: 5px solid rgb(255, 255, 255);"></div><br><br><br>
+                <div class="container" >
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<h3>Count of Customers Per Month </h3>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<canvas id="customerChart" width="400" height="200"></canvas>
+						</div>
+					</div><br><br><br>
+                    
 				</div>
+        </div></div>
 				<!-- fh5co-blog-section -->
 
 				<!-- fh5co-blog-section -->
@@ -609,6 +602,93 @@
             console.error('Error fetching feedback:', error.message);
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    fetch("/getCustomers")
+    .then(response => response.json())
+    .then(data => {
+        const countsByMonth = {};
+
+        // Iterate through customers and count new customers per month
+        data.forEach(customer => {
+            const joinDate = customer.joinDate;
+
+            if (!isValidDateFormat(joinDate)) {
+                console.error(`Invalid date format: ${joinDate}`);
+            } else {
+                const dateParts = joinDate.split('/');
+                const monthNumber = parseInt(dateParts[1], 10);
+                const monthName = getMonthName(monthNumber);
+
+                if (!countsByMonth[monthName]) {
+                    countsByMonth[monthName] = 1;
+                } else {
+                    countsByMonth[monthName]++;
+                }
+            }
+        });
+
+        // Print the counts for each month in the console
+        Object.keys(countsByMonth).forEach(month => {
+            console.log(`${month}: ${countsByMonth[month]} times`);
+        });
+
+        // Create an array of all months, including those with zero counts
+        const allMonths = Object.keys(countsByMonth).sort(); // Sort by month name
+
+        const counts = allMonths.map(month => countsByMonth[month]);
+
+        // Create the chart using Chart.js
+        const ctx = document.getElementById('customerChart').getContext('2d');
+        const customerChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: allMonths,
+                datasets: [{
+                    label: 'New Customers per Month',
+                    data: counts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        ticks: {
+                            integer: true  // Display only integer ticks
+                        }
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching customer data:', error);
+    });
+
+    // Function to check if the date string is in valid format (DD/MM/YYYY)
+    function isValidDateFormat(dateString) {
+        const regex = /^\d{2}\/\d{2}\/\d{4}$/; // Change the regex pattern to match DD/MM/YYYY format
+        return regex.test(dateString);
+    }
+
+    // Function to get the month name from its number (1-12)
+    function getMonthName(monthNumber) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthNumber - 1];
+    }
+});
+
+      
+ 
+
+
+
+ 
+
 
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
