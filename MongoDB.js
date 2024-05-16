@@ -506,7 +506,7 @@ async function getAllPartners() {
 }
 
 //add new Customer 
-const addCustomer = async (customerID, fullName, phone, email, joinDate,customerType, UserName) => {
+const addCustomer = async (customerID, fullName, phone, email,joinDate ,customerType, UserName) => {
   let client;
 
   try {
@@ -515,6 +515,7 @@ const addCustomer = async (customerID, fullName, phone, email, joinDate,customer
 
     const database = client.db('Practicum');
     const collection = database.collection('Customers');
+    const collection2 = database.collection('Users');
 
     // Check if customerID already exists
     const existingCustomer = await collection.findOne({ CustomerID: customerID });
@@ -523,7 +524,7 @@ const addCustomer = async (customerID, fullName, phone, email, joinDate,customer
     }
 
     // Check if UserName already exists
-    const existingUserName = await collection.findOne({ UserName: UserName });
+    const existingUserName = await collection2.findOne({ UserName: UserName });
     if (!existingUserName) {
       throw new Error("Username doesn't exist. Please make a new account for the future customer before making a new customer file.");
     }
@@ -547,8 +548,8 @@ const addCustomer = async (customerID, fullName, phone, email, joinDate,customer
     if (client) {
       await client.close();
       console.log('Connection to MongoDB closed');
-    }
-  }
+    }
+  }
 }
 
 async function createDeal(assetId, customer1Id, customer2Id, partnerUserName) {

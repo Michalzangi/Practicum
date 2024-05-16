@@ -421,14 +421,14 @@
 					data[key] = value;
 				});
 				     // Add current month name to the data object
-		var currentDate = new Date();
+					 var currentDate = new Date();
 		var formattedDate = currentDate.toLocaleDateString('en-GB', {
 			day: 'numeric',
 			month: 'numeric',
 			year: 'numeric'
 		});
 
-		data['Date'] = formattedDate;
+		data['joinDate'] = formattedDate;
 
         console.log(data);
 
