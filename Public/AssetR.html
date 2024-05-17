@@ -339,7 +339,7 @@
         // צור קישור להורדה
         const link = document.createElement('a');
         link.href = URL.createObjectURL(csvBlob);
-        link.setAttribute('download', 'assets.csv'); // שם הקובץ להורדה
+        link.setAttribute('download', 'assets.xlsx'); // שם הקובץ להורדה
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
