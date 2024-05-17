@@ -331,7 +331,7 @@
         // צור קישור להורדה
         const link = document.createElement('a');
         link.href = URL.createObjectURL(csvBlob);
-        link.setAttribute('download', 'customers.xlsx'); // שם הקובץ להורדה
+        link.setAttribute('download', 'customers.csv'); // שם הקובץ להורדה
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
