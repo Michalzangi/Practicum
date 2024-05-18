@@ -268,11 +268,23 @@ const addMeeting = async (customerID, date, time, location, partner, meetingType
     client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Connected to MongoDB');
 
-    // Access the MongoDB database and Meetings collection
+    // Access the MongoDB database
     const database = client.db('Practicum');
-    const collection = database.collection('Meetings');
+    const meetingsCollection = database.collection('Meetings');
+    const customersCollection = database.collection('Customers');
 
-    // Convert date and time to JavaScript Date object
+    // Check if the provided date has already passed
+    const meetingDate = new Date(date);
+    const currentDate = new Date();
+    if (meetingDate < currentDate) {
+      throw new Error('Date has passed. Please pick a date that is relevant.');
+    }
+
+    // Check if the CustomerID exists in the Customers collection
+    const customer = await customersCollection.findOne({ CustomerID: customerID });
+    if (!customer) {
+      throw new Error('You are not yet a customer. Please sign up as one.');
+    }
 
     // Add meeting document to Meetings collection with appropriate details
     const meetingData = {
@@ -284,18 +296,18 @@ const addMeeting = async (customerID, date, time, location, partner, meetingType
       MeetingType: meetingType
     };
 
-    // Check if AssetSelect is not undefined before adding it to the document
-    if (assetSelect !== undefined) {
+    // Check if AssetSelect is provided before adding it to the document
+    if (assetSelect && assetSelect.length > 0) {
       meetingData.AssetSelect = assetSelect;
     }
 
-    const result = await collection.insertOne(meetingData);
+    const result = await meetingsCollection.insertOne(meetingData);
 
     console.log('Meeting added successfully');
     return result.insertedId;
   } catch (error) {
-    console.error('Error adding meeting:', error);
-    throw new Error('Failed to add meeting');
+    console.error('Error adding meeting:', error.message);
+    throw new Error(error.message);
   } finally {
     // Close connection to MongoDB database
     if (client) {
@@ -303,7 +315,9 @@ const addMeeting = async (customerID, date, time, location, partner, meetingType
       console.log('Connection to MongoDB closed');
     }
   }
-}
+};
+
+
 
 
 
