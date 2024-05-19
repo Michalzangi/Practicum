@@ -31,7 +31,8 @@
     <link rel="stylesheet" href="css/cs-select.css">
     <link rel="stylesheet" href="css/cs-skin-border.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
         .calendar {
@@ -191,6 +192,7 @@
         margin-top: 20px; /* Adjust this value to move the button down */
         
     }
+
 
     </style>
 
@@ -352,13 +354,15 @@
                     const meetingItem = document.createElement('div');
                     meetingItem.classList.add('meeting-item');
                     meetingItem.innerHTML = `
-                        <h4>${meeting.MeetingType}</h4><br><br>
-                        <p class="icon-calendar">&nbsp;&nbsp;Date: ${meeting.Date} at  ${meeting.Time}</p><br>
-                        <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.Location}</p><br>
-                        <p class="icon-user">&nbsp;&nbsp;Customer Number: ${meeting.CustomerID}</p><br>
-                        ${meeting.AssetSelect ? `<p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>` : ''}
-                        <button class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
-                    `;
+                    <h4>${meeting.MeetingType}</h4><br><br>
+                    <i class="fas fa-calendar"></i> &nbsp;&nbsp;Date: ${meeting.Date} at ${meeting.Time}</p><br>
+                    <i class="fas fa-map-marker-alt"></i> &nbsp;&nbsp;Location: ${meeting.Location}</p><br>
+                    <i class="fas fa-user"></i> &nbsp;&nbsp;Customer Number: ${meeting.CustomerID}</p><br>
+                    ${meeting.AssetSelect ? `<i class="fas fa-home"></i> &nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect} <br><br>` : ''}
+                    <button class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
+                `;
+
+
                     meetingList.appendChild(meetingItem);
                 });
             } else {
