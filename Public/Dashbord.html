@@ -604,17 +604,17 @@
                 },
 				options: {
     scales: {
-		
         y: {
             beginAtZero: true,
             stepSize: 1,
             ticks: {
-                integer: true  // Display only integer ticks
+                integer: true,  // Display only integer ticks
+                precision: 0    // Display only whole numbers
             }
         }
-		
     }
 }
+
 
             });
         } catch (error) {
@@ -672,16 +672,18 @@
                 }]
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 1,
-                        ticks: {
-                            integer: true  // Display only integer ticks
-                        }
-                    }
-                }
-            }
+				scales: {
+					y: {
+						beginAtZero: true,
+						stepSize: 1,
+						ticks: {
+							integer: true,  // Display only integer ticks
+							precision: 0    // Display only whole numbers
+						}
+					}
+				}
+			}
+
         });
     })
     .catch(error => {
@@ -746,17 +748,19 @@ document.addEventListener("DOMContentLoaded", function() {
                     borderWidth: 1
                 }]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 1,
-                        ticks: {
-                            integer: true  // Display only integer ticks
-                        }
-                    }
-                }
-            }
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true,
+						stepSize: 1,
+						ticks: {
+							integer: true,  // Display only integer ticks
+							precision: 0    // Display only whole numbers
+						}
+					}
+				}
+			}
+
         });
     })
     .catch(error => {
