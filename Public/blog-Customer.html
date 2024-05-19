@@ -385,8 +385,8 @@
 			<div class="container">
                     <form id="feedbackForm" method="POST" action="/addFeedback">
 						<div class="form-group">
-							<label for="CustomerID">CustomerID:</label>
-							<input type="text" class="form-control" id="CustomerID" name="CustomerID" required>
+							<label for="Username">Username:</label>
+							<input type="text" class="form-control" id="Username" name="Username" required readonly>
 						</div>
                         <div class="form-group">
 								<label for="Name">Name:</label>
@@ -504,7 +504,19 @@
 	</div>
 
 <script>
-	
+document.addEventListener("DOMContentLoaded", function () {
+    const username = sessionStorage.getItem('username');
+    if (!username) {
+        console.error('Username not found in session storage');
+        return;
+    }
+
+    const usernameInput = document.getElementById('Username');
+    if (usernameInput) {
+        usernameInput.value = username;
+    }
+});
+
    
 document.addEventListener("DOMContentLoaded", function () {
     // Get the current date

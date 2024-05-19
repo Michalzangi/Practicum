@@ -94,8 +94,8 @@ app.post('/addFeedback', async (req, res) => {
   const feedbackData = req.body; // Data sent from the form on the client side
 
   try {
-      const customerId = feedbackData.CustomerID;
-      const result = await addFeedback(customerId, feedbackData);
+      const username = feedbackData.Username;
+      const result = await addFeedback(username, feedbackData);
       res.status(201).json({ message: 'Feedback added successfully!' });
   } catch (error) {
       if (error.message.includes('Customer not found')) {

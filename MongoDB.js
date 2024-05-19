@@ -227,26 +227,33 @@ const addProperty = async (assetType, city, bathrooms, SqrRoot, assetPrice, asse
 }
 
 //Add New Feedback
-const addFeedback = async (customerId, feedbackData) => {
+const addFeedback = async (Username, feedbackData) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  
+
   try {
       await client.connect();
       const database = client.db('Practicum');
       const customersCollection = database.collection('Customers');
       const dealsCollection = database.collection('Deals');
-      const customer = await customersCollection.findOne({ CustomerID: customerId });
+
+      // Find the customer by Username
+      const customer = await customersCollection.findOne({ UserName: Username });
       if (!customer) {
           throw new Error('Customer not found. Please register as a customer to add feedback.');
       }
 
+      // Find the customer ID from the found customer
+      const customerId = customer.CustomerID;
+
+      // Check if the customer has made any deals
       const dealsCount = await dealsCollection.countDocuments({ customerId: customerId });
       if (dealsCount === 0) {
           throw new Error('You still haven\'t made a deal. A feedback hasn\'t been added.');
       }
 
-      const collection = database.collection('Feedback');
-      const result = await collection.insertOne(feedbackData);
+      // Add the feedback to the Feedback collection
+      const feedbackCollection = database.collection('Feedback');
+      const result = await feedbackCollection.insertOne(feedbackData);
       console.log('Feedback added successfully!');
       console.log('Received feedback data:', feedbackData);
       return result;
