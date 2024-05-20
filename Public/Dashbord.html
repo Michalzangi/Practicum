@@ -737,6 +737,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
+        // Divide counts by 2
+        const counts = allMonths.map(month => countsByMonth[month] / 2);
+
         // Create the chart using Chart.js
         const ctx = document.getElementById('dealChart').getContext('2d');
         const dealChart = new Chart(ctx, {
@@ -744,26 +747,25 @@ document.addEventListener("DOMContentLoaded", function() {
             data: {
                 labels: allMonths,
                 datasets: [{
-                    label: 'Deals per Month',
-                    data: allMonths.map(month => countsByMonth[month]),
+                    label: 'Deals per Month (divided by 2)',
+                    data: counts,
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgb(75, 192, 192)',
                     borderWidth: 1
                 }]
             },
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-						stepSize: 1,
-						ticks: {
-							integer: true,  // Display only integer ticks
-							precision: 0    // Display only whole numbers
-						}
-					}
-				}
-			}
-
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        ticks: {
+                            integer: true,  // Display only integer ticks
+                            precision: 0    // Display only whole numbers
+                        }
+                    }
+                }
+            }
         });
     })
     .catch(error => {
@@ -782,9 +784,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return months[monthNumber - 1];
     }
 });
-
- 
-
 
 
  

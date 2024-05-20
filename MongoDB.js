@@ -573,106 +573,97 @@ const addCustomer = async (customerID, fullName, phone, email,joinDate ,customer
   }
 }
 
-async function createDeal(assetId, customer1Id, customer2Id, SignatureDate,partnerUserName) {
+
+async function createDeal(assetId, customer1Id, customer2Id, SignatureDate, partnerUserName) {
   try {
-      // Convert assetId to integer
-      assetId = parseInt(assetId);
+    assetId = parseInt(assetId);
 
-      if (customer1Id === customer2Id) {
-          console.log("Error: Customer IDs cannot be the same.");
-          return;
-      }
+    if (customer1Id === customer2Id) {
+      throw new Error("Customer IDs cannot be the same.");
+    }
 
-      const db = client.db("Practicum");
-      const dealsCollection = db.collection("Deals");
-      const customersCollection = db.collection("Customers");
-      const assetsCollection = db.collection("Assets");
+    const db = client.db("Practicum");
+    const dealsCollection = db.collection("Deals");
+    const customersCollection = db.collection("Customers");
+    const assetsCollection = db.collection("Assets");
 
-      // Fetch customer1 and customer2 documents
-      const customer1 = await customersCollection.findOne({ CustomerID: customer1Id });
-      const customer2 = await customersCollection.findOne({ CustomerID: customer2Id });
+    const customer1 = await customersCollection.findOne({ CustomerID: customer1Id });
+    const customer2 = await customersCollection.findOne({ CustomerID: customer2Id });
 
-      if (!customer1 || !customer2) {
-          console.log("Error: Customer 1 or Customer 2 not found.");
-          return;
-      }
+    if (!customer1 || !customer2) {
+      throw new Error("Customer 1 or Customer 2 not found.");
+    }
 
-      // Fetch asset document
-      const asset = await assetsCollection.findOne({ AssetID: assetId });
+    const asset = await assetsCollection.findOne({ AssetID: assetId });
 
-      if (!asset) {
-          console.log("Error: Asset not found.");
-          return;
-      }
+    if (!asset) {
+      throw new Error("Asset not found.");
+    }
 
-      // Determine deal type and customer roles based on asset type
-      let dealType, customer1Role, customer2Role, dealCommission;
-      if (asset.AssetType.toLowerCase() === "rent") {
-          dealType = "Renting";
-          customer1Role = "Rented";
-          customer2Role = "Rentee";
-          dealCommission = asset.AssetPrice;
-      } else if (asset.AssetType.toLowerCase() === "sale") {
-          dealType = "Buying";
-          customer1Role = "Seller";
-          customer2Role = "Buyer";
-          dealCommission = asset.AssetPrice * 0.01;
-      } else {
-          console.log("Error: Invalid asset type. Asset type must be 'rent' or 'sale'.");
-          return;
-      }
+    if (asset.AssetStatus === "Unavailable") {
+      throw new Error("Asset is unavailable.");
+    }
 
-      // Generate a unique transaction number
-      const highestDeal = await dealsCollection.findOne({}, { sort: { transactionNumber: -1 } });
-      const transactionNumber = highestDeal ? highestDeal.transactionNumber + 1 : 1;
+    let dealType, customer1Role, customer2Role, dealCommission;
+    if (asset.AssetType.toLowerCase() === "rent") {
+      dealType = "Renting";
+      customer1Role = "Rented";
+      customer2Role = "Rentee";
+      dealCommission = asset.AssetPrice;
+    } else if (asset.AssetType.toLowerCase() === "sale") {
+      dealType = "Buying";
+      customer1Role = "Seller";
+      customer2Role = "Buyer";
+      dealCommission = asset.AssetPrice * 0.01;
+    } else {
+      throw new Error("Invalid asset type. Asset type must be 'rent' or 'sale'.");
+    }
 
-      // Create deal documents with separate fields for hour and date
-      const currentDate = new Date();
-      const hour = currentDate.getHours();
-      
-      const deal1 = {
-          transactionNumber,
-          customerId: customer1Id,
-          assetId,
-          dealType,
-          role: customer1Role,
-          dealCommission,
-          createdAtHour: hour,
-          createdAtDate: SignatureDate,
-          PartnerUserName: partnerUserName
-      };
+    const highestDeal = await dealsCollection.findOne({}, { sort: { transactionNumber: -1 } });
+    const transactionNumber = highestDeal ? highestDeal.transactionNumber + 1 : 1;
 
-      const transactionNumberForSecondDeal = transactionNumber + 1;
+    const currentDate = new Date();
+    const hour = currentDate.getHours();
 
-      const deal2 = {
-          transactionNumber: transactionNumberForSecondDeal,
-          customerId: customer2Id,
-          assetId,
-          dealType: (dealType === "Renting") ? "Rented" : "Selling",
-          role: customer2Role,
-          dealCommission,
-          createdAtHour: hour,
-          createdAtDate: SignatureDate,
-          PartnerUserName: partnerUserName
-      };
+    const deal1 = {
+      transactionNumber,
+      customerId: customer1Id,
+      assetId,
+      dealType,
+      role: customer1Role,
+      dealCommission,
+      createdAtHour: hour,
+      createdAtDate: SignatureDate,
+      PartnerUserName: partnerUserName
+    };
 
-      // Update asset status to "Unavailable"
-      await assetsCollection.updateOne(
-          { AssetID: assetId },
-          { $set: { AssetStatus: "Unavailable" } }
-      );
+    const transactionNumberForSecondDeal = transactionNumber + 1;
 
-      // Insert both deal documents into the deals collection
-      await dealsCollection.insertOne(deal1);
-      await dealsCollection.insertOne(deal2);
+    const deal2 = {
+      transactionNumber: transactionNumberForSecondDeal,
+      customerId: customer2Id,
+      assetId,
+      dealType: (dealType === "Renting") ? "Rented" : "Selling",
+      role: customer2Role,
+      dealCommission,
+      createdAtHour: hour,
+      createdAtDate: SignatureDate,
+      PartnerUserName: partnerUserName
+    };
 
-      console.log("Deal documents created successfully.");
+    await assetsCollection.updateOne(
+      { AssetID: assetId },
+      { $set: { AssetStatus: "Unavailable" } }
+    );
+
+    await dealsCollection.insertOne(deal1);
+    await dealsCollection.insertOne(deal2);
+
+    return { deal1, deal2 };
   } catch (error) {
-      console.error("Error creating deal:", error);
+    throw new Error(error.message);
   }
 }
-
-
 
 
 //delete meeting

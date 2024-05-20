@@ -175,6 +175,9 @@
                 <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
                     Deals added successfully!
                 </div>
+                <div id="errorMessage" style="display: none;" class="alert alert-danger" role="alert">
+                    Failed to add deals!
+                  </div>
             </form><br><br><br><br>
         </div>
     </div>
@@ -240,7 +243,7 @@
     </footer>
 
     <script>
-       document.addEventListener("DOMContentLoaded", function() {
+ document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('DealForm');
     const username = sessionStorage.getItem('username');
     if (!username) {
@@ -274,17 +277,25 @@
         })
         .then(function(response) {
             if (response.ok) {
-                document.getElementById("successMessage").style.display = "block";
-                console.log("Deals added successfully");
-                setTimeout(function() {
-                    location.reload();
-                }, 3000); 
+                return response.json();
             } else {
-                console.error("Failed to add deal");
+                return response.json().then(function(data) {
+                    throw new Error(data.error);
+                });
             }
         })
+        .then(function(data) {
+            document.getElementById("successMessage").style.display = "block";
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
+        })
         .catch(function(error) {
-            console.error("Error:", error);
+            document.getElementById("errorMessage").innerText = error.message;
+            document.getElementById("errorMessage").style.display = "block";
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
         });
     });
 });
