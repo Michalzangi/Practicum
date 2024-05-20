@@ -2,21 +2,22 @@
 <html class="no-js">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <title>practicum</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
     <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
     <meta name="author" content="FREEHTML5.CO" />
-    <meta property="og:title" content="" />
-    <meta property="og:image" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content="" />
-    <meta property="og:description" content="" />
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
     <meta name="twitter:title" content="" />
     <meta name="twitter:image" content="" />
     <meta name="twitter:url" content="" />
     <meta name="twitter:card" content="" />
+
     <link rel="shortcut icon" href="favicon.ico">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/animate.css">
@@ -29,652 +30,575 @@
     <link rel="stylesheet" href="css/cs-select.css">
     <link rel="stylesheet" href="css/cs-skin-border.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
-    <link rel="dns-prefetch" href="//unpkg.com" />
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
-
     <style>
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 20px;
+
+#filter-form-container select#asset-type-select,
+#filter-form-container input#from-place,
+#filter-form-container input#asset-price-min,
+#filter-form-container input#asset-price-max,
+#filter-form-container input#room-number,
+#filter-form-container input#asset-street-number {
+    width: 100%;
+    height: 40px; /* Adjust the height as needed */
+    border-radius: 0px; /* Ensure rounded corners */
+    border: 1px solid #fffdfd; /* Add border for clarity */
+    padding: 8px; /* Add padding for spacing */
+    box-sizing: border-box; /* Ensure padding and border are included
+in the width */
+}
+
+#fh5co-search-map {
+    position: relative;
+}
+
+
+#search-property {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 30%;
+    height: auto; /* Change height to auto to allow content to
+determine height */
+    max-height: 100%; /* Limit height to the viewport height */
+    overflow-y: auto; /* Add scrollbars if content exceeds height */
+    background-color: #de6277;
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#search-property.show {
+    right: 0;
+}
+
+#filter-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+#filter-mobile-button, #all-assets-button {
+    background-color: #de6277;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px; /* Adjust spacing between buttons */
+}
+
+#filter-mobile-button:hover, #all-assets-button:hover {
+    background-color: #e91e63; /* Darker pink on hover */
+}
+
+#all-assets-button {
+    /* display: none; */ /* Initially hidden */
+    position: fixed;
+    bottom: 20px;
+    right: calc(20px + 160px); /* Adjust based on the width of the filter button */
+    z-index: 999;
+    background-color:#de6277;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 150px;
+}
+
+#empty-assets-message {
+    font-family: 'calibri', cursive;
+    font-size: 30px;
+    color: #fff;
+    background-color:#de6277;
+    border: none;
+    padding: 20px;
+    border-radius: 15px; /* Reduce border-radius for a smaller frame */
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 1.5s steps(40, end) forwards, fadeInDown 1s ease;
+    position: relative;
+}
+
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#empty-assets-message::before,
+#empty-assets-message::after {
+    content: '';
+    position: abso
+}
+
+.form-group {
+            display: flex;
+            align-items: center;
+        }
+    
+        .form-group input[type="text"] {
+            margin-left: -30px; /* Adjust this value as needed */
         }
 
-        .meeting-item {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
+        .form-group button[type="submit"] {
+        margin-top: 20px; /* Adjust this value to move the button down */
+    }
 
-        .meeting-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
+    @keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
-        .meeting-item h4 {
-            font-family: 'Kunstler Script';
-            margin-top: auto;
-            margin-bottom: auto;
-            font-size: 50px;
-            color: rgba(120, 101, 101, 0.671);
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
+#filter-mobile-button {
+  animation: pulse 2s infinite; /* הפעלת האנימציה pulse באורך של 2 שניות ובחזרה אינסופית */
+}
 
-        .meeting-item p {
-            margin: 0;
-            font-size: 20px;
-            color: #666666;
-            font-family: 'calibri';
-        }
 
-        .meeting-item .date {
-            font-weight: bold;
-            color: #007bff;
-        }
 
-        .meeting-item .location {
-            margin-top: 10px;
-        }
-
-        .meeting-item .customer {
-            margin-top: 10px;
-        }
-
-        .meeting-item .asset-details {
-            margin-top: 10px;
-        }
-
-        .btn1 {
-            -webkit-transition: 0.3s;
-            -o-transition: 0.3s;
-            transition: 0.3s;
-        }
-
-        .btn1 {
-            letter-spacing: 1px;
-            -webkit-transition: 0.3s;
-            -o-transition: 0.3s;
-            transition: 0.3s;
-        }
-
-        .btn1.btn1-primary {
-            background: #de6277;
-            color: #fff;
-            border: none;
-            border: 2px solid transparent;
-        }
-
-        .btn1.btn1-primary:hover,
-        .btn1.btn1-primary:active,
-        .btn1.btn1-primary:focus {
-            box-shadow: none;
-            background: #de6277;
-            color: #fff;
-        }
-
-        .btn1:hover,
-        .btn1:active,
-        .btn1:focus {
-            background: #393e46;
-            color: #fff;
-            outline: none;
-        }
-
-        .btn1.btn1-default:hover,
-        .btn1.btn1-default:focus,
-        .btn1.btn1-default:active {
-            border-color: transparent;
-        }
-
-        .btn1.btn1-outline {
-            background: transparent;
-            color: #de6277;
-            border: 2px solid #de6277;
-        }
-
-        .btn1.btn1-outline:hover,
-        .btn1.btn1-outline:focus,
-        .btn1.btn1-outline:active {
-            background: #de6277;
-            color: #fff;
-        }
-
-        .tab-content .btn1 {
-            letter-spacing: 0;
-            font-weight: bold;
-            font-size: 30px;
-            text-transform: none !important;
-        }
-
-        #sub1 {
-            display: block;
-            margin: 0 auto;
-            padding: 6px;
-            width: fit-content;
-        }
-
-        .btn1.btn1-primary:hover,
-        .btn1.btn1-primary:active,
-        .btn1.btn1-primary:focus {
-            box-shadow: none;
-            background: #de6277;
-            color: #fff !important;
-        }
-
-        .btn1:hover,
-        .btn1:active,
-        .btn1:focus {
-            background: #393e46 !important;
-            color: #fff;
-            outline: none !important;
-        }
-
-        .btn1.btn1-default:hover,
-        .btn1.btn1-default:focus,
-        .btn1.btn1-default:active {
-            border-color: transparent;
-        }
-        [x-cloak] {
-            display: none;
-        }
-        .alert-success {
-            display: none; /* Ensure it is initially hidden */
-            background-color: #ff69b4; /* Pinkish background */
-            color: #fff; /* White text color */
-            font-family: 'Arial, sans-serif'; /* Beautiful font */
-            font-size: 18px; /* Slightly larger font size */
-            font-weight: bold; /* Bold text */
-            padding: 20px; /* Padding for space inside the box */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-            text-align: center; /* Center the text */
-            margin: 20px auto; /* Center the box horizontally */
-            max-width: 400px; /* Maximum width for the box */
-        }
-
-        /* Animation for popping effect */
-        .alert-success {
-            animation: pop 0.5s ease-out forwards;
-        }
-
-        @keyframes pop {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
     </style>
-
-
 </head>
 <body>
-    <header id="fh5co-header-section" class="sticky-banner">
-        <div class="container">
-            <div class="nav-header">
-                <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-                <h1 id="fh5co-logo"><a href="Home.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
-                <nav id="fh5co-menu-wrap" role="navigation">
-                    <ul class="sf-menu" id="fh5co-primary-menu">
-                        <li class="active"><a href="Home.html">Home</a></li>
-                        <li>
-                            <a>Assets</a>
-                            <ul class="fh5co-sub-menu">
-                                <li><a href="all-Customer.html">All</a></li>
-                                <li><a href="filter-Customer.html">Filter</a></li>
-                                <li><a href="new-Customer.html">New</a></li>
-                                <li><a href="sale-Customer.html">Sale</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="blog-Customer.html">Blog</a></li>
-                        <li><a href="addC-Customer.html">Join</a></li>
-                        <li>
-                            <a>Meeting</a>
-                            <ul class="fh5co-sub-menu">
-                                <li><a href="meeting-Customer.html">Add</a></li>
-                                <li><a href="meetingV-Customer.html">View</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
 
-    <aside id="fh5co-hero" class="js-fullheight">
-        <div class="flexslider js-fullheight">
-            <ul class="slides">
-                <li style="background-image: url(images/cov.png);">
-                    <div class="overlay"></div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
-                                <div class="slider-text-inner">
-                                    <h2 class="heading-title">Meeting</h2>
-                                    <p class="fh5co-lead"><i class="icon-heart3"></i> </p>
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <header id="fh5co-header-section" class="sticky-banner">
+				<div class="container">
+					<div class="nav-header">
+						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+						<h1 id="fh5co-logo"><a href="Home.html"><i class="icon-home"></i> Heh B’iyar <span> Real Estate</span></a></h1>
+						<nav id="fh5co-menu-wrap" role="navigation">
+							<ul class="sf-menu" id="fh5co-primary-menu">
+								<li class="active"><a href="Home.html">Home</a></li>
+								<li>
+									<a>Assets</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="all-Customer.html">Search</a></li>
+										<li><a href="new-Customer.html">New</a></li>
+										<li><a href="sale-Customer.html">Sale</a></li>
+									</ul>
+								</li>
+								<li><a href="blog-Customer.html">Blog</a></li>
+								<li><a href="addC-Customer.html">Join</a></li>
+								<li>
+									<a>Meeting</a>
+									<ul class="fh5co-sub-menu">
+										<li><a href="meeting-Customer.html">Add</a></li>
+										<li><a href="meetingV-Customer.html">View</a></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+
+        <aside id="fh5co-hero" class="js-fullheight">
+            <div class="flexslider js-fullheight">
+                <ul class="slides">
+                    <li style="background-image: url(images/cov.png);">
+                        <div class="overlay"></div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                                    <div class="slider-text-inner">
+                                        <h2 class="heading-title">All our Assets</h2>
+                                        <p class="fh5co-lead"><i class="icon-heart3"></i>  </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </aside>
-
- <!-- /meetingList --> <!-- /meetingList --> <!-- /meetingList--> <!-- /meetingList -->
- <div id="fh5co-blog-section" class="fh5co-section-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-                <h3>View Meeting</h3>
+                        </div>
+                    </li>
+                </ul>
             </div>
+        </aside>
+
+        <div id="filter-wrapper">
+            <button id="all-assets-button" class="btn btn-primary btn-lg">All Assets</button>
+            <button id="filter-mobile-button" class="btn btn-pink btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;Filter&nbsp;&nbsp;&nbsp;&nbsp;</button>
         </div>
-        <div class="calendar" id="meetingList">
-            <!-- This is where the selected meeting will be displayed -->
-        </div>
-    </div>
-</div>
 
-<!-- /meetingList --> <!-- /meetingList --> <!-- /meetingList--> <!-- /meetingList -->
- 
+    <div id="fh5co-search-map">
+        <div id="search-property">
+            <div class="map" style="background-image: url(images/cover_bg_1.jpg);"></div>
+            <div class="s-holder">
+                <h2>Search Properties</h2>
+                <div class="row">  
+                    <div id="filter-form-container"><br>
+                        <h2>Search Properties</h2>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-type-select">Asset Type:</label>
+                                <select id="asset-type-select" class="cs-select cs-skin-border">
+                                    <option value="" selected>Any</option> <!-- Neutral option -->
+                                    <option value="Rent" selected>Rent</option>
+                                    <option value="Sale"selected>Sale</option>
+                                </select>
 
-<!-- /calendar --> <!-- /calendar --> <!-- /calendar--> <!-- /calendar -->
-<div class="antialiased sans-serif bg-gray-100 h-screen">
-    <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
-        <div class="container mx-auto px-4 py-2 md:py-24">
-            <div class="font-bold text-gray-800 text-xl mb-4">
-                Schedule Tasks
-            </div>
-            <div class="bg-white rounded-lg shadow overflow-hidden">
-                <div class="flex items-center justify-between py-2 px-6">
-                    <div>
-                        <span x-text="MONTH_NAMES[month]" class="text-lg font-bold text-gray-800"></span>
-                        <span x-text="year" class="ml-1 text-lg text-gray-600 font-normal"></span>
-                    </div>
-                    <div class="border rounded-lg px-1" style="padding-top: 2px;">
-                        <button 
-                            type="button"
-                            class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center" 
-                            :class="{'cursor-not-allowed opacity-25': month == 0 }"
-                            :disabled="month == 0 ? true : false"
-                            @click="month--; getNoOfDays()">
-                            <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                            </svg>  
-                        </button>
-                        <div class="border-r inline-flex h-6"></div>        
-                        <button 
-                            type="button"
-                            class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1" 
-                            :class="{'cursor-not-allowed opacity-25': month == 11 }"
-                            :disabled="month == 11 ? true : false"
-                            @click="month++; getNoOfDays()">
-                            <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>                                    
-                        </button>
-                    </div>
-                </div><br>  
-
-                <div class="-mx-1 -mb-1">
-                    <div class="flex flex-wrap" style="margin-bottom: -40px;">
-                        <template x-for="(day, index) in DAYS" :key="index">    
-                            <div style="width: 14.26%" class="px-2 py-2">
-                                <div x-text="day" class="text-gray-600 text-sm uppercase tracking-wide font-bold text-center"></div>
-                            </div>
-                        </template>
-                    </div>
-                
-                    <div class="flex flex-wrap border-t border-l">
-                        <template x-for="blankday in blankdays">
-                            <div style="width: 14.28%; height: 120px" class="text-center border-r border-b px-4 pt-2"></div>
-                        </template> 
-                        <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex"> 
-                            <div style="width: 14.28%; height: 120px" class="px-4 pt-2 border-r border-b relative">
-                                <div
-                                    @click="filterMeetings(date)"
-                                    x-text="date"
-                                    class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
-                                    :class="{'bg-blue-500 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }"
-                                ></div>
-                                <div style="height: 80px;" class="overflow-y-auto mt-1">
-                                    <div 
-                                        class="absolute top-0 right-0 mt-2 mr-2 inline-flex items-center justify-center rounded-full text-sm w-6 h-6 bg-gray-700 text-white leading-none"
-                                        x-show="events.filter(e => e.event_date === new Date(year, month, date).toDateString()).length"
-                                        x-text="events.filter(e => e.event_date === new Date(year, month, date).toDateString()).length">
-                                    </div>
-                
-                                    <template x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">  
-                                        <div
-                                            class="px-2 py-1 rounded-lg mt-1 overflow-hidden border"
-                                            :class="{
-                                                'border-blue-200 text-blue-800 bg-blue-100': event.event_theme === 'blue',
-                                                'border-red-200 text-red-800 bg-red-100': event.event_theme === 'red',
-                                                'border-yellow-200 text-yellow-800 bg-yellow-100': event.event_theme === 'yellow',
-                                                'border-green-200 text-green-800 bg-green-100': event.event_theme === 'green',
-                                                'border-purple-200 text-purple-800 bg-purple-100': event.event_theme === 'purple'
-                                            }">
-                                            <p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
-                                            <p x-text="'Time: ' + event.details.time" class="text-xs"></p>
-                                            <p x-text="'Location: ' + event.details.location" class="text-xs"></p>
-                                            <p x-text="'Customer ID: ' + event.details.customerID" class="text-xs"></p>
-                                            <p x-text="'Asset Details: ' + event.details.assetDetails" class="text-xs"></p>
-                                        </div>
-                                    </template>
+                            </section>
+                        </div>
+                        <!-- Asset Price Inputs -->
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-price-min">Minimum Price:</label>
+                                <div class="wide">
+                                    <input type="number" class="form-control small-input" id="asset-price-min" placeholder="Min" min="0" step="any"/>
                                 </div>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-price-max">Maximum Price:</label>
+                                <div class="wide">
+                                    <input type="number" class="form-control small-input" id="asset-price-max" placeholder="Max" min="0" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-room-number">Asset's Room Number:</label>
+                                <div class="wide">
+                                    <input type="number" class="form-control small-input" id="room-number" placeholder="Any" min="1" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                            <section>
+                                <label for="asset-street-number">Asset's Street Number:</label>
+                                <div class="wide">
+                                    <input type="number" class="form-control small-input" id="asset-street-number" placeholder="Any" min="1" step="any"/>
+                                </div>
+                            </section>
+                        </div>
+                        <!-- Room Number Input -->
+                        <!-- Asset Street Input -->
+                        <div class="col-xxs-12 col-xs-12">
+                            <div class="input-field">
+                                <label for="from-place">Asset Street:</label>
+                                <input type="text" class="form-control" id="from-place" placeholder="Any"/>
                             </div>
-                        </template>
+                            </div>
+                        </div>
+                        <!-- Learn More Button -->
+                        <div class="col-xxs-12 col-xs-12 text-center">
+                            <p><a id="learn-more-link" class="btn btn-primary btn-lg" href="#">Search</a></p>
+                        </div>
                     </div>
                 </div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- /calendar --> <!-- /calendar --> <!-- /calendar--> <!-- /calendar -->
-<div class="transparent-white" x-show="openEventModal">
-    <div id="meetingList">
-        <!-- Display meetings for the selected date here -->
-        <template x-for="event in selectedEvents">
-            <div class="meeting-item">
-                <h4 x-text="event.event_title"></h4><br>
-                <p class="icon-clock">&nbsp;&nbsp;Time: <span x-text="event.details.time"></span></p><br>
-                <p class="icon-location">&nbsp;&nbsp;Location: <span x-text="event.details.location"></span></p><br>
-                <p class="icon-user">&nbsp;&nbsp;Customer ID: <span x-text="event.details.customerID"></span></p><br>
-                <p class="icon-home">&nbsp;&nbsp;Asset Details: <span x-text="event.details.assetDetails"></span></p><br>
-                <button class="btn1 btn1-primary" @click="deleteMeeting(event.id)">Delete Meeting</button>
-            </div>
-        </template>
-    </div>
-</div>
+                <button id="close-filter-slide" class="btn btn-pink btn-lg">
+                    <i class="fas fa-times"></i> 
+                </button>
 
-<!-- /calendar --> <!-- /calendar --> <!-- /calendar--> <!-- /calendar -->
-    <footer>
-        <div id="footer">
+            </div>
+        </div>
+    </div>
+
+
+
+        <div id="fh5co-properties" class="fh5co-section-gray">
             <div class="container">
-                <div class="row row-bottom-padded-md">
-                    <div class="col-md-3">
-                        <h3 class="section-title">About Us</h3>
-                        <p>We, Bar Michal and Nofar, information systems management students at the College of
-                            Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
-                    </div>
-
-                    <div class="col-md-3 col-md-push-1">
-                        <h3 class="section-title">Links</h3>
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Assets</a></li>
-                            <li><a href="#">Agent</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h3 class="section-title">Information</h3>
-                        <ul>
-                            <li><a href="#">Terms &amp; Condition</a></li>
-                            <li><a href="#">License</a></li>
-                            <li><a href="#">Privacy &amp; Policy</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h3 class="section-title">Newsletter</h3>
-                        <p>Subscribe for our newsletter</p>
-                        <form class="form-inline" id="fh5co-header-subscribe">
-                            <div class="row">
-                                <div class="col-md-12 col-md-offset-0">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="email"
-                                            placeholder="Enter your email">
-                                        <button type="submit" class="btn btn-default"><i
-                                                class="icon-paper-plane"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                        <h3>All Assets</h3>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="fh5co-social-icons">
-                            <a href="#"><i class="icon-twitter2"></i></a>
-                            <a href="#"><i class="icon-facebook2"></i></a>
-                            <a href="#"><i class="icon-instagram"></i></a>
-                            <a href="#"><i class="icon-dribbble2"></i></a>
-                            <a href="#"><i class="icon-youtube"></i></a>
-                        </p>
-                    </div>
+                <div class="row" id="assets-container">
                 </div>
             </div>
         </div>
-    </footer>
 
-    </div>
-    </div>
+        <footer>
+            <div id="footer">
+                <div class="container">
+                    <div class="row row-bottom-padded-md">
+                        <div class="col-md-3">
+                            <h3 class="section-title">About Us</h3>
+                            <p>We, Bar Michal and Nofar, information systems management students at the College of Management, own all the exclusive rights to this website <i class="icon-heart3"></i></p>
+                        </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    const username = sessionStorage.getItem('username');
-    if (!username) {
-        console.error('Username not found in session storage');
-        return;
+                        <div class="col-md-3 col-md-push-1">
+                            <h3 class="section-title">Links</h3>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Assets</a></li>
+                                <li><a href="#">Agent</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-3">
+                            <h3 class="section-title">Information</h3>
+                            <ul>
+                                <li><a href="#">Terms &amp; Condition</a></li>
+                                <li><a href="#">License</a></li>
+                                <li><a href="#">Privacy &amp; Policy</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="section-title">Newsletter</h3>
+                            <p>Subscribe for our newsletter</p>
+                            <form class="form-inline" id="fh5co-header-subscribe">
+                                <div class="row">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="email" placeholder="Enter your email">
+                                            <button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="fh5co-social-icons">
+                                <a href="#"><i class="icon-twitter2"></i></a>
+                                <a href="#"><i class="icon-facebook2"></i></a>
+                                <a href="#"><i class="icon-instagram"></i></a>
+                                <a href="#"><i class="icon-dribbble2"></i></a>
+                                <a href="#"><i class="icon-youtube"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/sticky.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/superfish.js"></script>
+<script src="js/jquery.flexslider-min.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/selectFx.js"></script>
+<script src="js/main.js"></script>
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+    const filterMobileButton = document.getElementById("filter-mobile-button");
+    const searchProperty = document.getElementById("search-property");
+    const closeFilterSlide = document.getElementById("close-filter-slide");
+    const allAssetsButton = document.getElementById("all-assets-button");
+
+    // Function to reset form fields
+    function resetFormFields() {
+        document.getElementById("asset-type-select").value = "";
+        document.getElementById("asset-price-min").value = "";
+        document.getElementById("asset-price-max").value = "";
+        document.getElementById("room-number").value = "";
+        document.getElementById("asset-street-number").value = "";
+        document.getElementById("from-place").value = "";
     }
 
-    console.log('Username:', username);
+    filterMobileButton.addEventListener("click", function() {
+        // Hide filter button
+        filterMobileButton.style.display = "none";
+        // Hide all assets button
+        allAssetsButton.style.display = "none";
+        // Show slide
+        searchProperty.classList.add("show");
 
-    fetch(`/meetings-customer?username=${username}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Response data:', data);
-            const meetingList = document.getElementById('meetingList');
-            if (Array.isArray(data)) {
-                data.forEach(meeting => {
-                    const meetingItem = document.createElement('div');
-                    meetingItem.classList.add('meeting-item');
-                    meetingItem.innerHTML = `
-                        <h4>${meeting.MeetingType}</h4><br><br>
-                        <p class="icon-calendar">&nbsp;&nbsp;Date: ${meeting.Date} at ${meeting.Time}</p><br>
-                        <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.Location}</p><br>
-                        <p class="icon-user">&nbsp;&nbsp;Customer Number: ${meeting.CustomerID}</p><br>
-                        ${meeting.AssetSelect ? `<p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>` : ''}
-                        <button class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
-                    `;
-                    meetingList.appendChild(meetingItem);
-                });
-            } else {
-                console.error('Response data is not an array:', data);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching meetings:', error);
-            const meetingList = document.getElementById('meetingList');
-            meetingList.innerHTML = '<p>Error fetching meetings. Please try again later.</p>';
-        });
+        // Reset form fields
+        resetFormFields();
+    });
+
+    closeFilterSlide.addEventListener("click", function() {
+        // Show filter button
+        filterMobileButton.style.display = "block";
+        // Show all assets button
+        allAssetsButton.style.display = "block";
+        // Hide slide
+        searchProperty.classList.remove("show");
+
+        // Reset form fields
+        resetFormFields();
+    });
+
+    allAssetsButton.addEventListener("click", async function() {
+        // Reload the page
+        location.reload();
+    });
+
+    const learnMoreButton = document.getElementById("learn-more-link");
+    learnMoreButton.addEventListener("click", async function(event) {
+        // Prevent default link behavior
+        event.preventDefault();
+
+        // Close the slider
+        closeSlider();
+
+        // Call the search function
+        await searchAssets();
+
+        // Show filter button and all assets button
+        filterMobileButton.style.display = "block";
+        allAssetsButton.style.display = "block";
+    });
+
+    allAssetsButton.addEventListener("click", function() {
+        // Reload the page to display all assets
+        location.reload();
+    });
 });
 
-const deleteMeeting = (meetingId) => {
-    fetch(`/meeting/${meetingId}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+async function searchAssets() {
+    // Gather data from input fields
+    const assetType = document.getElementById("asset-type-select").value;
+    const assetPriceMin = document.getElementById("asset-price-min").value;
+    const assetPriceMax = document.getElementById("asset-price-max").value;
+    const roomNumber = document.getElementById("room-number").value;
+    const assetStreetNumber = document.getElementById("asset-street-number").value;
+    const assetStreet = document.getElementById("from-place").value;
+
+    // Construct the URL with query parameters
+    const url = `/CustomerAssets?assetType=${assetType}&assetPriceMin=${assetPriceMin}&assetPriceMax=${assetPriceMax}&roomNumber=${roomNumber}&assetStreetNumber=${assetStreetNumber}&assetStreet=${assetStreet}`;
+
+    try {
+        // Make an asynchronous GET request
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        console.log(data); // Log response for debugging
+        console.log('hi!');
+        const assetsContainer = document.getElementById('assets-container');
+
+        if (data.length === 0) {
+            // Display message when no assets are found
+            assetsContainer.innerHTML = '<div id="empty-assets-message">Didn\'t find any relevant assets.</div>';
+        } else {
+            // Display the filtered assets
+            displayAssets(data);
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Meeting deleted successfully:', data);
-        // Remove the deleted meeting from the DOM
-        const meetingItem = document.querySelector(`button[onclick="deleteMeeting('${meetingId}')"]`).parentElement;
-        meetingItem.remove();
-    })
-    .catch(error => {
-        console.error('Error deleting meeting:', error);
-    });
-};
-	
-        const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    } catch (error) {
+        console.error('Error:', error);
+        console.error('Error:', error);
+    }
+}
 
-        function app() {
-            return {
-        month: '',
-        year: '',
-        datepickerValue: '',
-        no_of_days: [],
-        blankdays: [],
-        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+function closeSlider() {
+    // Show filter button
+    const filterMobileButton = document.getElementById("filter-mobile-button");
+    filterMobileButton.style.display = "block";
 
-        events: [],
-        event_title: '',
-        event_date: '',
-        event_theme: 'blue',
-		openEventModal: false,
+    // Hide slide
+    const searchProperty = document.getElementById("search-property");
+    searchProperty.classList.remove("show");
+}
 
-        themes: [
-            { value: "blue", label: "Blue Theme" },
-            { value: "red", label: "Red Theme" },
-            { value: "yellow", label: "Yellow Theme" },
-            { value: "green", label: "Green Theme" },
-            { value: "purple", label: "Purple Theme" }
-        ],
+async function fetchAssets() {
+    try {
+        const response = await fetch('/AssetsForCustomer');
+        const assets = await response.json();
+        return assets;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch assets');
+    }
+}
 
-        openEventModal: false,
+async function displayAssets(assets) {
+    const assetsContainer = document.getElementById('assets-container');
+    assetsContainer.innerHTML = ''; // Clear previous content
 
-        initDate() {
-            let today = new Date();
-            this.month = today.getMonth();
-            this.year = today.getFullYear();
-            this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
-            this.fetchMeetings();
-        },
+    // Create a single row for all assets
+    const rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
 
-        fetchMeetings() {
-            const username = sessionStorage.getItem('username');
-            if (!username) {
-                console.error('Username not found in session storage');
-                return;
-            }
+    assets.forEach((asset, index) => {
+        const assetDiv = document.createElement('div');
+        assetDiv.classList.add('col-md-4', 'asset-item');
 
-            fetch(`/meetings-customer?username=${username}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (Array.isArray(data)) {
-                        this.events = data.map(meeting => ({
-                            event_date: new Date(meeting.Date).toDateString(),
-                            event_title: meeting.MeetingType,
-                            event_theme: 'red',  // You can customize the theme based on the meeting type or any other property
-                            details: {
-                                time: meeting.Time,
-                                location: meeting.Location,
-                                customerID: meeting.CustomerID,
-                                assetDetails: meeting.AssetSelect
-                            }
-                        }));
-                    } else {
-                        console.error('Response data is not an array:', data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching meetings:', error);
-                });
-        },
+        const title = asset.AssetType;
+        const Price = `Price: $${asset.AssetPrice}`;
+        const imageUrl = asset.AssetImage;
+        const status = asset.AssetStatus;
+        const streetAndRooms = `Address: ${asset.AssetStreet} ${asset.AssetStreetNumber} ${asset.AssetCity}`;
+        const Description = `Description: ${asset.AssetDescription}`;
 
-        isToday(date) {
-            const today = new Date();
-            const d = new Date(this.year, this.month, date);
-            return today.toDateString() === d.toDateString();
-        },
-
-
-
-showEventModal(date) {
-    // Set the openEventModal to true to show the modal
-    this.openEventModal = true;
-    
-    // Get the selected date
-    const selectedDate = new Date(this.year, this.month, date).toDateString();
-    
-    // Filter events based on the selected date
-    this.selectedEvents = this.events.filter(event => event.event_date === selectedDate);
-},
-
-        getNoOfDays() {
-            let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-            let dayOfWeek = new Date(this.year, this.month).getDay();
-            let blankdaysArray = [];
-            for (var i = 1; i <= dayOfWeek; i++) {
-                blankdaysArray.push(i);
-            }
-
-            let daysArray = [];
-            for (var i = 1; i <= daysInMonth; i++) {
-                daysArray.push(i);
-            }
-
-            this.blankdays = blankdaysArray;
-            this.no_of_days = daysArray;
-        },
-		filterMeetings(date) {
-    const selectedDate = new Date(this.year, this.month, date).toDateString();
-    const filteredMeetings = this.events.filter(e => new Date(e.event_date).toDateString() === selectedDate);
-
-    const meetingList = document.getElementById('meetingList');
-    meetingList.innerHTML = '';
-
-    filteredMeetings.forEach(meeting => {
-        const meetingItem = document.createElement('div');
-        meetingItem.classList.add('meeting-item');
-        meetingItem.innerHTML = `
-            <h4>${meeting.event_title}</h4><br>
-            <p class="icon-clock">&nbsp;&nbsp;Time: ${meeting.details.time}</p><br>
-            <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.details.location}</p><br>
-            <p class="icon-user">&nbsp;&nbsp;Customer ID: ${meeting.details.customerID}</p><br>
-            <p class="icon-home">&nbsp;&nbsp;Asset Details: ${meeting.details.assetDetails}</p><br>
-            <button class="btn1 btn1-primary" onclick="deleteMeeting('${meeting.id}')">Delete Meeting</button>
+        assetDiv.innerHTML = `
+            <div class="property">
+                <a href="#" class="fh5co-property" style="background-image: url('${imageUrl}')">
+                    <span class="status">${title}</span>
+                    <ul class="list-details">
+                        <li>${asset.RoomNum} Bedroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetBathrooms} Bathroom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>${asset.AssetSquareRoot} ft sq</li>
+                    </ul>
+                </a>
+                    <div class="property-details">
+                        <span class="price">${Price}</span>
+                        <p>${Description}</p>
+                        <span class="address"><i class="icon-map"></i>${streetAndRooms}</span>
+                    </div>
+            </div>
         `;
-        meetingList.appendChild(meetingItem);
+
+        rowDiv.appendChild(assetDiv);
+
+        // Apply fade-in animation to each asset item
+        setTimeout(() => {
+            assetDiv.style.opacity = 1;
+            assetDiv.style.transform = 'translateY(0)';
+        }, index * 200); // Delay each asset item for better animation
+
+        if ((index + 1) % 3 === 0 || index === assets.length - 1) {
+            // Append the row when it contains three properties or it's the last row
+            assetsContainer.appendChild(rowDiv);
+        }
     });
-
-    // Open the modal
-    this.openEventModal = true;
-}
-    };
 }
 
+window.onload = async function() {
+    const assets = await fetchAssets();
+    displayAssets(assets);
+};
 
-</script>
-        
+  </script>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/sticky.js"></script>
-    <script src="js/hoverIntent.js"></script>
-    <script src="js/superfish.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="js/bootstrap-datepicker.min.js"></script>
-    <script src="js/classie.js"></script>
-    <script src="js/selectFx.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
-    </body>
+</body>
 </html>
+
