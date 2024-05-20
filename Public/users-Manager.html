@@ -97,28 +97,13 @@
         .delete-btn:hover {
             background-color: #000000;
         }
-        .message-container {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 128, 0, 0.8); /* Green background color */
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-        }
-
-        .message-container.right {
-            right: 50px; /* Adjust the right distance from the side of the page */
-        }
         .filter-bar {
-    background-color: #f2f2f2;
-    border: 0px solid #ccc;
+    background-color: #fff;
+    border: 0px solid #fff;
     border-radius: 5px;
     padding: 5px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px #f2f2f2(0, 0, 0, 0.1);
 }
 
 .filter-bar label {
@@ -128,7 +113,7 @@
 
 .filter-bar select {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
     border-radius: 3px;
     background-color: #fff;
     font-size: 14px;
@@ -141,8 +126,8 @@
 
 .filter-bar select:focus {
     outline: none;
-    border-color: #dfb4c6;
-    box-shadow: 0 0 5px rgba(227, 139, 208, 0.5);
+    border-color: #ffffff;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 .fh5co-section-gray {
 		background: rgba(0, 0, 0, 0);
@@ -156,6 +141,14 @@
     border-bottom-left-radius: 0px !important;
     background: #de6277;
     border: none;
+}
+
+.message-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: inline-block;
 }
  
     </style>
@@ -278,7 +271,14 @@
                         <label for="phone">Phone:</label>
                         <input type="tel" id="phone" name="Phone" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="sub">Add User</button><br></form>
+                    <button type="submit" class="btn btn-primary" id="sub">Add User</button><br>
+                    <div id="successMessage" style="display: none;" class="alert alert-success" role="alert">
+                        User and partner added successfully!
+                    </div>
+                    <div id="errorMessage" style="display: none;" class="alert alert-danger" role="alert">
+                        Failed to add user and partner.
+                    </div>
+                </form>
 			</div>
         </div>
     </div>
@@ -458,6 +458,7 @@ document.getElementById('add-user-form').addEventListener('submit', async functi
 
         if (!userResponse.ok) {
             console.error('Failed to add user to "user" collection');
+            showMessage('Failed to add user.', 'error');
             return;
         }
 
@@ -472,15 +473,17 @@ document.getElementById('add-user-form').addEventListener('submit', async functi
 
         if (!partnerResponse.ok) {
             console.error('Failed to add user to "partner" collection');
+            showMessage('Failed to add user to partner.', 'error');
             return;
         }
 
         // If both saves are successful, show success message
-        showMessage('User and partner added successfully', 'success');
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
         document.getElementById('email').value = '';
         document.getElementById('phone').value = '';
+
+        showMessage('User and partner added successfully!', 'success');
 
         // Refresh the page after 5 seconds
         setTimeout(() => {
@@ -488,6 +491,7 @@ document.getElementById('add-user-form').addEventListener('submit', async functi
         }, 5000);
     } catch (error) {
         console.error('Error adding user:', error);
+        showMessage('Error adding user.', 'error');
     }
 });
 
@@ -495,7 +499,12 @@ function showMessage(message, type) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
     messageContainer.textContent = message;
-    messageContainer.style.backgroundColor = type === 'success'
+    messageContainer.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+    messageContainer.style.color = type === 'success' ? '#155724' : '#721c24';
+    messageContainer.style.border = '1px solid ' + (type === 'success' ? '#c3e6cb' : '#f5c6cb');
+    messageContainer.style.padding = '10px';
+    messageContainer.style.margin = '10px 0';
+    messageContainer.style.borderRadius = '5px';
     document.body.appendChild(messageContainer);
     setTimeout(() => {
         messageContainer.remove();
