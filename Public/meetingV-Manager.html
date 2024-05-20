@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="css/cs-select.css">
     <link rel="stylesheet" href="css/cs-skin-border.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
     <style>
         .calendar {
@@ -363,13 +363,14 @@
                 meetingItem.classList.add('meeting-item');
                 meetingItem.innerHTML = `
                     <h4>${meeting.MeetingType}</h4><br><br>
-                    <p class="icon-calendar">&nbsp;&nbsp;Date: ${meeting.Date} at  ${meeting.Time}</p><br>
-                    <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.Location}</p><br>
-                    <p class="icon-user" id="customerFullName_${meeting._id}">&nbsp;&nbsp;Customer Name: Fetching...</p><br>
-                    <p class="icon-phone" id="customerPhone_${meeting._id}">&nbsp;&nbsp;Customer's phone: Fetching...</p><br>
-                    ${meeting.AssetSelect ? `<p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br><br>` : ''}
-                    <button  class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
+                    <p><i class="fas fa-calendar"></i> &nbsp;&nbsp;Date: ${meeting.Date} at ${meeting.Time}</p><br>
+                    <p><i class="fas fa-map-marker-alt"></i> &nbsp;&nbsp;Location: ${meeting.Location}</p><br>
+                    <p><i class="fas fa-user"></i> &nbsp;&nbsp;<span id="customerFullName_${meeting._id}">Fetching...</span></p><br>
+                    <p><i class="fas fa-phone"></i> &nbsp;&nbsp; <span id="customerPhone_${meeting._id}">Fetching...</span></p><br>
+                    ${meeting.AssetSelect ? `<p><i class="fas fa-home"></i> &nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>` : ''}
+                    <button class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
                 `;
+
                 meetingList.appendChild(meetingItem);
 
                 // Fetch customer full name and update the HTML content
