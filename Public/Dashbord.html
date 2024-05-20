@@ -628,6 +628,16 @@
     .then(data => {
         const countsByMonth = {};
 
+        // Initialize counts for all months to zero
+        const allMonths = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        allMonths.forEach(month => {
+            countsByMonth[month] = 0;
+        });
+
         // Iterate through customers and count new customers per month
         data.forEach(customer => {
             const joinDate = customer.joinDate;
@@ -639,11 +649,7 @@
                 const monthNumber = parseInt(dateParts[1], 10);
                 const monthName = getMonthName(monthNumber);
 
-                if (!countsByMonth[monthName]) {
-                    countsByMonth[monthName] = 1;
-                } else {
-                    countsByMonth[monthName]++;
-                }
+                countsByMonth[monthName]++;
             }
         });
 
@@ -651,9 +657,6 @@
         Object.keys(countsByMonth).forEach(month => {
             console.log(`${month}: ${countsByMonth[month]} times`);
         });
-
-        // Create an array of all months, including those with zero counts
-        const allMonths = Object.keys(countsByMonth).sort(); // Sort by month name
 
         const counts = allMonths.map(month => countsByMonth[month]);
 
@@ -672,18 +675,17 @@
                 }]
             },
             options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-						stepSize: 1,
-						ticks: {
-							integer: true,  // Display only integer ticks
-							precision: 0    // Display only whole numbers
-						}
-					}
-				}
-			}
-
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        ticks: {
+                            integer: true,  // Display only integer ticks
+                            precision: 0    // Display only whole numbers
+                        }
+                    }
+                }
+            }
         });
     })
     .catch(error => {
@@ -702,6 +704,7 @@
         return months[monthNumber - 1];
     }
 });
+
 
 document.addEventListener("DOMContentLoaded", function() {
     fetch("/deals")
