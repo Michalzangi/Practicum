@@ -235,9 +235,10 @@
     .then(response => response.json())
     .then(data => {
         const assetSelect = document.getElementById('assetSelect');
-        data.forEach(asset => {
+        const availableAssets = data.filter(asset => asset.AssetStatus === "Available");
+        availableAssets.forEach(asset => {
             const option = document.createElement('option');
-            option.value = 'Street: '+asset.AssetStreet +' , Street Number: ' +asset.AssetStreetNumber +', Price: ' + asset.AssetPrice + ', Type: ' + asset.AssetType;
+            option.value = `Street: ${asset.AssetStreet}, Street Number: ${asset.AssetStreetNumber}, Price: ${asset.AssetPrice}, Type: ${asset.AssetType}`;
             option.textContent = option.value;
             assetSelect.appendChild(option);
         });
