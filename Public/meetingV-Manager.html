@@ -367,7 +367,7 @@
                     <p class="icon-location">&nbsp;&nbsp;Location: ${meeting.Location}</p><br>
                     <p class="icon-user" id="customerFullName_${meeting._id}">&nbsp;&nbsp;Customer Name: Fetching...</p><br>
                     <p class="icon-phone" id="customerPhone_${meeting._id}">&nbsp;&nbsp;Customer's phone: Fetching...</p><br>
-                    <p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br>
+                    ${meeting.AssetSelect ? `<p class="icon-home">&nbsp;&nbsp;AssetDetails: ${meeting.AssetSelect}</p><br><br>` : ''}
                     <button  class="btn1 btn1-primary" id="sub1" onclick="deleteMeeting('${meeting._id}')">Delete Meeting</button>
                 `;
                 meetingList.appendChild(meetingItem);
